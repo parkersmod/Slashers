@@ -11,6 +11,12 @@ local function Spawn_SlashGen()
 	if GM.MAP.Goal then --If we have data for this map
 		for k, v in pairs( GM.MAP.Goal ) do
 
+			if (v == GM.MAP.Goal.Generator) then
+				nbEntToSpawn = 2
+			else
+				nbEntToSpawn = 0
+			end
+			
 			if (v == GM.MAP.Goal.Jerrican) then
 				nbEntToSpawn = 3 *  math.ceil( (#player.GetAll() / 3) )
 			else
