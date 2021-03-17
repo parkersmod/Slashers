@@ -9,8 +9,8 @@ local GM = GM or GAMEMODE
 
 GM.MAP.Name = "Lodge"
 GM.MAP.EscapeDuration = 60
-GM.MAP.StartMusic = "slasher_start_game_intruder.wav"
-GM.MAP.ChaseMusic = "slashers/ambient/chase_intruder.wav"
+GM.MAP.StartMusic = "slasher_start_game_jack.wav"
+GM.MAP.ChaseMusic = "slashers/ambient/chase_jack.wav"
 GM.MAP.Goal = {
 	Jerrican = {
 		 {type="sls_jerrican", pos=Vector( -430.8125,-909.71875,15.15625 ), ang=Angle(0.3076171875,40.693359375,-0.087890625),},
@@ -54,8 +54,8 @@ GM.MAP.Goal = {
 }
 
 -- Killer
-GM.MAP.Killer.Name = "the Intruder"
-GM.MAP.Killer.Model = "models/steinman/slashers/intruder_pm.mdl"
+GM.MAP.Killer.Name = "Jack Torrence"
+GM.MAP.Killer.Model = "models/players/an_shining_jack.mdl"
 GM.MAP.Killer.WalkSpeed = 200
 GM.MAP.Killer.RunSpeed = 200
 GM.MAP.Killer.ExtraWeapons = {"weapon_beartrap", "weapon_alertropes", "weapon_dooraxe"}

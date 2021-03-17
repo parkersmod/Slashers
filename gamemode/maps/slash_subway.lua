@@ -9,8 +9,8 @@ local GM = GM or GAMEMODE
 
 GM.MAP.Name = "Subway"
 GM.MAP.EscapeDuration = 90
-GM.MAP.StartMusic = "slashers_start_game_proxy.wav"
-GM.MAP.ChaseMusic = "slashers/ambient/chase_proxy.wav"
+GM.MAP.StartMusic = "slashers_start_game_freddy.wav"
+GM.MAP.ChaseMusic = "slashers/ambient/chase_freddy.wav"
 GM.MAP.Goal = {
 	Generator = {
 		{type="sls_generator", pos=Vector( 	1555.2901611328	,	625.43389892578	,	-475.79974365234	 ), ang=Angle(	-0.047894809395075	,	77.103637695313	,	-0.008544921875	),},
@@ -66,15 +66,15 @@ GM.MAP.Goal = {
 }
 
 -- Killer
-GM.MAP.Killer.Name = "the Proxy"
-GM.MAP.Killer.Model = "models/slender_arrival/chaser.mdl"
+GM.MAP.Killer.Name = "Freddy Krueger"
+GM.MAP.Killer.Model = "models/player/FreddyKrueger.mdl"
 GM.MAP.Killer.WalkSpeed = 200
 GM.MAP.Killer.RunSpeed = 200
 GM.MAP.Killer.ExtraWeapons = {}
 
 if CLIENT then
 	GM.MAP.Killer.Desc = GM.LANG:GetString("class_desc_proxy")
-	GM.MAP.Killer.Icon = Material("icons/icon_proxy.png")
+	GM.MAP.Killer.Icon = Material("icons/icon_fred.png")
 end
 
 

@@ -19,7 +19,7 @@ GM.CLASS.Survivors[CLASS_SURV_SPORTS].life = 120
 GM.CLASS.Survivors[CLASS_SURV_SPORTS].stamina = 210
 GM.CLASS.Survivors[CLASS_SURV_SPORTS].model = "models/steinman/slashers/sport_pm.mdl"
 GM.CLASS.Survivors[CLASS_SURV_SPORTS].die_sound = "slashers/effects/scream_man_1.wav"
-GM.CLASS.Survivors[CLASS_SURV_SPORTS].weapons = {}
+GM.CLASS.Survivors[CLASS_SURV_SPORTS].weapons = {"tfa_nmrih_bat"}
 if CLIENT then
 	GM.CLASS.Survivors[CLASS_SURV_SPORTS].dispname = "Trent"
 	GM.CLASS.Survivors[CLASS_SURV_SPORTS].description = GM.LANG:GetString("class_desc_sports")

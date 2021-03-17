@@ -40,7 +40,7 @@ SWEP.InspectPos = Vector(8.418, 0, 15.241)
 SWEP.InspectAng = Vector(-9.146, 9.145, 17.709)
 
 SWEP.Primary.Blunt = true
-SWEP.Primary.Damage = 25
+SWEP.Primary.Damage = 2
 SWEP.Primary.Reach = 40
 SWEP.Primary.RPM = 90
 SWEP.Primary.SoundDelay = 0
@@ -50,15 +50,15 @@ SWEP.Primary.Automatic = false
 
 SWEP.Secondary.Blunt = true
 SWEP.Secondary.RPM = 60 -- Delay = 60/RPM, this is only AFTER you release your heavy attack
-SWEP.Secondary.Damage = 60
-SWEP.Secondary.Reach = 40	
+SWEP.Secondary.Damage = 2
+SWEP.Secondary.Reach = 80	
 SWEP.Secondary.SoundDelay = 0.0
 SWEP.Secondary.Delay = 0.2
 SWEP.Secondary.Automatic = false
 
 SWEP.Secondary.BashDamage = 50
 SWEP.Secondary.BashDelay = 0.35
-SWEP.Secondary.BashLength = 40
+SWEP.Secondary.BashLength = 80
 
 SWEP.MoveSpeed = 1
 SWEP.AllowViewAttachment = false
@@ -198,6 +198,33 @@ end
 
 	//end
 //end
+
+
+if SERVER then
+	local function EntityTakeDamage(target, dmg)
+		if !target:IsPlayer() || !dmg:GetAttacker() || !dmg:GetAttacker().GetActiveWeapon || !dmg:GetAttacker():GetActiveWeapon() ||
+			dmg:GetAttacker():GetActiveWeapon():GetClass() != "weapon_flashlight" then return end
+		if target:Team() == TEAM_SURVIVORS then return true end
+		if target:Team() == TEAM_KILLER && !target.stun then
+			timer.Create("stunlight_" .. target:UniqueID(), math.random(.5, 1), 1, function()
+				if !IsValid(target) then return end
+				if target:Alive() then 
+					target:SetRunSpeed(target.stungun_runspeed)
+					target:SetWalkSpeed(target.stungun_walkspeed)
+				end
+				target.stun = false
+			end)
+			
+			target.stun = true
+			target.stungun_runspeed = target:GetRunSpeed()
+			target.stungun_walkspeed = target:GetWalkSpeed()
+			target:SetRunSpeed(50)
+			target:SetWalkSpeed(50)
+		end
+	end
+	hook.Add("EntityTakeDamage", "stunlight_EntityTakeDamage", EntityTakeDamage)
+end
+
 
 -- if SERVER then
 -- 	local function EntityTakeDamage(target, dmg)

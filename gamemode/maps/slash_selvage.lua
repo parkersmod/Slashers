@@ -76,7 +76,7 @@ GM.MAP.Goal = {
 
 -- Killer
 GM.MAP.Killer.Name = "Michael Myers"
-GM.MAP.Killer.Model = "models/player/dewobedil/mike_myers/default_p.mdl"
+GM.MAP.Killer.Model = "models/players/mj_dbd_myers.mdl"
 GM.MAP.Killer.WalkSpeed = 200
 GM.MAP.Killer.RunSpeed = 200
 GM.MAP.Killer.ExtraWeapons = {}

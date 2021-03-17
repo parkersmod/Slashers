@@ -48,7 +48,9 @@ function playermeta:SetupKiller()
 	self:SetNoCollideWithTeammates(false)
 	self:SetModel(GM.MAP.Killer.Model)
 	self:SetupHands()
-
+	if GM.MAP.Killer.Model == "models/players/an_shining_jack.mdl" then
+		self:SetBodygroup( 1, 6 )
+	end
 	if GM.MAP.Killer.ExtraWeapons then
 		for _, v in ipairs(GM.MAP.Killer.ExtraWeapons) do
 			self:Give(v)

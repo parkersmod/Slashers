@@ -14,10 +14,11 @@ GM.CONFIG["disabled_modules"] = {
 
 -- Armes pour le tueur
 GM.CONFIG["killer_weapons"] = {
-	"tfa_nmrih_chainsaw",
-	 "tfa_nmrih_kknife",
+	--"tfa_nmrih_chainsaw",
+	"tfa_nmrih_kknife",
 	"tfa_nmrih_fireaxe",
-	"tfa_nmrih_machete"
+	"tfa_nmrih_machete",
+	"tfa_nmrih_pickaxe"
 }
 -- Armes pour les survivants
 GM.CONFIG["survivors_weapons"] = {
