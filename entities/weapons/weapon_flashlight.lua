@@ -206,7 +206,7 @@ if SERVER then
 			dmg:GetAttacker():GetActiveWeapon():GetClass() != "weapon_flashlight" then return end
 		if target:Team() == TEAM_SURVIVORS then return true end
 		if target:Team() == TEAM_KILLER && !target.stun then
-			timer.Create("stunlight_" .. target:UniqueID(), math.random(.5, 1), 1, function()
+			timer.Create("stunlight_" .. target:UniqueID(), math.random(1, 2), 1, function()
 				if !IsValid(target) then return end
 				if target:Alive() then 
 					target:SetRunSpeed(target.stungun_runspeed)

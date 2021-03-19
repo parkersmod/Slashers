@@ -101,7 +101,7 @@ if SERVER then
 			dmg:GetAttacker():GetActiveWeapon():GetClass() != "stun_gun" then return end
 		if target:Team() == TEAM_SURVIVORS then return true end
 		if target:Team() == TEAM_KILLER && !target.stun then
-			timer.Create("stungun_" .. target:UniqueID(), math.random(2, 4), 1, function()
+			timer.Create("stungun_" .. target:UniqueID(), math.random(6, 8), 1, function()
 				if !IsValid(target) then return end
 				if target:Alive() then 
 					target:SetRunSpeed(target.stungun_runspeed)

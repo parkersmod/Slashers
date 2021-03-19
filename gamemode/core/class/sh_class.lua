@@ -64,7 +64,7 @@ GM.CLASS.Survivors[CLASS_SURV_FAT].life = 180
 GM.CLASS.Survivors[CLASS_SURV_FAT].stamina = 80
 GM.CLASS.Survivors[CLASS_SURV_FAT].model = "models/steinman/slashers/fat_pm.mdl"
 GM.CLASS.Survivors[CLASS_SURV_FAT].die_sound = "slashers/effects/scream_man_1.wav"
-GM.CLASS.Survivors[CLASS_SURV_FAT].weapons = {}
+GM.CLASS.Survivors[CLASS_SURV_FAT].weapons = {"heal_syringe"}
 if CLIENT then
 	GM.CLASS.Survivors[CLASS_SURV_FAT].dispname = "Franklin"
 	GM.CLASS.Survivors[CLASS_SURV_FAT].description = GM.LANG:GetString("class_desc_fat")

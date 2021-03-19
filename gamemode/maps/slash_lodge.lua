@@ -62,7 +62,7 @@ GM.MAP.Killer.ExtraWeapons = {"weapon_beartrap", "weapon_alertropes", "weapon_do
 
 if CLIENT then
 	GM.MAP.Killer.Desc = GM.LANG:GetString("class_desc_intruder")
-	GM.MAP.Killer.Icon = Material("icons/icon_intruder.png")
+	GM.MAP.Killer.Icon = Material("icons/icon_jack.png")
 	local trapsEntity = {}
 	local function getEntityToDrawHalo()
 		trapsEntity = net.ReadTable()
