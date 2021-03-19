@@ -2,8 +2,8 @@
 --
 -- @Author: Garrus2142
 -- @Date:   2017-07-25 16:15:45
--- @Last modified by:   Guilhem PECH
--- @Last modified time: 21-Oct-2018
+-- @Last modified by:   Valafi
+-- @Last modified time: 2021-03-19 09:15:34
 
 include("shared.lua")
 include("config.lua")
@@ -14,7 +14,8 @@ local hide = {
 	CHudHealth = true,
 	CHudBattery = true,
 	CHudAmmo = true,
-	//CHudWeaponSelection = true,
+	CHudDamageIndicator = true
+	--CHudWeaponSelection = true
 }
 
 hook.Add( "HUDShouldDraw", "HideHUD", function( name )
@@ -23,7 +24,7 @@ hook.Add( "HUDShouldDraw", "HideHUD", function( name )
 	-- Don't return anything here, it may break other addons that rely on this hook.
 end )
 
--- Enleve le nom des joueurs
+-- Remove the names of the players
 function GM:HUDDrawTargetID()
 
 end
