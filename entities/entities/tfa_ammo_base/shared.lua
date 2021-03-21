@@ -29,7 +29,7 @@ if SERVER then
 
 	function ENT:SpawnFunction(ply, tr, classname)
 
-		if (!tr.Hit) then return end
+		if (not tr.Hit) then return end
 		
 		local pos = tr.HitPos + tr.HitNormal*4
 		
@@ -90,7 +90,7 @@ if SERVER then
 	bul.Spread = Vector(0,0,0)
 	
 	function ENT:OnTakeDamage(dmginfo)
-		if !IsValid(self) then return end
+		if not IsValid(self) then return end
 		
 		local at = dmginfo:GetInflictor()
 		
@@ -168,7 +168,7 @@ if SERVER then
 			
 			self:FireBullets(bul) 
 			
-			if adm!=1 then
+			if adm ~= 1 then
 				while i<=math.Clamp(numbuls,1,35) do
 				
 					randvec.x=math.Rand(-1,1)
@@ -196,7 +196,7 @@ if SERVER then
 				util.Effect("Explosion", effectdata)
 			end
 			
-			if adm!=1 then
+			if adm ~= 1 then
 				util.Effect("cball_explode", effectdata)
 			end
 			
@@ -223,7 +223,7 @@ if CLIENT then
 			ang:RotateAroundAxis(ang:Up(), self.TextAngles.y)
 			ang:RotateAroundAxis(ang:Forward(), self.TextAngles.z)
 			
-			if !self.Text then
+			if not self.Text then
 				self.Text = string.upper(self.AmmoType)
 			end
 			

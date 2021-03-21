@@ -8,7 +8,7 @@ Purpose:  Autodetection
 ]]--
 
 function SWEP:AutoDetectMuzzle()
-	if !self.MuzzleFlashEffect then
+	if not self.MuzzleFlashEffect then
 		
 		local a=string.lower(self.Primary.Ammo)
 		local cat = string.lower(self.Category and self.Category or "")
@@ -25,7 +25,7 @@ function SWEP:AutoDetectMuzzle()
 			self.MuzzleFlashEffect = "tfa_muzzleflash_sniper"		
 		elseif string.find(a,"pistol") or string.find(cat,"pistol")  then
 			self.MuzzleFlashEffect = "tfa_muzzleflash_pistol"
-		elseif string.find(a,"ar2") or string.find(a,"rifle") or ( string.find(cat,"revolver") and !string.find(cat,"rifle") ) then
+		elseif string.find(a,"ar2") or string.find(a,"rifle") or ( string.find(cat,"revolver") and not string.find(cat,"rifle") ) then
 			self.MuzzleFlashEffect = "tfa_muzzleflash_rifle"
 		else
 			self.MuzzleFlashEffect = "tfa_muzzleflash_generic"		
@@ -69,12 +69,12 @@ function SWEP:AutoDetectDamage()
 			self.Primary.Damage = self.Primary.Damage*1.2
 		end
 	end
-	if (!self.Primary.Damage) or (self.Primary.Damage<=0.01) then
+	if (not self.Primary.Damage) or (self.Primary.Damage<=0.01) then
 		if self.Velocity then
 			self.Primary.Damage = self.Velocity/5
 		end
 	end
-	if (!self.Primary.Damage) or (self.Primary.Damage<=0.01) then
+	if (not self.Primary.Damage) or (self.Primary.Damage<=0.01) then
 		self.Primary.Damage = (self.Primary.KickUp+self.Primary.KickUp+self.Primary.KickUp)*10
 	end
 end
@@ -102,7 +102,7 @@ function SWEP:IconFix()
 			self.WepSelectIcon = surface.GetTextureID(self.WepSelectIcon)
 			proceed = false
 			print("string")
-		--[[elseif tselicon == "number" or tselicon == "integer" or tselicon == "int" and self.WepSelectIcon!=212 then
+		--[[elseif tselicon == "number" or tselicon == "integer" or tselicon == "int" and self.WepSelectIcon ~= 212 then
 			--We're good
 			proceed = false
 			print(self.WepSelectIcon)
@@ -119,7 +119,7 @@ function SWEP:IconFix()
 	end
 	--[[
 	local ff = file.Find(self.WepSelectIcon,"GAME")
-	if !ff or #ff<=0 then
+	if not ff or #ff<=0 then
 		local tstr = "materials/"..self.WepSelectIcon.."*"
 		local ff2=file.Find(tstr,"GAME")
 		if ff2 and #ff2>1 then
@@ -152,7 +152,7 @@ Purpose:  Autodetection
 ]]--
 
 function SWEP:CorrectScopeFOV( fov )
-	if !self.Secondary.IronFOV or self.Secondary.IronFOV==0 then
+	if not self.Secondary.IronFOV or self.Secondary.IronFOV==0 then
 		if self.Scoped then
 			self.Secondary.IronFOV = fov / (self.Secondary.ScopeZoom and self.Secondary.ScopeZoom or 2)
 		else
@@ -170,7 +170,7 @@ Purpose:  Autodetection
 ]]--
 
 function SWEP:DetectValidAnimations()
-	if !IsValid(self) then
+	if not IsValid(self) then
 		return
 	end
 	
@@ -180,7 +180,7 @@ function SWEP:DetectValidAnimations()
 		end
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	local vm=self.Owner:GetViewModel()
 	if IsValid(vm) then
@@ -189,7 +189,7 @@ function SWEP:DetectValidAnimations()
 		for k,v in pairs(self.actlist) do
 			seq=vm:SelectWeightedSequence(v)
 			
-			if seq!=-1 then
+			if seq ~= -1 then
 				self.SequenceEnabled[v]=true
 				self.SequenceLength[v] = vm:SequenceDuration( seq )
 			else
@@ -200,7 +200,7 @@ function SWEP:DetectValidAnimations()
 			if (v == ACT_VM_IDLE_SILENCED or v == ACT_VM_RELOAD_SILENCED or v == ACT_VM_PRIMARYATTACK_SILENCED) and self.CanBeSilenced then
 				self.SequenceEnabled[v]=true
 				self.SequenceLength[v] = vm:SequenceDuration( seq )
-				if !self.SequenceLength[v] or self.SequenceLength[v]<=0.01 then
+				if not self.SequenceLength[v] or self.SequenceLength[v]<=0.01 then
 					self.SequenceLength[v]=0.3
 				end
 			end
@@ -210,13 +210,13 @@ function SWEP:DetectValidAnimations()
 		
 		seq=vm:SelectWeightedSequence(ACT_VM_DRYFIRE)
 		
-		if seq!=-1 and seq != vm:SelectWeightedSequence(ACT_VM_PRIMARYATTACK) then
+		if seq ~= -1 and seq ~= vm:SelectWeightedSequence(ACT_VM_PRIMARYATTACK) then
 			self.SequenceEnabled[ACT_VM_DRYFIRE]=true
 		end
 		
 		seq=vm:SelectWeightedSequence(ACT_VM_DRYFIRE_SILENCED)
 		
-		if seq!=-1 and seq != vm:SelectWeightedSequence(ACT_VM_PRIMARYATTACK_SILENCED) then
+		if seq ~= -1 and seq ~= vm:SelectWeightedSequence(ACT_VM_PRIMARYATTACK_SILENCED) then
 			self.SequenceEnabled[ACT_VM_DRYFIRE_SILENCED]=true
 		end
 		
@@ -244,7 +244,7 @@ Purpose:  Autodetection
 
 function SWEP:CreateFireModes( isfirstdraw )
 	local thasbeencreated = false
-	if !self.FireModes then
+	if not self.FireModes then
 		self.FireModes = {}
 		local burstcnt = self:FindEvenBurstNumber()
 		if self.SelectiveFire then
@@ -293,7 +293,7 @@ function SWEP:CreateFireModes( isfirstdraw )
 		end
 	end
 	
-	if !self:GetFireMode() or self:GetFireMode() == 0 then
+	if not self:GetFireMode() or self:GetFireMode() == 0 then
 		if self.Primary.Automatic then
 			self:SetFireMode(1)
 		else
@@ -301,7 +301,7 @@ function SWEP:CreateFireModes( isfirstdraw )
 		end
 	end
 	
-	if !table.HasValue(self.FireModes,"Safe") then
+	if not table.HasValue(self.FireModes,"Safe") then
 		table.insert(self.FireModes,#self.FireModes+1,"Safe")
 	end
 	
@@ -353,7 +353,7 @@ Purpose:  Autodetection
 function SWEP:SetUpSpread()
 	local ht = self.DefaultHoldType and self.DefaultHoldType or self.HoldType
 	
-	if !self.Primary.SpreadMultiplierMax or self.AutoDetectSpreadMultiplierMax then
+	if not self.Primary.SpreadMultiplierMax or self.AutoDetectSpreadMultiplierMax then
 		self.Primary.SpreadMultiplierMax = 2.5 * math.max(self.Primary.RPM,400)/600 * math.sqrt(self.Primary.Damage/30*self.Primary.NumShots)--How far the spread can expand when you shoot.
 		if ht =="smg" then
 			self.Primary.SpreadMultiplierMax = self.Primary.SpreadMultiplierMax*0.8
@@ -367,7 +367,7 @@ function SWEP:SetUpSpread()
 		self.AutoDetectSpreadMultiplierMax = true
 	end
 	
-	if !self.Primary.SpreadIncrement or self.AutoDetectSpreadIncrement then
+	if not self.Primary.SpreadIncrement or self.AutoDetectSpreadIncrement then
 		self.AutoDetectSpreadIncrement = true
 		self.Primary.SpreadIncrement = 1*(math.Clamp(math.sqrt(self.Primary.RPM)/24.5,0.7,3)) * math.sqrt(self.Primary.Damage/30*self.Primary.NumShots)--What percentage of the modifier is added on, per shot.
 		if (ht) == "revolver" then
@@ -396,7 +396,7 @@ function SWEP:SetUpSpread()
 		self.Primary.SpreadIncrement = self.Primary.SpreadIncrement * math.sqrt(self.Primary.Recoil * (self.Primary.KickUp + self.Primary.KickDown + self.Primary.KickHorizontal))*0.8
 	end
 	
-	if !self.Primary.SpreadRecovery or self.AutoDetectSpreadRecovery then
+	if not self.Primary.SpreadRecovery or self.AutoDetectSpreadRecovery then
 		self.AutoDetectSpreadRecovery = true
 		self.Primary.SpreadRecovery = math.sqrt(math.max(self.Primary.RPM,300))/29*4 --How much the spread recovers, per second.
 		if ht=="smg" then

@@ -56,7 +56,7 @@ function ENT:DesactivateOnPlayer(ent, self)
 end
 
 function ENT:Think()
-	if !self.playertraped then return end
+	if not self.playertraped then return end
 
 	if CurTime() - self.lasttime > 0.1 and self.tapleft <= slashers_beartrap_maxtap then
 		self.lasttime = CurTime()
@@ -83,21 +83,21 @@ function ENT:Initialize()
 end
 
 function ENT:Use(activator, caller, useType, value)
-	if !IsKiller(caller) and self.tapleft > 0 then
+	if not IsKiller(caller) and self.tapleft > 0 then
 		if self.playertraped:SteamID() ~= caller:SteamID() then return end
 		self.tapleft = self.tapleft - 10
 		RefreshTap(caller, self)
 		if self.tapleft <= 0 then
 			self:DesactivateOnPlayer(caller, self)
 		end
-	elseif IsKiller(caller) and !self.playertraped then
+	elseif IsKiller(caller) and not self.playertraped then
 		caller:GiveAmmo(1, "ammo_beartrap", true)
 		self:Remove()
 	end
 end
 
 function ENT:Touch(ent)
-	if ent.beartrap or self.isused == 1 or !ent:IsPlayer() or IsKiller(ent) then return end
+	if ent.beartrap or self.isused == 1 or not ent:IsPlayer() or IsKiller(ent) then return end
 
 	ActivateOnPlayer(ent, self)
 

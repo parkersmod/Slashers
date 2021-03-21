@@ -39,7 +39,7 @@ function ENT:Initialize()
 end
 
 function ENT:SpawnFunction( ply, tr )
-    if ( !tr.Hit ) then return end
+    if ( not tr.Hit ) then return end
     local ent = ents.Create("sls_radio")
     ent:SetPos( tr.HitPos + tr.HitNormal * 16 )
     ent:Spawn()
@@ -53,7 +53,7 @@ function ENT:OnTakeDamage(dmg)
 end
 
 function ENT:Use(ply)
-	if CurrentObjective == "activate_radio" && ply:Team() == TEAM_SURVIVORS then
+	if CurrentObjective == "activate_radio" and ply:Team() == TEAM_SURVIVORS then
 		net.Start( "notificationSlasher" )
 						net.WriteTable({"round_notif_police_call"})
 						net.WriteString("safe")
@@ -68,7 +68,7 @@ function ENT:Use(ply)
 		self.Active = true
 		self:EmitSound("slashers_radio")
 	else
-		if (!self:GetNWBool( 'activated')) then
+		if (not self:GetNWBool( 'activated')) then
 				net.Start( "notificationSlasher" )
 								net.WriteTable({"round_notif_error_radio"})
 								net.WriteString("cross")

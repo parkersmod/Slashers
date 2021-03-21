@@ -31,7 +31,7 @@ function SWEP:PrimaryAttack()
 	tracedata.start = Vector(self.Owner:GetEyeTrace().HitPos)
 	tracedata.endpos = Vector(self.Owner:GetEyeTrace().HitPos)
 	tracedata.endpos.z = tracedata.endpos.z - 5
-	if self.Owner:GetPos():Distance(self.Owner:GetEyeTrace().HitPos) > self.MaxDistance or !util.TraceLine(tracedata).HitWorld  or (beartrap_angle.pitch % 360) > 45 then
+	if self.Owner:GetPos():Distance(self.Owner:GetEyeTrace().HitPos) > self.MaxDistance or not util.TraceLine(tracedata).HitWorld  or (beartrap_angle.pitch % 360) > 45 then
 		ent:Remove()
 		return
 	end

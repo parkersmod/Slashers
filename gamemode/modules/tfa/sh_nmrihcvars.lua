@@ -107,28 +107,28 @@ if SERVER then
 	net.Receive("NMRIHFlashlightToggle",function(length,ply)
 		if IsValid(ply) then
 			local wep = ply:GetActiveWeapon()
-			if IsValid(wep) then wep.IsOn = !wep.IsOn end
+			if IsValid(wep) then wep.IsOn = not wep.IsOn end
 		end
 	end)
 
 	hook.Add("PlayerTick","FlashlightStuffTick",function(ply)
-		if !flashlightvar or !flashlightvar:GetBool() then return end
-		if !IsValid(ply) then return end
+		if not flashlightvar or not flashlightvar:GetBool() then return end
+		if not IsValid(ply) then return end
 		local wep = ply:GetActiveWeapon()
-		if !IsValid(wep) then return end
-		if ply:FlashlightIsOn() and ( wep:GetClass()!="tfa_nmrih_maglite" or !wep.IsOn ) then
+		if not IsValid(wep) then return end
+		if ply:FlashlightIsOn() and ( wep:GetClass() ~= "tfa_nmrih_maglite" or not wep.IsOn ) then
 			ply:Flashlight(false)
 		end
 	end)
 end
 
 hook.Add("PlayerBindPress","FlashlightStuff",function(ply,bind,pressed)
-	if !CLIENT then return end
+	if not CLIENT then return end
 	if bind=="impulse 100" then
 		if flashlightvar and flashlightvar:GetBool() then
-			if !IsValid(ply) then return true end
-			if !IsValid(ply:GetActiveWeapon()) then return true end
-			if ply:GetActiveWeapon():GetClass()!="tfa_nmrih_maglite" then
+			if not IsValid(ply) then return true end
+			if not IsValid(ply:GetActiveWeapon()) then return true end
+			if ply:GetActiveWeapon():GetClass() ~= "tfa_nmrih_maglite" then
 				if ply:HasWeapon("tfa_nmrih_maglite") then
 					ply:ConCommand("use tfa_nmrih_maglite")
 				end
@@ -140,8 +140,8 @@ hook.Add("PlayerBindPress","FlashlightStuff",function(ply,bind,pressed)
 			end
 			return true
 		else
-			if !IsValid(ply) then return true end
-			if !IsValid(ply:GetActiveWeapon()) then return true end
+			if not IsValid(ply) then return true end
+			if not IsValid(ply:GetActiveWeapon()) then return true end
 			if ply:GetActiveWeapon():GetClass()=="tfa_nmrih_maglite" then
 				if pressed then
 					net.Start("NMRIHFlashlightToggle")

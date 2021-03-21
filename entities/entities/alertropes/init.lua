@@ -41,7 +41,7 @@ function ENT:Think()
 			if CurTime() - self.lasttime > 1 then
 				self.lasttime = CurTime()
 				self:EmitSound("slashers/effects/alert_bell.wav")
-				if self.hookedrope && team.GetPlayers(TEAM_KILLER)[1] then
+				if self.hookedrope and team.GetPlayers(TEAM_KILLER)[1] then
 					net.Start("noticonSlashers")
 						net.WriteVector(self.hookedrope:GetPos())
 						net.WriteString("info")
@@ -79,7 +79,7 @@ function ENT:Initialize()
 end
 
 function ENT:Use(activator, caller, useType, value)
-	if !IsKiller(caller) then return end
+	if not IsKiller(caller) then return end
 	if IsValid(self.hookedrope) then
 		self.hookedrope:Remove()
 		caller:GiveAmmo(1, "ammo_alertropes", true)

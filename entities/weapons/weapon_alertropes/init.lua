@@ -39,7 +39,7 @@ function SWEP:PrimaryAttack()
 
 	if self:Ammo1() <= 0 then return end
 
-	if self.Owner:GetPos():Distance(self.Owner:GetEyeTrace().HitPos) > self.MaxDistance or !self.Owner:GetEyeTrace().HitWorld then
+	if self.Owner:GetPos():Distance(self.Owner:GetEyeTrace().HitPos) > self.MaxDistance or not self.Owner:GetEyeTrace().HitWorld then
 		return
 	end
 
@@ -72,7 +72,7 @@ function SWEP:PrimaryAttack()
 
 	ent:Spawn()
 
-	if !IsValid(self.firsthook) then
+	if not IsValid(self.firsthook) then
 		self.firsthook = ent
 	elseif IsValid(self.firsthook) then
 		ent:LinkHook(self.firsthook)

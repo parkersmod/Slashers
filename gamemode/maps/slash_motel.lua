@@ -205,7 +205,7 @@ if CLIENT then
 
 	net.Receive( "sls_motherradar", function( len, ply )
 		local distLevel = net.ReadUInt(2)
-		if GM.oldLevel != distLevel then
+		if GM.oldLevel ~= distLevel then
 			GM.oldLevel = distLevel
 			GM:SoundToPlay(distLevel)
 		end

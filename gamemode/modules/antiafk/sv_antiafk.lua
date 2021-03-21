@@ -18,17 +18,17 @@ local function Think()
 	local CV_afkmsgtime = GetConVar("slashers_antiafk_afkmsgtime")
 	local curtime = CurTime()
 
-	if !CV_enable || !CV_afktime || !CV_afkmsgtime then return end
-	if !CV_enable:GetBool() then return end
+	if not CV_enable or not CV_afktime or not CV_afkmsgtime then return end
+	if not CV_enable:GetBool() then return end
 
 	for _, v in ipairs(player.GetAll()) do
-		if !v:Alive() || v:IsBot() then
+		if not v:Alive() or v:IsBot() then
 			v.afktime = curtime
 			continue
 		end
 
 		-- Reset
-		if v.lastpos != v:GetPos() || v.lastang != v:EyeAngles() then
+		if v.lastpos ~= v:GetPos() or v.lastang ~= v:EyeAngles() then
 			v.afktime = curtime
 			v.lastpos = v:GetPos()
 			v.lastang = v:EyeAngles()
@@ -41,7 +41,7 @@ local function Think()
 				u:ChatPrint(v:Name() .. " kicked by anti-afk")
 			end
 
-		elseif v:GetNWInt("afk_warn") == 0 && curtime > v.afktime + CV_afktime:GetInt() then
+		elseif v:GetNWInt("afk_warn") == 0 and curtime > v.afktime + CV_afktime:GetInt() then
 			-- Warning
 			v:SetNWInt("afk_warn", v.afktime + (CV_afktime:GetInt() + CV_afkmsgtime:GetInt()))
 		end

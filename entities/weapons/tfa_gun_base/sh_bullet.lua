@@ -41,7 +41,7 @@ function SWEP:ShootBulletInformation( ifp )
 	self.lastbulnoric = false
 	
 	self.ConDamageMultiplier = GetConVar("sv_tfa_damage_multiplier"):GetFloat()
-	if (CLIENT and !game.SinglePlayer()) and !ifp then return end
+	if (CLIENT and not game.SinglePlayer()) and not ifp then return end
 	
 	if SERVER and game.SinglePlayer() and self.Akimbo then self:CallOnClient("ToggleAkimbo","") end
 	
@@ -56,12 +56,12 @@ function SWEP:ShootBulletInformation( ifp )
 	CurrentDamage = basedamage * tmpranddamage
 	
 	--[[
-	if self.DoMuzzleFlash and ( (SERVER) or ( CLIENT and !self.AutoDetectMuzzleAttachment ) or (CLIENT and !self:IsFirstPerson() ) ) then
+	if self.DoMuzzleFlash and ( (SERVER) or ( CLIENT and not self.AutoDetectMuzzleAttachment ) or (CLIENT and not self:IsFirstPerson() ) ) then
 		self:ShootEffects()
 	end
 	]]--
 	
-	if !self.AutoDetectMuzzleAttachment then
+	if not self.AutoDetectMuzzleAttachment then
 		self:ShootEffectsCustom( ifp )
 	end
 	
@@ -87,7 +87,7 @@ function SWEP:ShootBullet(damage, recoil, num_bullets, aimcone, disablericochet,
 		if val then return val end
 	end
 
-	if (CLIENT and !game.SinglePlayer()) and !IsFirstTimePredicted() then return end
+	if (CLIENT and not game.SinglePlayer()) and not IsFirstTimePredicted() then return end
 	
 	num_bullets 		= num_bullets or 1
 	aimcone 			= aimcone or 0
@@ -139,7 +139,7 @@ function SWEP:ShootBullet(damage, recoil, num_bullets, aimcone, disablericochet,
 		else
 			TracerName = "Tracer"
 		end
-		if self.TracerName and self.TracerName != "" then
+		if self.TracerName and self.TracerName ~= "" then
 			TracerName = self.TracerName
 		end
 		
@@ -208,11 +208,11 @@ local mfac
 	
 function bullet:Penetrate( ply , traceres, dmginfo, weapon )
 	
-	if !IsValid(weapon) then return end
+	if not IsValid(weapon) then return end
 	
 	local hitent = traceres.Entity
 	
-	if !self.HasAppliedRange then
+	if not self.HasAppliedRange then
 		local bulletdistance =  ( ( traceres.HitPos - traceres.StartPos ):Length( ) )
 		local damagescale = bulletdistance / weapon.Primary.Range
 		damagescale = math.Clamp(damagescale - weapon.Primary.RangeFalloff,0,1)
@@ -243,7 +243,7 @@ function bullet:Penetrate( ply , traceres, dmginfo, weapon )
 			end
 		end
 		if dmginfo:IsDamageType(DMG_BURN) then
-			if traceres.Hit and IsValid(hitent) and !traceres.HitWorld and !traceres.HitSky then
+			if traceres.Hit and IsValid(hitent) and not traceres.HitWorld and not traceres.HitSky then
 				if dmginfo:GetDamage()>1 then
 					if hitent.Ignite then
 						hitent:Ignite(dmginfo:GetDamage()/2,1)
@@ -270,7 +270,7 @@ function bullet:Penetrate( ply , traceres, dmginfo, weapon )
 		end
 	end
 	
-	if penetration_cvar and !penetration_cvar:GetBool() then return end
+	if penetration_cvar and not penetration_cvar:GetBool() then return end
 	
 	if self:Ricochet(ply,traceres,dmginfo,weapon) then return end
 	
@@ -321,7 +321,7 @@ end
 
 function bullet:Ricochet( ply, traceres, dmginfo, weapon)
 	
-	if ricochet_cvar and !ricochet_cvar:GetBool() then return end
+	if ricochet_cvar and not ricochet_cvar:GetBool() then return end
 	
 	if self.PenetrationCount > weapon.MaxPenetrationCounter then
 		return

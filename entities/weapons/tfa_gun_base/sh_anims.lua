@@ -15,14 +15,14 @@ Purpose:  Animation / Utility
 function SWEP:AnimForce(str) 
 	
 
-	if !str then return end
+	if not str then return end
 	local ply = LocalPlayer and LocalPlayer() or self.Owner
 	local vm = ply:GetViewModel()
 	if IsValid(vm) then
 		local strnum = tonumber(str)
-		if !strnum then return end
+		if not strnum then return end
 		local nm = vm:SelectWeightedSequence(strnum)
-		if !nm then return end
+		if not nm then return end
 		vm:SendViewModelMatchingSequence(nm)
 	end
 	--self:ResetEvents()
@@ -37,7 +37,7 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseDrawAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim = ACT_VM_DRAW
 	local success = true
@@ -69,7 +69,7 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseInspectAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim = ACT_VM_FIDGET
 	local success = true
@@ -113,7 +113,7 @@ Purpose:  Animation / Utility
 ACT_VM_HOLSTER_SILENCED = ACT_VM_HOLSTER_SILENCED or ACT_CROSSBOW_HOLSTER_UNLOADED
 
 function SWEP:ChooseHolsterAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim = ACT_VM_IDLE
 	local success = true
@@ -125,7 +125,7 @@ function SWEP:ChooseHolsterAnim()
 		tanim = ACT_VM_HOLSTER
 	end
 	
-	if tanim!=ACT_VM_IDLE then
+	if tanim ~= ACT_VM_IDLE then
 		self:SendWeaponAnim(tanim)
 		
 		if game.SinglePlayer() then
@@ -149,14 +149,14 @@ Purpose:  Animation / Utility
 
 
 function SWEP:ChooseProceduralReloadAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	if self.Callback.ChooseProceduralReloadAnim then
 		local retval = self.Callback.ChooseProceduralReloadAnim(self)
-		if retval != nil then return retval end
+		if retval ~= nil then return retval end
 	end
 	
-	if !self.DisableIdleAnimations then
+	if not self.DisableIdleAnimations then
 		self:SendWeaponAnim(ACT_VM_IDLE)
 	end
 	
@@ -172,11 +172,11 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseReloadAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	if self.Callback.ChooseReloadAnim then
 		local retval = self.Callback.ChooseReloadAnim(self)
-		if retval != nil then return retval end
+		if retval ~= nil then return retval end
 	end
 	
 	--self:ResetEvents()
@@ -211,7 +211,7 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseShotgunReloadAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim = ACT_SHOTGUN_RELOAD_START
 	local success = true
@@ -262,7 +262,7 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseIdleAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim=ACT_VM_IDLE
 	if self.SequenceEnabled[ACT_VM_IDLE_SILENCED]  and self:GetSilenced() then
@@ -299,11 +299,11 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseShootAnim( ifp )
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	
 	
-	if !self.BlowbackEnabled or ( !self:GetIronSights() and self.Blowback_Only_Iron) then
+	if not self.BlowbackEnabled or ( not self:GetIronSights() and self.Blowback_Only_Iron) then
 	
 		local tanim
 		local success = true
@@ -314,9 +314,9 @@ function SWEP:ChooseShootAnim( ifp )
 		
 		if self.SequenceEnabled[ACT_VM_PRIMARYATTACK_SILENCED]  and self:GetSilenced() then
 			tanim = ACT_VM_PRIMARYATTACK_SILENCED
-		elseif self:Clip1()==1 and self.SequenceEnabled[ACT_VM_PRIMARYATTACK_EMPTY]  and !self.ForceEmptyFireOff then
+		elseif self:Clip1()==1 and self.SequenceEnabled[ACT_VM_PRIMARYATTACK_EMPTY]  and not self.ForceEmptyFireOff then
 			tanim = ACT_VM_PRIMARYATTACK_EMPTY		
-		elseif self:Clip1()==0 and self.SequenceEnabled[ACT_VM_DRYFIRE] and !self.ForceDryFireOff then
+		elseif self:Clip1()==0 and self.SequenceEnabled[ACT_VM_DRYFIRE] and not self.ForceDryFireOff then
 			tanim = ACT_VM_DRYFIRE		
 		elseif self.Akimbo and self.SequenceEnabled[ACT_VM_SECONDARYATTACK] and self.AnimCycle==1 then
 			tanim = ACT_VM_SECONDARYATTACK
@@ -377,7 +377,7 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseSilenceAnim( val )
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim=ACT_VM_PRIMARYATTACK
 	local success = false
@@ -394,7 +394,7 @@ function SWEP:ChooseSilenceAnim( val )
 			success=true
 		end
 	end
-	if !success then
+	if not success then
 		local _
 		_, tanim = self:ChooseIdleAnim()
 	end
@@ -418,15 +418,15 @@ Purpose:  Animation / Utility
 ]]--
 
 function SWEP:ChooseDryFireAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim=ACT_VM_DRYFIRE
 	local success = true
-	if self.SequenceEnabled[ACT_VM_DRYFIRE_SILENCED] and self:GetSilenced() and !self.ForceDryFireOff then
+	if self.SequenceEnabled[ACT_VM_DRYFIRE_SILENCED] and self:GetSilenced() and not self.ForceDryFireOff then
 		self:SendWeaponAnim(ACT_VM_DRYFIRE_SILENCED)
 		tanim=ACT_VM_DRYFIRE_SILENCED
 	else
-		if self.SequenceEnabled[ACT_VM_DRYFIRE] and !self.ForceDryFireOff then
+		if self.SequenceEnabled[ACT_VM_DRYFIRE] and not self.ForceDryFireOff then
 			self:SendWeaponAnim(ACT_VM_DRYFIRE)
 			tanim=ACT_VM_DRYFIRE
 		else

@@ -51,9 +51,9 @@ end
 
 function ENT:Initialize()
 	if SERVER then
-		if !IsValid(self.myowner) then
+		if not IsValid(self.myowner) then
 			self.myowner=self.Owner
-			if !IsValid(myowner) then
+			if not IsValid(myowner) then
 				self.myowner=self.Entity
 			end
 		end
@@ -64,7 +64,7 @@ function ENT:Initialize()
 			end
 		end)
 		
-		if GetConVarNumber("sv_tfbow_arrow_lifetime",-1)!=-1 then
+		if GetConVarNumber("sv_tfbow_arrow_lifetime",-1) ~= -1 then
 			timer.Simple(GetConVarNumber("sv_tfbow_arrow_lifetime",30)+5, function()
 				if IsValid(self) then
 					self:Remove()
@@ -89,11 +89,11 @@ function ENT:Initialize()
 	end
 	self:SetNWVector("lastpos",self:GetPos())
 	
-	if !self.mydamage then
+	if not self.mydamage then
 		self.mydamage = 60
 	end
 	
-	if !self.gun then
+	if not self.gun then
 		if IsValid(self.Owner) and self.Owner:IsPlayer() then
 			self:UpdateGun()
 		else
@@ -115,11 +115,11 @@ end
 function ENT:Think()
 	
 	local wl=self:WaterLevel()
-	if !self.prevwaterlevel then
+	if not self.prevwaterlevel then
 		self.prevwaterlevel=wl
 	end
 	
-	if self.prevwaterlevel!=wl and wl-self.prevwaterlevel>=1 then
+	if self.prevwaterlevel ~= wl and wl-self.prevwaterlevel>=1 then
 		--print(wl)
 		local ef = EffectData()
 		ef:SetOrigin( self:GetPos() )
@@ -185,7 +185,7 @@ function ENT:Think()
 						arrowstuck:Spawn()
 					else
 						if IsValid(tr.Entity) then
-							if (!tr.Entity:IsWorld()) then
+							if (not tr.Entity:IsWorld()) then
 								local arrowstuck=ents.Create("tfbow_arrow_stuck_clientside")
 								arrowstuck:SetModel(self:GetModel())
 								arrowstuck:SetPos(tr.HitPos)

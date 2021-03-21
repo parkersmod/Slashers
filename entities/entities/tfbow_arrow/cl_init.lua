@@ -10,7 +10,7 @@ function ENT:Draw()
 	local ang,tmpang
 	tmpang=self:GetAngles()
 	ang=tmpang
-	if !self.roll then
+	if not self.roll then
 		self.roll = 0
 	end
 	local phobj=self:GetPhysicsObject()

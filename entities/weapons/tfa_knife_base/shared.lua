@@ -47,7 +47,7 @@ function SWEP:PrimaryAttack()
 	--[[self:CanPrimaryAttack()]]--
 	if SERVER and self:GetNextPrimaryFire()<CurTime() and self.Owner:IsPlayer() then
 	self.Weapon:SendWeaponAnim( ACT_VM_IDLE )
-		if !self.Owner:KeyDown(IN_SPEED) and !self.Owner:KeyDown(IN_RELOAD) then
+		if not self.Owner:KeyDown(IN_SPEED) and not self.Owner:KeyDown(IN_RELOAD) then
 			self.Slash = self.Slash + 1
 			if self.Slash > #self.SlashTable then
 				self.Slash = 1
@@ -59,7 +59,7 @@ function SWEP:PrimaryAttack()
 				self:CallOnClient("AnimForce",self.SlashTable[self.Slash])
 			end
 			
-			self.Weapon:EmitSound(self.Primary.Sound)//slash in the wind sound here
+			self.Weapon:EmitSound(self.Primary.Sound)--slash in the wind sound here
 			
 			timer.Create("cssslash"..self:EntIndex(), self.SlashDelay, 1, function() if not IsValid(self) then return end
 				if IsValid(self.Owner) and IsValid(self.Weapon) then 
@@ -82,7 +82,7 @@ function SWEP:PrimarySlash()
 	ang = self.Owner:GetAimVector()
 	damagedice = math.Rand(.85,1.25)
 	pain = self.Primary.Damage * damagedice
-	if !pain or pain<=1 then pain = 40 * damagedice end
+	if not pain or pain<=1 then pain = 40 * damagedice end
 	self.Owner:LagCompensation(true)
 	if IsValid(self.Owner) and IsValid(self.Weapon) then
 		if self.Owner:Alive() and self.Owner:GetActiveWeapon():GetClass() == self.Gun then
@@ -121,11 +121,11 @@ function SWEP:PrimarySlash()
 					slashtrace.Entity:TakeDamageInfo(dmg)
 				end
 				targ = slashtrace.Entity
-				if !(slashtrace.MatType != MAT_FLESH and slashtrace.MatType != MAT_ALIENFLESH ) then
-					//find a way to splash a little blood
-					self.Weapon:EmitSound(self.KnifeSlash)//stab noise
+				if not (slashtrace.MatType ~= MAT_FLESH and slashtrace.MatType ~= MAT_ALIENFLESH ) then
+					--find a way to splash a little blood
+					self.Weapon:EmitSound(self.KnifeSlash)--stab noise
 				else
-					self.Weapon:EmitSound(self.KnifeShink)//SHINK!
+					self.Weapon:EmitSound(self.KnifeShink)--SHINK!
 				end
 			end
 		end
@@ -140,8 +140,8 @@ function SWEP:SecondaryAttack()
 	vm = self.Owner:GetViewModel()
 	if self:GetNextSecondaryFire()<CurTime() and self.Owner:IsPlayer() then
 	self.Weapon:SendWeaponAnim( ACT_VM_IDLE )
-		if !self.Owner:KeyDown(IN_SPEED) and !self.Owner:KeyDown(IN_RELOAD) then
-			self.Weapon:EmitSound(self.Primary.Sound)//stab noise
+		if not self.Owner:KeyDown(IN_SPEED) and not self.Owner:KeyDown(IN_RELOAD) then
+			self.Weapon:EmitSound(self.Primary.Sound)--stab noise
 			local stab = {}
 			stab.start = pos
 			stab.endpos = pos + (ang * self.StabLength)
@@ -200,7 +200,7 @@ function SWEP:Stab()
 	ang2 = self.Owner:GetAimVector()
 	damagedice = math.Rand(.85,1.25)
 	pain = self.Secondary.Damage * damagedice
-	if !pain or pain<=1 then pain = 100 * damagedice end
+	if not pain or pain<=1 then pain = 100 * damagedice end
 	self.Owner:LagCompensation(true)
 	local stab2 = {}
 	stab2.start = pos2
@@ -241,11 +241,11 @@ function SWEP:Stab()
 					stabtrace2.Entity:TakeDamageInfo(dmg)
 				end
 				targ = stabtrace2.Entity
-				if !(stabtrace2.MatType != MAT_FLESH and stabtrace2.MatType != MAT_ALIENFLESH ) then
-					//find a way to splash a little blood
-					self.Weapon:EmitSound(self.KnifeSlash)//stab noise
+				if not (stabtrace2.MatType ~= MAT_FLESH and stabtrace2.MatType ~= MAT_ALIENFLESH ) then
+					--find a way to splash a little blood
+					self.Weapon:EmitSound(self.KnifeSlash)--stab noise
 				else
-					self.Weapon:EmitSound(self.KnifeShink)//SHINK!
+					self.Weapon:EmitSound(self.KnifeShink)--SHINK!
 				end
 			end
 		end
@@ -254,7 +254,7 @@ function SWEP:Stab()
 end
 
 function SWEP:ThrowKnife()
-	if !IsFirstTimePredicted() and CLIENT then return end
+	if not IsFirstTimePredicted() and CLIENT then return end
 	
 		self.Weapon:EmitSound(self.Primary.Sound)
 		if (SERVER) then

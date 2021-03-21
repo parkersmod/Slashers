@@ -51,7 +51,7 @@ function ENT:Initialize()
 end
 
 function ENT:SpawnFunction( ply, tr )
-	if ( !tr.Hit ) then return end
+	if ( not tr.Hit ) then return end
 	local ent = ents.Create("sls_generator")
 	ent:SetPos( tr.HitPos + tr.HitNormal )
 	ent:Spawn()
@@ -65,7 +65,7 @@ function ENT:OnTakeDamage(dmg)
 end
 
 function ENT:Use(activator, caller)
-	if CurrentObjective == "activate_generator" && caller:Team() == TEAM_SURVIVORS then
+	if CurrentObjective == "activate_generator" and caller:Team() == TEAM_SURVIVORS then
 		local tr = caller:GetEyeTrace()
 		self:SetUseType( CONTINUOUS_USE )
 		curentProgress = self:GetNWFloat('progressBar')
@@ -79,7 +79,7 @@ function ENT:Use(activator, caller)
 			net.Send(caller)
 		end
 
-		if (curentProgress >= 1 && !generatorNowActivated) then
+		if (curentProgress >= 1 and not generatorNowActivated) then
 
 			self:SetNWBool( 'activated', true)
 			self:SetNWFloat( 'progressBar', 2)
@@ -103,7 +103,7 @@ function ENT:Use(activator, caller)
 		end
 	else
 		self:SetUseType( SIMPLE_USE )
-		if (!self:GetNWBool( 'activated')) then
+		if (not self:GetNWBool( 'activated')) then
 			net.Start( "notificationSlasher" )
 			net.WriteTable({"round_notif_error_generator"})
 			net.WriteString("cross")

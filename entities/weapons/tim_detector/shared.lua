@@ -17,7 +17,7 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = true
 SWEP.Spawnable	= true
 SWEP.AdminSpawnable	= true
-//SWEP.DrawAmmo = false
+--SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
 SWEP.Primary.Delay				= 0
@@ -65,20 +65,20 @@ function SWEP:Initialize()
     self:SetHoldType(self.HoldType)
     if CLIENT then
         self.ViewModelBoneMods = table.FullCopy( self.ViewModelBoneMods )
-        // init view model bone build function
+        -- init view model bone build function
 		if IsValid(self.Owner) then
 			local vm = self.Owner:GetViewModel()
 			if IsValid(vm) then
 				self:ResetBonePositions(vm)
 
-				// Init viewmodel visibility
+				-- Init viewmodel visibility
 				if (self.ShowViewModel == nil or self.ShowViewModel) then
 					vm:SetColor(Color(255,255,255,255))
 				else
-					// we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
+					-- we set the alpha to 1 instead of 0 because else ViewModelDrawn stops being called
 					vm:SetColor(Color(255,255,255,1))
-					// ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
-					// however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
+					-- ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
+					-- however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
 					vm:SetMaterial("Debug/hsv")
 				end
 			end
@@ -109,7 +109,7 @@ if CLIENT then
         local found = false
         self.echos = {}
         for _, v in ipairs(player.GetAll()) do
-        	if !v:Alive() then continue end
+        	if not v:Alive() then continue end
             local ang = LocalPlayer():GetAngles();
             local pos = LocalPlayer():GetPos() - v:GetPos();
             pos:Rotate(Angle(0, -1*ang.Yaw, 0));
@@ -117,7 +117,7 @@ if CLIENT then
             local y1 = 219 + 0.15*pos.x;
             local dist = v:GetPos():Distance(LocalPlayer():GetPos())
 
-            if dist < 1000 && math.abs(pos.z) < 125 && x1 >= 16 && x1 <= 304 && y1 >= 71 && y1 <= 216 then
+            if dist < 1000 and math.abs(pos.z) < 125 and x1 >= 16 and x1 <= 304 and y1 >= 71 and y1 <= 216 then
                 found = true
                 table.insert(self.echos, {x1, y1, 255})
             end
@@ -134,7 +134,7 @@ if CLIENT then
             self:Ping()
             self.nextPing = curTime + 1.5
         end
-        if self.startEcho > -1 && self.startEcho < curTime then
+        if self.startEcho > -1 and self.startEcho < curTime then
             self:Echo()
             self.startEcho = -1
         end
@@ -150,9 +150,9 @@ if CLIENT then
         ang:RotateAroundAxis(ang:Forward(), 270)
         ang:RotateAroundAxis(ang:Right(), 270)
         cam.Start3D2D(pos, ang, 0.01)
-            // Canvas: width(325) height(246)
+            -- Canvas: width(325) height(246)
 
-            // Draw Ping
+            -- Draw Ping
             if self.startPing then
                 for i = 0, 10 do
                     surface.SetDrawColor(Color(0, 200, 0, 10 + (5 * i)))
@@ -164,7 +164,7 @@ if CLIENT then
                 end
             end
 
-            // Draw echo
+            -- Draw echo
             surface.SetMaterial(mat)
             for k, v in ipairs(self.echos) do
                 surface.SetDrawColor(0, 255, 0, v[3])
@@ -177,18 +177,18 @@ if CLIENT then
     function SWEP:DrawWorldModel()
         local hand, offset
 
-        if !IsValid(self.Owner) then
+        if not IsValid(self.Owner) then
             self:DrawModel()
             return
         end
 
-        if !self.hand then
+        if not self.hand then
             self.hand = self.Owner:LookupAttachment("anim_attachment_rh")
         end
 
         hand = self.Owner:GetAttachment( self.hand )
 
-        if !hand then
+        if not hand then
             self:DrawModel()
             return
         end
@@ -230,12 +230,12 @@ if CLIENT then
 
 		if self.ViewModelBoneMods then
 
-			if (!vm:GetBoneCount()) then return end
+			if (not vm:GetBoneCount()) then return end
 
-			// !! WORKAROUND !! //
-			// We need to check all model names :/
+			-- !! WORKAROUND !! --
+			-- We need to check all model names :/
 			local loopthrough = self.ViewModelBoneMods
-			if (!hasGarryFixedBoneScalingYet) then
+			if (not hasGarryFixedBoneScalingYet) then
 				allbones = {}
 				for i=0, vm:GetBoneCount() do
 					local bonename = vm:GetBoneName(i)
@@ -252,17 +252,17 @@ if CLIENT then
 
 				loopthrough = allbones
 			end
-			// !! ----------- !! //
+			-- !! ----------- !! --
 
 			for k, v in pairs( loopthrough ) do
 				local bone = vm:LookupBone(k)
-				if (!bone) then continue end
+				if (not bone) then continue end
 
-				// !! WORKAROUND !! //
+				-- !! WORKAROUND !! --
 				local s = Vector(v.scale.x,v.scale.y,v.scale.z)
 				local p = Vector(v.pos.x,v.pos.y,v.pos.z)
 				local ms = Vector(1,1,1)
-				if (!hasGarryFixedBoneScalingYet) then
+				if (not hasGarryFixedBoneScalingYet) then
 					local cur = vm:GetBoneParent(bone)
 					while(cur >= 0) do
 						local pscale = loopthrough[vm:GetBoneName(cur)].scale
@@ -272,15 +272,15 @@ if CLIENT then
 				end
 
 				s = s * ms
-				// !! ----------- !! //
+				-- !! ----------- !! --
 
-				if vm:GetManipulateBoneScale(bone) != s then
+				if vm:GetManipulateBoneScale(bone) ~= s then
 					vm:ManipulateBoneScale( bone, s )
 				end
-				if vm:GetManipulateBoneAngles(bone) != v.angle then
+				if vm:GetManipulateBoneAngles(bone) ~= v.angle then
 					vm:ManipulateBoneAngles( bone, v.angle )
 				end
-				if vm:GetManipulateBonePosition(bone) != p then
+				if vm:GetManipulateBonePosition(bone) ~= p then
 					vm:ManipulateBonePosition( bone, p )
 				end
 			end
@@ -292,7 +292,7 @@ if CLIENT then
 
 	function SWEP:ResetBonePositions(vm)
 
-		if (!vm:GetBoneCount()) then return end
+		if (not vm:GetBoneCount()) then return end
 		for i=0, vm:GetBoneCount() do
 			vm:ManipulateBoneScale( i, Vector(1, 1, 1) )
 			vm:ManipulateBoneAngles( i, Angle(0, 0, 0) )
@@ -301,21 +301,21 @@ if CLIENT then
 
 	end
 
-	/**************************
+	--[[***********************
 		Global utility code
-	**************************/
+	*************************]]
 
-	// Fully copies the table, meaning all tables inside this table are copied too and so on (normal table.Copy copies only their reference).
-	// Does not copy entities of course, only copies their reference.
-	// WARNING: do not use on tables that contain themselves somewhere down the line or you'll get an infinite loop
+	-- Fully copies the table, meaning all tables inside this table are copied too and so on (normal table.Copy copies only their reference).
+	-- Does not copy entities of course, only copies their reference.
+	-- WARNING: do not use on tables that contain themselves somewhere down the line or you'll get an infinite loop
 	function table.FullCopy( tab )
 
-		if (!tab) then return nil end
+		if (not tab) then return nil end
 
 		local res = {}
 		for k, v in pairs( tab ) do
 			if (type(v) == "table") then
-				res[k] = table.FullCopy(v) // recursion ho!
+				res[k] = table.FullCopy(v) -- recursion ho!
 			elseif (type(v) == "Vector") then
 				res[k] = Vector(v.x, v.y, v.z)
 			elseif (type(v) == "Angle") then

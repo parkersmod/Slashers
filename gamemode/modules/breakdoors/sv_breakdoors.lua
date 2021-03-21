@@ -55,7 +55,7 @@ local function WoodenDamageCallback(ent, dmg)
 	local aimvec
 
 	ent.breakdoors_life = ent.breakdoors_life - dmg:GetDamage()
-	if IsValid(dmg:GetAttacker()) && dmg:GetAttacker():IsPlayer() then
+	if IsValid(dmg:GetAttacker()) and dmg:GetAttacker():IsPlayer() then
 		aimvec = dmg:GetAttacker():GetAimVector()
 	else
 		aimvec = Vector(0, 0, 0)
@@ -130,7 +130,7 @@ local function MetalDamageCallback(ent, dmg)
 	local aimvec
 
 	ent.breakdoors_life = ent.breakdoors_life - dmg:GetDamage()
-	if IsValid(dmg:GetAttacker()) && dmg:GetAttacker():IsPlayer() then
+	if IsValid(dmg:GetAttacker()) and dmg:GetAttacker():IsPlayer() then
 		aimvec = dmg:GetAttacker():GetAimVector()
 	else
 		aimvec = Vector(0, 0, 0)
@@ -177,7 +177,7 @@ hook.Add("sls_round_PostStart", "breakdoors_PostStart", BreakDoorsInitialize)
 
 hook.Add("EntityTakeDamage", "breakdoors_EntityTakeDamage", 
 	function(ent, dmg) 
-		if IsValid(ent) && ent.breakdoors_callback then
+		if IsValid(ent) and ent.breakdoors_callback then
 			ent.breakdoors_callback(ent, dmg)
 		end 
 	end

@@ -28,13 +28,13 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
-	if not IsFirstTimePredicted() or !IsValid(alertropes_holo) then return true end
+	if not IsFirstTimePredicted() or not IsValid(alertropes_holo) then return true end
 	alertropes_holo:Remove()
 	return true
 end
 
 function SWEP:Think()
-	if !IsValid(alertropes_holo) then return end
+	if not IsValid(alertropes_holo) then return end
 
 	local eyetrace = LocalPlayer():GetEyeTrace()
 
@@ -64,7 +64,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:OnRemove()
-	if !IsValid(alertropes_holo) then return end
+	if not IsValid(alertropes_holo) then return end
 	alertropes_holo:Remove()
 end
 
@@ -76,7 +76,7 @@ end
 
 function SWEP:DrawWorldModel()
 	local bone = self.Owner:LookupBone("ValveBiped.Bip01_R_Hand")
-	if !bone then return end
+	if not bone then return end
 	local hand_pos = self.Owner:GetBonePosition(bone)
 	local hand_ang = Angle(self.Owner:EyeAngles().pitch + 180, self.Owner:EyeAngles().yaw - 30, 0)
 	hand_pos = hand_pos + hand_ang:Forward() * -3 + hand_ang:Right() * -2

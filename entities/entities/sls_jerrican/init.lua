@@ -29,7 +29,7 @@ function ENT:Initialize()
 end
 
 function ENT:SpawnFunction( ply, tr )
-    if ( !tr.Hit ) then return end
+    if ( not tr.Hit ) then return end
     local ent = ents.Create("sls_jerrican")
     ent:SetPos( tr.HitPos + tr.HitNormal * 16 )
     ent:Spawn()
@@ -43,8 +43,8 @@ function ENT:OnTakeDamage(dmg)
 end
 
 function ENT:Use(ply)
-	if (CurrentObjective == "find_jerrican" && ply:Team() == TEAM_SURVIVORS) then
-		if (NbJerricanToFound != 0) then
+	if (CurrentObjective == "find_jerrican" and ply:Team() == TEAM_SURVIVORS) then
+		if (NbJerricanToFound ~= 0) then
 			self:Remove()
 			NbJerricanToFound = NbJerricanToFound - 1
 			net.Start( "notificationSlasher" )

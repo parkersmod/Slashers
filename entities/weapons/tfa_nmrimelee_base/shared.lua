@@ -86,7 +86,7 @@ function SWEP:DoImpactEffect( tr, nDamageType )
 	
 	if ib and self.Secondary.BashDamageType == DMG_GENERIC then return true end
 
-	if ( self:GetNWInt("ChargeStatus",2) and self:GetNWBool("On",false) ) or ( tr.MatType!=MAT_FLESH and tr.MatType!=MAT_ALIENFLESH and ( ( self.LastAttackType == 1 and !self.Primary.Blunt ) or ( self.LastAttackType == 2 and !self.Secondary.Blunt ) or ( self.LastAttackType == 3 and self.Primary.BashDamageType==DMG_SLASH ) ) ) then
+	if ( self:GetNWInt("ChargeStatus",2) and self:GetNWBool("On",false) ) or ( tr.MatType ~= MAT_FLESH and tr.MatType ~= MAT_ALIENFLESH and ( ( self.LastAttackType == 1 and not self.Primary.Blunt ) or ( self.LastAttackType == 2 and not self.Secondary.Blunt ) or ( self.LastAttackType == 3 and self.Primary.BashDamageType==DMG_SLASH ) ) ) then
 		util.Decal("ManhackCut",tr.HitPos - tr.HitNormal,tr.HitPos + tr.HitNormal)
 		return true
 	end
@@ -122,16 +122,16 @@ SWEP.data.ironsights			= 0 --No ironsights
 
 function SWEP:HitSound(mat,heavy,hitnpc)
 	local snd = self.HitSounds[mat]
-	if !snd then snd = self.HitSounds[-1] end
+	if not snd then snd = self.HitSounds[-1] end
 	if mat==MAT_FLESH or mat==MAT_ALIENFLESH or hitnpc then
 		snd = heavy and self.Secondary.HitSound_Flesh[self.Secondary.Blunt and "blunt" or "sharp"] or self.Primary.HitSound_Flesh[self.Primary.Blunt and "blunt" or "sharp"] 
 	end
-	if snd and snd!="" then self:EmitSound(snd) end
+	if snd and snd ~= "" then self:EmitSound(snd) end
 end
 
 function SWEP:SendWeaponSequence(seq,vm,idledelay,noidle)
-	if !vm then vm = self.Owner:GetViewModel() end
-	if !IsValid(vm) then return end
+	if not vm then vm = self.Owner:GetViewModel() end
+	if not IsValid(vm) then return end
 	
 	local ind = seq
 	if self.AnimSequences[seq] then
@@ -166,7 +166,7 @@ function SWEP:SendWeaponSequence(seq,vm,idledelay,noidle)
 	end
 	]]--
 	local seq2 = vm:LookupSequence(ind)
-	if !seq2 or seq2<=-1 then return end
+	if not seq2 or seq2<=-1 then return end
 	vm:SendViewModelMatchingSequence(seq2)
 		
 	if game.SinglePlayer() then
@@ -174,7 +174,7 @@ function SWEP:SendWeaponSequence(seq,vm,idledelay,noidle)
 	end
 	
 	timer.Simple( idledelay and (idledelay - 0.1) or (60/self.Primary.RPM-0.1),function()
-		if IsValid(self) and !noidle then
+		if IsValid(self) and not noidle then
 			self:SendWeaponAnim(ACT_VM_IDLE)
 		end
 	end)
@@ -228,19 +228,19 @@ SWEP.Callback.OnRemove = function(self)
 end
 
 function SWEP:UpdateClip1()
-	if !self.oldclip then
+	if not self.oldclip then
 		self.oldclip = -1
 		self:SetClip1(math.ceil(self:GetNWFloat("Clip",0)))
 	end
 	local nc = math.ceil(self:GetNWFloat("Clip",0))
-	if nc!=self.oldclip then
+	if nc ~= self.oldclip then
 		self:SetClip1(math.max(nc,0))
 		self.oldclip = nc
 	end
 end
 
 function SWEP:Cough()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	local vm = self.Owner:GetViewModel()
 	
 	self:StopSound(self.Primary.Motorized_SawSound)	
@@ -270,13 +270,13 @@ function SWEP:Cough()
 end
 
 function SWEP:Reload()
-	if !self:OwnerIsValid() then return end
-	if !self.Primary.Motorized then return end
-	if !self.Owner:KeyPressed(IN_RELOAD) then return end
+	if not self:OwnerIsValid() then return end
+	if not self.Primary.Motorized then return end
+	if not self.Owner:KeyPressed(IN_RELOAD) then return end
 	if self.Owner:KeyDown(IN_ATTACK) then return end
 	if ( self:GetNWInt("ChargeStatus",0)>0 ) or self.ChargeTransition or self:GetNextSecondaryFire()>CurTime() then return end
 	local am = self.Owner:GetAmmoCount(self:GetPrimaryAmmoType())
-	if !self:GetNWBool("On",false) then
+	if not self:GetNWBool("On",false) then
 		if am<=0 and self:GetNWFloat("Clip",0)<=0 then return end
 		local ammototake = math.max(math.min(am,self.Primary.ClipSize-self:GetNWFloat("Clip",0)),0)
 		self:SetNWFloat("Clip",self:GetNWFloat("Clip",0)+ammototake)
@@ -300,7 +300,7 @@ function SWEP:Reload()
 			if IsValid(self) then
 				self:SetNWInt("ChargeStatus",0)
 				self.ChargeTransition = false	
-				if !on then
+				if not on then
 					self:SendWeaponSequence( "idle_on",vm,math.huge,false)
 					self:EmitSound(self.Primary.Motorized_IdleSound)
 				else
@@ -312,7 +312,7 @@ function SWEP:Reload()
 		
 		timer.Simple( on and 0.2 or self.Primary.Motorized_ToggleTime,function()
 			if IsValid(self) then
-				self:SetNWBool("On",!on)
+				self:SetNWBool("On",not on)
 			end		
 		end)
 		
@@ -325,13 +325,13 @@ function SWEP:Holster()
 end
 
 function SWEP:PrimaryAttack()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	if self:GetInspecting() then return end
 	
 	if (CLIENT and IsFirstTimePredicted()) or SERVER then
 		if self:GetNWInt("ChargeStatus",0)>0 or self.ChargeTransition or self:GetNextSecondaryFire()>CurTime() or self:GetBashing() then return end
-		--if self:GetShooting() or self.Owner:KeyPressed(IN_ATTACK) then-- and self:GetNextPrimaryFire()<=CurTime() and !self:GetSprinting() then
+		--if self:GetShooting() or self.Owner:KeyPressed(IN_ATTACK) then-- and self:GetNextPrimaryFire()<=CurTime() and not self:GetSprinting() then
 		if self.AttackStart == -1 then
 			self.AttackStart = CurTime()
 		end
@@ -343,21 +343,21 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Think()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	if self.Callback and self.Callback.Think then self.Callback.Think(self) end
 	local vm = self.Owner:GetViewModel()
 	if (CLIENT and IsFirstTimePredicted()) or SERVER then
-		if !self.AttackStart then self.AttackStart = -1 end
+		if not self.AttackStart then self.AttackStart = -1 end
 		if self:GetNWBool("On",false) then
-			if vm:GetSkin()!=1 then vm:SetSkin(1) end
+			if vm:GetSkin() ~= 1 then vm:SetSkin(1) end
 			self.AttackStart = -1
 			local cs = self:GetNWInt("ChargeStatus",0)
 			
-			if self:GetNWFloat("Clip",0)<=0 and !self.ChargeTransition then
+			if self:GetNWFloat("Clip",0)<=0 and not self.ChargeTransition then
 				self:Cough()
 			end
 			
-			if !self:GetBashing() then
+			if not self:GetBashing() then
 				
 				if cs==0 and self.Owner:KeyDown(IN_ATTACK) then
 					self:SetNWInt("ChargeStatus",1)
@@ -375,7 +375,7 @@ function SWEP:Think()
 					end)
 				end
 				
-				if cs==2 and !self.Owner:KeyDown(IN_ATTACK) then
+				if cs==2 and not self.Owner:KeyDown(IN_ATTACK) then
 					self:SetNWInt("ChargeStatus",1)
 					cs = 1
 					self.ChargeTransition = true
@@ -391,7 +391,7 @@ function SWEP:Think()
 					end)
 				end
 				
-				if CurTime()>=self:GetNextIdleAnim()-0.05 and cs!=1 then
+				if CurTime()>=self:GetNextIdleAnim()-0.05 and cs ~= 1 then
 					self:SendWeaponSequence( (cs == 2) and "attack_loop" or "idle_on",vm,math.huge,false)
 					self:SetNextIdleAnim( CurTime() + vm:SequenceDuration() )
 				end
@@ -408,15 +408,15 @@ function SWEP:Think()
 			
 			return
 		else
-			if vm:GetSkin()!=0 then vm:SetSkin(0) end		
+			if vm:GetSkin() ~= 0 then vm:SetSkin(0) end		
 		end
 		if self:GetInspecting() then
 			self:SetNWInt("ChargeStatus", 0)
 			self.AttackStart = -1
 			return
 		end
-		if self.AttackStart != -1 then
-			if !self.ChargeTransition then
+		if self.AttackStart ~= -1 then
+			if not self.ChargeTransition then
 				local t = CurTime() - self.AttackStart
 				if t<self.Primary.Window then
 					if self.Owner:KeyReleased(IN_ATTACK) then
@@ -434,12 +434,12 @@ function SWEP:Think()
 						self:SetNextSecondaryFire(CurTime()+60/self.Primary.RPM)
 						
 						timer.Simple(self.Primary.SoundDelay,function()
-							if !IsValid(self) or !self:OwnerIsValid() then return end
+							if not IsValid(self) or not self:OwnerIsValid() then return end
 							self:EmitSound(self.Primary.Sound)
 						end)
 						
 						timer.Simple(self.Primary.Delay,function()
-							if !IsValid(self) or !self:OwnerIsValid() then return end
+							if not IsValid(self) or not self:OwnerIsValid() then return end
 							self:PrimarySlash()
 						end)
 						
@@ -452,13 +452,13 @@ function SWEP:Think()
 						self:SetNWInt("ChargeStatus", 1)
 						
 						timer.Simple(vm:SequenceDuration(),function()
-							if !IsValid(self) or !self:OwnerIsValid() then return end
+							if not IsValid(self) or not self:OwnerIsValid() then return end
 							self.ChargeTransition = false
 							self:SetNWInt("ChargeStatus", 2)
 						end)
 						
 					elseif self:GetNWInt("ChargeStatus",0) == 2 then
-						if !self.Owner:KeyDown(IN_ATTACK) then
+						if not self.Owner:KeyDown(IN_ATTACK) then
 						
 							self.LastAttackType = 2
 							self.AttackStart = -1
@@ -473,12 +473,12 @@ function SWEP:Think()
 							self:SetShootingEnd(CurTime()+vm:SequenceDuration())
 							
 							timer.Simple(self.Secondary.SoundDelay,function()
-								if !IsValid(self) or !self:OwnerIsValid() then return end
+								if not IsValid(self) or not self:OwnerIsValid() then return end
 								self:EmitSound(self.Secondary.Sound)
 							end)
 							
 							timer.Simple(self.Secondary.Delay,function()
-								if !IsValid(self) or !self:OwnerIsValid() then return end
+								if not IsValid(self) or not self:OwnerIsValid() then return end
 								self:SecondarySlash()
 							end)
 							
@@ -494,7 +494,7 @@ function SWEP:Think()
 end
 
 function SWEP:PrimarySlash()
-	if !self.meleedmgcvar then
+	if not self.meleedmgcvar then
 		self.meleedmgcvar = GetConVar("sv_tfa_nmrih_melee_multiplier")
 	end
 	
@@ -534,7 +534,7 @@ function SWEP:PrimarySlash()
 		slash.maxs = Vector(10, 5, 5)
 		local slashtrace = util.TraceHull(slash)
 		if slashtrace.Hit then
-			if !slashtrace.HitSky then self:HitSound(slashtrace.MatType,false,slashtrace.Entity:IsNPC() or slashtrace.Entity:IsPlayer()) end
+			if not slashtrace.HitSky then self:HitSound(slashtrace.MatType,false,slashtrace.Entity:IsNPC() or slashtrace.Entity:IsPlayer()) end
 			local dmg = DamageInfo()
 			dmg:SetAttacker(self.Owner)
 			dmg:SetInflictor(self)
@@ -550,7 +550,7 @@ function SWEP:PrimarySlash()
 end
 
 function SWEP:MotorSlash()
-	if !self.meleedmgcvar then
+	if not self.meleedmgcvar then
 		self.meleedmgcvar = GetConVar("sv_tfa_nmrih_melee_multiplier")
 	end
 	
@@ -593,7 +593,7 @@ function SWEP:MotorSlash()
 		slash.maxs = Vector(10, 5, 5)
 		local slashtrace = util.TraceHull(slash)
 		if slashtrace.Hit then
-			--if !slashtrace.HitSky then self:HitSound(slashtrace.MatType,false,slashtrace.Entity:IsNPC() or slashtrace.Entity:IsPlayer()) end
+			--if not slashtrace.HitSky then self:HitSound(slashtrace.MatType,false,slashtrace.Entity:IsNPC() or slashtrace.Entity:IsPlayer()) end
 			local dmg = DamageInfo()
 			dmg:SetAttacker(self.Owner)
 			dmg:SetInflictor(self)
@@ -609,7 +609,7 @@ function SWEP:MotorSlash()
 end
 
 function SWEP:SecondarySlash()
-	if !self.meleedmgcvar then
+	if not self.meleedmgcvar then
 		self.meleedmgcvar = GetConVar("sv_tfa_nmrih_melee_multiplier")
 	end
 	
@@ -646,7 +646,7 @@ function SWEP:SecondarySlash()
 		slash.maxs = Vector(10, 5, 5)
 		local slashtrace = util.TraceHull(slash)
 		if slashtrace.Hit then
-			if !slashtrace.HitSky then self:HitSound(slashtrace.MatType,true,slashtrace.Entity:IsNPC() or slashtrace.Entity:IsPlayer()) end
+			if not slashtrace.HitSky then self:HitSound(slashtrace.MatType,true,slashtrace.Entity:IsNPC() or slashtrace.Entity:IsPlayer()) end
 			local dmg = DamageInfo()
 			dmg:SetAttacker(self.Owner)
 			dmg:SetInflictor(self)
@@ -684,7 +684,7 @@ function SWEP:ApplyForce(ent,dmg,pos,physbone)
 end
 
 function SWEP:AltAttack()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 
 	if ( self:GetHolstering() ) then
 		if (self.ShootWhileHolster==false) then
@@ -697,7 +697,7 @@ function SWEP:AltAttack()
 	
 	if ( self:GetNWInt("ChargeStatus",0)>0 ) or self.ChargeTransition or self:GetNextSecondaryFire()>CurTime() then return end
 	
-	if (self:GetReloading() and self.Shotgun and !self:GetShotgunPumping() and !self:GetShotgunNeedsPump()) then
+	if (self:GetReloading() and self.Shotgun and not self:GetShotgunPumping() and not self:GetShotgunNeedsPump()) then
 		self:SetShotgunCancel( true )
 		--[[
 		self:SetShotgunInsertingShell(true)
@@ -730,7 +730,7 @@ function SWEP:AltAttack()
 	self.AttackStart = -1
 	
 	
-	if !game.SinglePlayer() then
+	if not game.SinglePlayer() then
 		timer.Simple(vm:SequenceDuration()-0.05,function()
 			if IsValid(self) and self:OwnerIsValid() then
 				if ( self:GetNWInt("ChargeStatus",0)>0 ) or self.ChargeTransition  then return end
@@ -753,7 +753,7 @@ function SWEP:AltAttack()
 		end)
 	end
 	
-	self.tmptoggle = !self.tmptoggle
+	self.tmptoggle = not self.tmptoggle
 	
 	self:SetNextPrimaryFire(CurTime()+vm:SequenceDuration())
 	self:SetNextSecondaryFire(CurTime()+vm:SequenceDuration())
@@ -780,7 +780,7 @@ function SWEP:AltAttack()
 				
 				
 				if slashtrace.Hit then
-					/*if slashtrace.Entity:GetClass() == "func_door_rotating" or slashtrace.Entity:GetClass() == "prop_door_rotating" then
+					--[[if slashtrace.Entity:GetClass() == "func_door_rotating" or slashtrace.Entity:GetClass() == "prop_door_rotating" then
 						local ply = self.Owner
 						ply:EmitSound("ambient/materials/door_hit1.wav", 100, math.random(80, 120))
 						
@@ -805,7 +805,7 @@ function SWEP:AltAttack()
 							end
 						end)
 						
-					end*/
+					end]]
 					self:EmitSound( (slashtrace.MatType == MAT_FLESH or slashtrace.MatType == MAT_ALIENFLESH) and self.Secondary.BashHitSound_Flesh or self.Secondary.BashHitSound  )
 					if game.GetTimeScale()>0.99 then
 						self.Owner:FireBullets({
@@ -834,8 +834,8 @@ function SWEP:AltAttack()
 					end		
 					
 					-- Empeche de pousser les joueurs
-					//local ent = slashtrace.Entity
-					//self:ApplyForce(ent,self.Secondary.BashDamage,slashtrace.HitPos,slashtrace.PhysicsBone)
+					--local ent = slashtrace.Entity
+					--self:ApplyForce(ent,self.Secondary.BashDamage,slashtrace.HitPos,slashtrace.PhysicsBone)
 				end
 			end
 		end
@@ -853,13 +853,13 @@ function SWEP:ToggleInspect()
 		return
 	end
 	
-	if !self:GetIronSights() and self:GetRunSightsRatio()<0.1 and self:GetNearWallRatio()<0.1 and !self:GetDrawing() and !self:GetHolstering() and !self:GetReloading() then
+	if not self:GetIronSights() and self:GetRunSightsRatio()<0.1 and self:GetNearWallRatio()<0.1 and not self:GetDrawing() and not self:GetHolstering() and not self:GetReloading() then
 	
 		local oldinsp = self:GetInspecting()
-		self:SetInspecting(!oldinsp)
+		self:SetInspecting(not oldinsp)
 		if CLIENT then
 			net.Start("tfaInspect")
-			net.WriteBool(!oldinsp)
+			net.WriteBool(not oldinsp)
 			net.SendToServer()
 		end
 		self:SetNextIdleAnim( CurTime() - 1)

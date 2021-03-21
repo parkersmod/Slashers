@@ -6,7 +6,7 @@ local ang
 function EFFECT:Init( data )
 	
 	self.WeaponEnt = data:GetEntity()
-	if !IsValid(self.WeaponEnt) then return end
+	if not IsValid(self.WeaponEnt) then return end
 	self.Attachment = data:GetAttachment()
 
 	local smokepart = "smoke_trail_tfa" 

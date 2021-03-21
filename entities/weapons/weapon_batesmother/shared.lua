@@ -53,10 +53,10 @@ end
 
 function SWEP:Think(  )
 	local holdType = self:GetHoldType()
-	if (self:Ammo1() == 0 && holdType != 'normal' ) then
+	if (self:Ammo1() == 0 and holdType ~= 'normal' ) then
 		self:SetHoldType('normal')
 		return
-	elseif (self:Ammo1() > 0 && holdType == 'normal') then
+	elseif (self:Ammo1() > 0 and holdType == 'normal') then
 		self:SetHoldType('duel')
 	end
 end

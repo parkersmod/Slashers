@@ -33,6 +33,6 @@ end
 
 --[[Actual serverside values]]--
 
-SWEP.Weight				= 60		// Decides whether we should switch from/to this
-SWEP.AutoSwitchTo			= true		// Auto switch to 
-SWEP.AutoSwitchFrom			= true		// Auto switch from
+SWEP.Weight				= 60		-- Decides whether we should switch from/to this
+SWEP.AutoSwitchTo			= true		-- Auto switch to 
+SWEP.AutoSwitchFrom			= true		-- Auto switch from

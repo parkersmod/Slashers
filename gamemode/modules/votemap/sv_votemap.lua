@@ -34,7 +34,7 @@ hook.Add("PlayerInitialSpawn", "slash_sendmaplist", sendCurrentVoteStat)
 
 local function receiveVote(len, player)
   local map = net.ReadString()
-  if map != "" then
+  if map ~= "" then
     currentVote[player] = map
   end
   for k,v in pairs(GM.MAPS) do

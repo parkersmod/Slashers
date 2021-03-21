@@ -3,7 +3,7 @@ if SERVER then
 end
 
 function GetHTMLMaterialVL( url, callbackfunc )
-	if !CLIENT then return end
+	if not CLIENT then return end
     HTMLMaterial( url, HTMLMAT_STYLE_COVER_IMG, function( mat )
 		local matdata =
 		{

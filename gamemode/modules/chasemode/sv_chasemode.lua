@@ -13,8 +13,8 @@ local function relayChase()
 	local ply = net.ReadEntity()
 	local color = net.ReadUInt(8)
 	local time = CurTime()
-	if !IsValid(GAMEMODE.ROUND.Killer) then return end
-	if color != 0 then
+	if not IsValid(GAMEMODE.ROUND.Killer) then return end
+	if color ~= 0 then
 
 	net.Start( "sls_chaseactivated" )
 		net.WriteFloat(time)

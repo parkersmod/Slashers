@@ -55,7 +55,7 @@ function ENT:Initialize()
 end
 
 function ENT:SpawnFunction( ply, tr )
-    if ( !tr.Hit ) then return end
+    if ( not tr.Hit ) then return end
     local ent = ents.Create("sls_motherbates")
     ent:SetPos( tr.HitPos + tr.HitNormal )    
     ent:Spawn()
@@ -66,7 +66,7 @@ ents.Create("prop_physics")
 
 
 function sendInfo (ply,DistSqr)
-	if(!IsValid(ply)) then return end
+	if(not IsValid(ply)) then return end
 	net.Start("sls_motherradar",true)
 		net.WriteUInt(howFar (DistSqr),2)
 	net.Send(ply)
@@ -89,7 +89,7 @@ function ENT:FindAroundPlayers(radius)
 	local entsNearby = ents.FindInSphere( self:GetPos() , radius )
 	local plyNearby = {}
 	for i,v in pairs(entsNearby) do
-		if (v:IsValid() and v:IsPlayer() and v:Team() ~= TEAM_KILLER and v.ClassID != CLASS_SURV_SHY) then
+		if (v:IsValid() and v:IsPlayer() and v:Team() ~= TEAM_KILLER and v.ClassID ~= CLASS_SURV_SHY) then
 			plyNearby[v] = v:GetPos():DistToSqr( self:GetPos() )
 			sendInfo(v,plyNearby[v])
 		end
@@ -98,8 +98,8 @@ function ENT:FindAroundPlayers(radius)
 end
 
 function ApplyModifications(ply,pos)
-	if(!IsValid(ply)) then return end
-	if (!ply.normWalk) then ply.normWalk = ply:GetWalkSpeed() end
+	if(not IsValid(ply)) then return end
+	if (not ply.normWalk) then ply.normWalk = ply:GetWalkSpeed() end
 
 	if (pos) < ( 500*500 ) then
 		ply:SetWalkSpeed(ply.normWalk * 1.6)
@@ -137,7 +137,7 @@ function ENT:OnTakeDamage(dmg)
 end
 
 function ENT:Use( activator, caller )
-	if ( activator:IsPlayer() && activator ~= GM.ROUND.Killer && !GM.ROUND.WaitingPolice) then
+	if ( activator:IsPlayer() and activator ~= GM.ROUND.Killer and not GM.ROUND.WaitingPolice) then
 		CurrentObjective = "wainting_police"
 		objectifComplete()
 		GM.ROUND:StartWaitingPolice()

@@ -832,21 +832,21 @@ end
 function TFAUpdateDefaultClip()
 	local dfc = math.Round(GetConVarNumber("sv_tfa_default_clip"))
 	local weplist = weapons.GetList()
-	if !weplist or #weplist<=0 then return end
+	if not weplist or #weplist<=0 then return end
 	for k,v in pairs(weplist) do
 		local cl = v.ClassName and v.ClassName or v
 		local wep = weapons.GetStored(cl)
 		if wep and ( wep.IsTFAWeapon or string.find( string.lower( wep.Base and wep.Base or "" ),"tfa") ) then
 
-			if !wep.Primary then
+			if not wep.Primary then
 				wep.Primary = {}
 			end
 
-			if !wep.Primary.TrueDefaultClip then
+			if not wep.Primary.TrueDefaultClip then
 				wep.Primary.TrueDefaultClip = wep.Primary.DefaultClip
 			end
 
-			if !wep.Primary.TrueDefaultClip then
+			if not wep.Primary.TrueDefaultClip then
 				wep.Primary.TrueDefaultClip = 0
 			end
 
@@ -1220,7 +1220,7 @@ local gas_sv_enabled = GetConVar("sv_tfa_fx_gas_override")
 function GetTFAGasEnabled()
 
 	if tmpsp then
-		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_gasblur",0))!=0
+		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_gasblur",0)) ~= 0
 	end
 
 	local enabled
@@ -1230,7 +1230,7 @@ function GetTFAGasEnabled()
 		enabled = false
 	end
 
-	if gas_sv_enabled and gas_sv_enabled:GetInt()!=-1 then enabled=gas_sv_enabled:GetBool() end
+	if gas_sv_enabled and gas_sv_enabled:GetInt() ~= -1 then enabled=gas_sv_enabled:GetBool() end
 
 	return enabled
 
@@ -1245,7 +1245,7 @@ local muzzlesmoke_sv_enabled = GetConVar("sv_tfa_fx_muzzlesmoke_override")
 function GetTFAMZSmokeEnabled()
 
 	if tmpsp then
-		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_muzzlesmoke",0))!=0
+		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_muzzlesmoke",0)) ~= 0
 	end
 
 	local enabled
@@ -1255,7 +1255,7 @@ function GetTFAMZSmokeEnabled()
 		enabled = false
 	end
 
-	if muzzlesmoke_sv_enabled and muzzlesmoke_sv_enabled:GetInt()!=-1 then enabled=muzzlesmoke_sv_enabled:GetBool() end
+	if muzzlesmoke_sv_enabled and muzzlesmoke_sv_enabled:GetInt() ~= -1 then enabled=muzzlesmoke_sv_enabled:GetBool() end
 
 	return enabled
 
@@ -1264,7 +1264,7 @@ end
 function GetTFAEJSmokeEnabled()
 
 	if tmpsp then
-		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_ejectionsmoke",0))!=0
+		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_ejectionsmoke",0)) ~= 0
 	end
 
 	local enabled
@@ -1286,7 +1286,7 @@ local ricofx_sv_enabled = GetConVar("sv_tfa_fx_ricochet_override")
 function GetTFARicochetEnabled()
 
 	if tmpsp then
-		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_impact_ricochet_enabled",0))!=0
+		return math.Round(Entity(1):GetInfoNum("cl_tfa_fx_impact_ricochet_enabled",0)) ~= 0
 	end
 
 	local enabled
@@ -1296,7 +1296,7 @@ function GetTFARicochetEnabled()
 		enabled = false
 	end
 
-	if ricofx_sv_enabled and ricofx_sv_enabled:GetInt()!=-1 then enabled=ricofx_sv_enabled:GetBool() end
+	if ricofx_sv_enabled and ricofx_sv_enabled:GetInt() ~= -1 then enabled=ricofx_sv_enabled:GetBool() end
 
 	return enabled
 
@@ -1308,7 +1308,7 @@ end
 --Local function for detecting TFA Base weapons.
 
 function PlayerCarryingTFAWeapon( ply )
-	if !ply then
+	if not ply then
 		if CLIENT then
 			if IsValid(LocalPlayer()) then
 				ply = LocalPlayer()
@@ -1339,7 +1339,7 @@ end
 function TFABlacklistPE()
 	--[[
 	local weplist = weapons.GetList()
-	if !weplist or #weplist<=0 then return end
+	if not weplist or #weplist<=0 then return end
 	for k,v in pairs(weplist) do
 		local cl = v.ClassName and v.ClassName or v
 		local wep = weapons.GetStored(cl)
@@ -1455,11 +1455,11 @@ end)
 if CLIENT then
 	local ply
 	local wep
-	if GetConVarNumber("sv_tfa_compatibility_clientframe",0)!=1 then
+	if GetConVarNumber("sv_tfa_compatibility_clientframe",0) ~= 1 then
 		hook.Add("PreRender", "prerender_tfabase", function()
 
 			ply = LocalPlayer()
-			if !IsValid(ply) then return end
+			if not IsValid(ply) then return end
 			wep = ply:GetActiveWeapon()
 			if IsValid(wep) and wep.IsTFAWeapon and wep.PlayerThinkClientFrame then
 				wep:PlayerThinkClientFrame(ply)
@@ -1470,7 +1470,7 @@ if CLIENT then
 		hook.Add("Think", "prerender_tfabase", function()
 
 			ply = LocalPlayer()
-			if !IsValid(ply) then return end
+			if not IsValid(ply) then return end
 			wep = ply:GetActiveWeapon()
 			if IsValid(wep) and wep.IsTFAWeapon and wep.PlayerThinkClientFrame then
 				wep:PlayerThinkClientFrame(pl)
@@ -1485,7 +1485,7 @@ end
 hook.Add("PostDrawTranslucentRenderables", "postdrawtranslucentrenderables_tfabase", function()
 
 	local ply = LocalPlayer()
-	if !IsValid(ply) then return end
+	if not IsValid(ply) then return end
 
 	local wep = ply:GetActiveWeapon()
 
@@ -1497,7 +1497,7 @@ end)
 
 --SWEP footstep hook
 
-if GetConVarNumber("sv_tfa_compatibility_footstep",0)!=1 then
+if GetConVarNumber("sv_tfa_compatibility_footstep",0) ~= 1 then
 	hook.Add("PlayerFootstep","tfa_playerfootstep", function( ply )
 		local isc, pl, wep = PlayerCarryingTFAWeapon(ply)
 
@@ -1533,7 +1533,7 @@ end
 
 --Movement speed
 
-if !(Clockwork) and GetConVarNumber("sv_tfa_compatibility_movement",0)!=1 then
+if not (Clockwork) and GetConVarNumber("sv_tfa_compatibility_movement",0) ~= 1 then
 	hook.Add("SetupMove","tfa_setupmove",function( ply, movedata, commanddata )
 
 		local iscarryingtfaweapon, pl, wep = PlayerCarryingTFAWeapon( ply )
@@ -1558,7 +1558,7 @@ end
 
 --Fonts
 
-if !TFASleekFontCreated and CLIENT then
+if not TFASleekFontCreated and CLIENT then
 	local fontdata = {}
 	fontdata.font = "Roboto"
 	fontdata.size = 36
@@ -1779,7 +1779,7 @@ function TFAPlayerBindPress(ply, b, p)
 				end
 			end
 			if wep.ShotgunInterrupt then
-				if b == "+attack" and (wep:GetReloading() and wep.Shotgun and !wep:GetShotgunPumping() and !wep:GetShotgunNeedsPump()) then
+				if b == "+attack" and (wep:GetReloading() and wep.Shotgun and not wep:GetShotgunPumping() and not wep:GetShotgunNeedsPump()) then
 					wep:ShotgunInterrupt()
 					return true
 				end
@@ -1814,7 +1814,7 @@ if CLIENT then
 
 		local wep = net.ReadEntity()
 		local snd = net.ReadString()
-		if IsValid(wep) and snd and snd!="" then
+		if IsValid(wep) and snd and snd ~= "" then
 			wep:EmitSound(snd)
 		end
 
@@ -1877,7 +1877,7 @@ if CLIENT or game.SinglePlayer() then
 end
 
 function TFARegPartThink( particle, partfunc )
-	if !particle or !partfunc then return end
+	if not particle or not partfunc then return end
 	particle.ThinkFunc = partfunc
 	if IsValid(particle.FollowEnt) and particle.Att then
 		local angpos = particle.FollowEnt:GetAttachment(particle.Att)
@@ -1910,7 +1910,7 @@ function TFAMuzzlePartFunc(self,first)
 	if IsValid(self.FollowEnt) then
 		local owent = self.FollowEnt.Owner or self.FollowEnt
 
-		if !IsValid(owent) then return end
+		if not IsValid(owent) then return end
 
 		local firvel
 
@@ -2050,7 +2050,7 @@ function TFARegisterAttachment(att)
 
 	if base then
 		for k,v in pairs(base) do
-			if !att[k] then att[k] = v end
+			if not att[k] then att[k] = v end
 		end
 	end
 
@@ -2070,7 +2070,7 @@ function TFAUpdateAttachments()
 	local addtbl = file.Find(TFA_ATTACHMENT_PATH.."*","LUA","namedesc")
 
 	for k,v in ipairs(addtbl) do
-		if !string.find(v,"base") then
+		if not string.find(v,"base") then
 			table.insert(tbl,#tbl+1,v)
 		end
 	end
@@ -2087,15 +2087,15 @@ function TFAUpdateAttachments()
 
 		ATTACHMENT.ID = string.Replace(id,".lua","")
 
-		// Loaded by module
-		/*if SERVER then
+		-- Loaded by module
+		--[[if SERVER then
 			AddCSLuaFile(v)
 			include(v)
 		else
 			include(v)
-		end*/
+		end]]
 
-		if ATTACHMENT.Model and type(ATTACHMENT.Model)=="string" and ATTACHMENT.Model != "" then
+		if ATTACHMENT.Model and type(ATTACHMENT.Model)=="string" and ATTACHMENT.Model ~= "" then
 			util.PrecacheModel(ATTACHMENT.Model)
 		end
 
@@ -2209,7 +2209,7 @@ if CLIENT then
 	tab[ "$pp_colour_mulb" ] 		= 0
 
 	local function MyDrawBokehDOF()
-		if !doblur or !doblur:GetBool() then return end
+		if not doblur or not doblur:GetBool() then return end
 
 		render.UpdateScreenEffectTexture()
 
@@ -2228,9 +2228,9 @@ if CLIENT then
 	hook.Add("PreDrawViewModel","PreDrawViewModel_TFA_INSPECT",function()
 		tfablurintensity = 0
 		local ply = LocalPlayer()
-		if !IsValid(ply) then return end
+		if not IsValid(ply) then return end
 		local wep = ply:GetActiveWeapon()
-		if !IsValid(wep) then return end
+		if not IsValid(wep) then return end
 		tfablurintensity = (wep.CLInspectingProgress or 0)
 		local its = tfablurintensity*10
 		if its>0.01 then
@@ -2245,7 +2245,7 @@ if CLIENT then
 	end)
 
 	hook.Add( "NeedsDepthPass", "NeedsDepthPass_TFA_Inspect", function()
-		if !doblur or !doblur:GetBool() then return end
+		if not doblur or not doblur:GetBool() then return end
 		if tfablurintensity >0.01 then
 			DOFModeHack( true )
 			return true
@@ -2277,43 +2277,43 @@ if CLIENT then
 	end)
 
 	-- Remove hitmarker
-	/*hook.Add("HUDPaint","tfaDrawHitmarker",function()
+	--[[hook.Add("HUDPaint","tfaDrawHitmarker",function()
 
-		if !enabledcvar then
+		if not enabledcvar then
 			enabledcvar = GetConVar("cl_tfa_hud_hitmarker_enabled")
 		end
 
 		if enabledcvar and enabledcvar:GetBool() then
 
-			if !spr then
+			if not spr then
 				spr = Material("scope/hitmarker")
 			end
 
-			if !solidtimecvar then
+			if not solidtimecvar then
 				solidtimecvar = GetConVar("cl_tfa_hud_hitmarker_solidtime")
 			end
 
-			if !fadetimecvar then
+			if not fadetimecvar then
 				fadetimecvar = GetConVar("cl_tfa_hud_hitmarker_fadetime")
 			end
 
-			if !scalecvar then
+			if not scalecvar then
 				scalecvar = GetConVar("cl_tfa_hud_hitmarker_scale")
 			end
 
-			if !rcvar then
+			if not rcvar then
 				rcvar = GetConVar("cl_tfa_hud_hitmarker_color_r")
 			end
 
-			if !gcvar then
+			if not gcvar then
 				gcvar = GetConVar("cl_tfa_hud_hitmarker_color_g")
 			end
 
-			if !bcvar then
+			if not bcvar then
 				bcvar = GetConVar("cl_tfa_hud_hitmarker_color_b")
 			end
 
-			if !acvar then
+			if not acvar then
 				acvar = GetConVar("cl_tfa_hud_hitmarker_color_a")
 			end
 
@@ -2337,7 +2337,7 @@ if CLIENT then
 			surface.DrawTexturedRect(w/2-sprw/2,h/2-sprh/2,sprw,sprh)
 
 		end
-	end)*/
+	end)]]
 
 end
 
@@ -2351,10 +2351,10 @@ if CLIENT then
 	local lmang
 	local lastvisible
 	hook.Add("PostDrawTranslucentRenderables","MaskTFA",function()
-		if eastereggcvar and !eastereggcvar:GetBool() then return end
-		if !IsValid(localplayer) then localplayer = LocalPlayer() end
-		if !IsValid(localplayer) then return end
-		if !lmang then lmang = Material("vgui/obscure") end
+		if eastereggcvar and not eastereggcvar:GetBool() then return end
+		if not IsValid(localplayer) then localplayer = LocalPlayer() end
+		if not IsValid(localplayer) then return end
+		if not lmang then lmang = Material("vgui/obscure") end
 		plytbl = player.GetAll()
 		for k,v in pairs(plytbl) do
 			drawicon = false
@@ -2362,7 +2362,7 @@ if CLIENT then
 				drawicon = true
 			end
 			if v==localplayer then
-				if !v:ShouldDrawLocalPlayer() then drawicon = false end
+				if not v:ShouldDrawLocalPlayer() then drawicon = false end
 			end
 			if drawicon then
 				local nekpos = ( v:GetShootPos() )
@@ -2379,12 +2379,12 @@ if CLIENT then
 
 				local view = GetViewEntity()
 				local tbl = {v:GetActiveWeapon()}
-				if view!=v then table.insert(tbl,view) end
+				if view ~= v then table.insert(tbl,view) end
 
 				if util.QuickTrace(epos,(nekpos-epos)*999999999,tbl).Entity==v then lastvisible = CurTime() end
 
 
-				if !lastvisible or CurTime()-lastvisible<0.1 then
+				if not lastvisible or CurTime()-lastvisible<0.1 then
 					render.SetMaterial(lmang)
 					render.DrawSprite(pos,16,16,color_white)
 

@@ -61,23 +61,23 @@ function EFFECT:Init(ef)
 	self.emittime = CurTime()+3
 	self.targent = ef:GetEntity()
 	self.targatt = ef:GetAttachment()
-	self.startpos = ef:GetOrigin() 
+	self.startpos = ef:GetOrigin()
 	self.startnormal = ef:GetNormal()
 	self.radius = ef:GetRadius()
 	self.grav = Vector(0,0,GetConVarNumber("sv_gravity",600)*0.2)
 	self.randfac = 1
-	if !self.startpos then
+	if not self.startpos then
 		self.startpos = vector_origin
 		if IsValid(LocalPlayer()) then
 			self.startpos = LocalPlayer():GetShootPos()
 		end
 	end
 	
-	if !self.startnormal then
+	if not self.startnormal then
 		self.startnormal = vector_origin
 	end
 	
-	if !self.radius or self.radius == 0 then
+	if not self.radius or self.radius == 0 then
 		self.radius = 1
 	end
 	

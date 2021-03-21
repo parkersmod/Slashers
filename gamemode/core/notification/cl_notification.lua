@@ -38,7 +38,7 @@ function notificationPanel(notifText,notificationType)
 	BackGroundPanel:AlignRight(250)
 	BackGroundPanel:SetDrawBackground( false )
 	BackGroundPanel:SetTerm( 4.7 )
-	if (!CounterActiveNotif || CounterActiveNotif == 0)  then
+	if (not CounterActiveNotif or CounterActiveNotif == 0)  then
 		CounterActiveNotif = 1
 	else
 		CounterActiveNotif = CounterActiveNotif + 1
@@ -75,7 +75,7 @@ function notificationPanel(notifText,notificationType)
 
 	if notificationType == "cross" then
 		surface.PlaySound( "slashers/effects/invalid.wav" )
-	elseif (notificationType == "safe" || notificationType == "exit" || notificationType =="question")  then
+	elseif (notificationType == "safe" or notificationType == "exit" or notificationType == "question")  then
 		surface.PlaySound( "slashers/effects/notif_2.wav" )
 	end
 
@@ -103,7 +103,7 @@ hook.Add("HUDPaint", "notification_HUDPaint", function()
 		surface.SetMaterial(v.icon)
 		surface.DrawTexturedRect(pos1.x - 64, pos1.y - 64, 128, 128)
 
-		if v.timer && v.timer < CurTime() then
+		if v.timer and v.timer < CurTime() then
 			table.remove(noticonData, k)
 		end
 	end

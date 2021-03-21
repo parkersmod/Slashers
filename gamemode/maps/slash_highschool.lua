@@ -98,7 +98,7 @@ end
 net.Receive("sls_kability_AddDoor", AddDoor)
 
 local function HUDPaintBackground()
-	if LocalPlayer():Team() != TEAM_KILLER then return end
+	if LocalPlayer():Team() ~= TEAM_KILLER then return end
 	local curtime = CurTime()
 
 	for k, v in ipairs(doors) do
@@ -124,13 +124,13 @@ else
 	util.AddNetworkString("sls_kability_AddDoor")
 
 	local function AddDoor(pos, endtime)
-	if !GM.ROUND.Active || !IsValid(GM.ROUND.Killer) then return end
+	if not GM.ROUND.Active or not IsValid(GM.ROUND.Killer) then return end
 	local CV_Radius = GetConVar("slashers_ghostface_door_radius")
 
-	if CV_Radius:GetInt() != 0 then
+	if CV_Radius:GetInt() ~= 0 then
 		local entsNerby = ents.FindInSphere( pos, CV_Radius:GetInt()	 )
 		local isKillerNerby = table.HasValue( entsNerby, GM.ROUND.Killer )
-		if !isKillerNerby then return end
+		if not isKillerNerby then return end
 	end
 
 	net.Start("sls_kability_AddDoor")
@@ -140,11 +140,11 @@ else
 end
 
 local function PlayerUse(ply, ent)
-	if !GM.ROUND.Active || !IsValid(GM.ROUND.Killer) then return end
-	if ply:Team() != TEAM_SURVIVORS then return end
+	if not GM.ROUND.Active or not IsValid(GM.ROUND.Killer) then return end
+	if ply:Team() ~= TEAM_SURVIVORS then return end
 	if ply.ClassID == CLASS_SURV_SHY then return end
-	if !table.HasValue(GM.CONFIG["killerhelp_door_entities"], ent:GetClass()) then return end
-	if ply.kh_use && ply.kh_use[ent:EntIndex()] && CurTime() <= ply.kh_use[ent:EntIndex()] then return end
+	if not table.HasValue(GM.CONFIG["killerhelp_door_entities"], ent:GetClass()) then return end
+	if ply.kh_use and ply.kh_use[ent:EntIndex()] and CurTime() <= ply.kh_use[ent:EntIndex()] then return end
 	local CV_DoorDuration = GetConVar("slashers_ghostface_door_duration")
 
 	ply.kh_use = ply.kh_use or {}

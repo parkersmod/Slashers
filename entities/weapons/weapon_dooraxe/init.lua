@@ -23,13 +23,13 @@ function SWEP:PrimaryAttack()
 
 	if self:Ammo1() <= 0 then return end
 
-	if !IsValid(self.Owner:GetEyeTrace().Entity) then return end
+	if not IsValid(self.Owner:GetEyeTrace().Entity) then return end
 
 	if self.Owner:GetEyeTrace().Entity:GetClass() == "prop_door_rotating" then
 
 		if self.Owner:GetEyeTrace().Entity.trapeddoor and self.Owner:GetEyeTrace().Entity.trapeddoor > 0 then return end
 
-		if !slashers_dooraxe_canplace(self.Owner) then return end
+		if not slashers_dooraxe_canplace(self.Owner) then return end
 
 		self.Owner:GetEyeTrace().Entity.trapeddoor = 1
 		self.Owner:SetAmmo(self:Ammo1() - 1, "ammo_dooraxe") 

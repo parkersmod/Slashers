@@ -18,15 +18,15 @@ viewbob_drawing_cvar = GetConVar("cl_tfa_viewbob_drawing")
 viewbob_reloading_cvar = GetConVar("cl_tfa_viewbob_reloading")
 
 function SWEP:CalcView(ply, pos, ang, fov)
-	if !ang then return end
+	if not ang then return end
 	
-	if ply != LocalPlayer() then return end
+	if ply ~= LocalPlayer() then return end
 	
 	local vm = ply:GetViewModel()
 	
-	if !IsValid(vm) then return end
+	if not IsValid(vm) then return end
 	
-	if !CLIENT then return end
+	if not CLIENT then return end
 	
 	local viewbobintensity = 0.2 * viewbob_intensity_cvar:GetFloat()
 	
@@ -43,7 +43,7 @@ function SWEP:CalcView(ply, pos, ang, fov)
 	vb_d = viewbob_drawing_cvar:GetBool()
 	vb_r = viewbob_reloading_cvar:GetBool()
 	
-	if ( ( ( vb_d and self:GetDrawing() ) or ( vb_r and self:GetReloading() ) ) and self.AllowViewAttachment and !self:GetProceduralReloading() ) then
+	if ( ( ( vb_d and self:GetDrawing() ) or ( vb_r and self:GetReloading() ) ) and self.AllowViewAttachment and not self:GetProceduralReloading() ) then
 	
 		local threshold = 0.325 --Time before the animation actually finishes, that we start reverting.
 		local spd = 260

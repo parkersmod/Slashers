@@ -55,9 +55,9 @@ end
 
 function SWEP:DrawWorldModel()
 	local holdType = self:GetHoldType()
-	if(holdType != 'normal') then
+	if(holdType ~= 'normal') then
 		local bone = self.Owner:LookupBone("ValveBiped.Bip01_R_Hand")
-		if !bone then return end
+		if not bone then return end
 		local hand_pos = self.Owner:GetBonePosition(bone)
 		local hand_ang = Angle(-30 , self.Owner:EyeAngles().yaw - 90, 0)
 		hand_pos = hand_pos + hand_ang:Forward() * - 18 + hand_ang:Right() * 3

@@ -67,7 +67,7 @@ function GetClosestPhysBone(ent, pos)
 				end
 			end
 		end
-		if i and i!=-1 then
+		if i and i ~= -1 then
 			local boneparpost=ent:GetBonePosition(par)
 			boneparpos=(boneparpost+bonepos)/2
 			if (ent:TranslateBoneToPhysBone(par)) then
@@ -109,7 +109,7 @@ function ENT:UpdatePosition()
 			bonescale = ent:GetModelScale()
 		end
 		local tmppos,tmprot
-		if !bonepos then
+		if not bonepos then
 			bonepos=ent:GetPos()
 			bonerot=ent:GetAngles()
 			bonescale = ent:GetModelScale()
@@ -152,7 +152,7 @@ function ENT:Initialize()
 			self:SetUseType(SIMPLE_USE)
 		end
 			
-		if GetConVarNumber("sv_tfa_arrow_lifetime",-1)!=-1 then
+		if GetConVarNumber("sv_tfa_arrow_lifetime",-1) ~= -1 then
 				timer.Simple(GetConVarNumber("sv_tfa_arrow_lifetime",30), function()
 				if IsValid(self) then
 					self:Remove()
@@ -195,7 +195,7 @@ function ENT:Initialize()
 			ent=self.targent
 			bone=self.targent:TranslatePhysBoneToBone(self.targphysbone)
 			self.targbone=bone
-			if !ent:GetBoneCount() or ent:GetBoneCount()<=1 or string.find(ent:GetModel(),"door") then
+			if not ent:GetBoneCount() or ent:GetBoneCount()<=1 or string.find(ent:GetModel(),"door") then
 				bonepos=ent:GetPos()
 				bonerot=ent:GetAngles()
 				self.enthasbones=false
@@ -216,7 +216,7 @@ function ENT:Initialize()
 				end
 			end
 			
-			if !bonepos then
+			if not bonepos then
 				bonepos=ent:GetPos()
 				bonerot=ent:GetAngles()
 			end
@@ -242,14 +242,14 @@ function ENT:Think()
 		
 	if SERVER then
 	
-		if !IsValid(self.targent) then
+		if not IsValid(self.targent) then
 			self:Remove()
 			return
 		elseif self.targent then
 			
 			if ( ( self.targent:IsPlayer() or self.targent:IsNPC() ) and self.targent:Health()<=0 ) then
 				local tmpragent = self.targent:GetRagdollEntity()
-				if IsValid(tmpragent) and tmpragent != self.targent then
+				if IsValid(tmpragent) and tmpragent ~= self.targent then
 					self.targent = tmpragent
 					self:SetNWEntity("targentnw",self.targent)
 				else
@@ -264,7 +264,7 @@ function ENT:Think()
 end
 
 function ENT:Use(activator, caller)
-	if (activator:IsPlayer()) and activator:GetWeapon(self.gun) != nil then
+	if (activator:IsPlayer()) and activator:GetWeapon(self.gun) ~= nil then
 		activator:GiveAmmo(1,activator:GetWeapon(self.gun):GetPrimaryAmmoType(),false)
 		self:Remove()
 	end

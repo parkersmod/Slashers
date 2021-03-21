@@ -76,7 +76,7 @@ function GM.ROUND:Start(forceKiller)
 	local i = 0
 	for _, v in ipairs(player.GetAll()) do
 		if i > 10 then break end
-		if GM.ROUND.Killer != v then
+		if GM.ROUND.Killer ~= v then
 			table.insert(GM.ROUND.Survivors, v)
 		end
 		i = i + 1
@@ -166,7 +166,7 @@ function GM.ROUND:End(nowin)
 	GM.ROUND.Active = false
 	GM.ROUND.WaitingPolice = false
 	GM.ROUND.Escape = false
-	if !nowin then
+	if not nowin then
 		winTeam = TEAM_KILLER
 		for _, v in ipairs(GM.ROUND.Survivors) do
 			if v:GetNWBool("Escaped") then
@@ -214,7 +214,7 @@ function GM.ROUND:UpdateEndTime(endtime)
 end
 
 function GM:PlayerSpawn(ply)
-	if !ply.initialKill then
+	if not ply.initialKill then
 		local camera = ents.FindByName("camera_view")[1]
 
 		ply:KillSilent()
@@ -243,7 +243,7 @@ function GM:PlayerSpawn(ply)
 end
 
 local function PlayerDK(ply)
-	if !GM.ROUND.Active then return end
+	if not GM.ROUND.Active then return end
 	if #GM.ROUND:GetSurvivorsAlive() == 0 then
 		GM.ROUND:End()
 	end
@@ -256,8 +256,8 @@ end
 hook.Add("PostPlayerDeath", "sls_round_PostPlayerDeath", PlayerDK)
 
 local function PlayerDisconnected(ply)
-	if !GM.ROUND.Survivors then return end
-	if !IsValid(ply) || !ply:IsValid() then return end
+	if not GM.ROUND.Survivors then return end
+	if not IsValid(ply) or not ply:IsValid() then return end
 
 	table.RemoveByValue(GM.ROUND.Survivors, ply)
 	net.Start("sls_round_Update")
@@ -271,7 +271,7 @@ hook.Add("PlayerDisconnected", "sls_round_PlayerDisconnected", PlayerDisconnecte
 local function Think()
 	local curtime = CurTime()
 
-	if GM.ROUND.Active && GM.ROUND.EndTime && curtime > GM.ROUND.EndTime then
+	if GM.ROUND.Active and GM.ROUND.EndTime and curtime > GM.ROUND.EndTime then
 		-- Escape
 		if GM.ROUND.WaitingPolice then
 			GM.ROUND:StartEscape()
@@ -281,14 +281,14 @@ local function Think()
 	end
 
 	-- Check NextMap
-	if !GM.ROUND.Active && GM.ROUND.NextStart && curtime >= GM.ROUND.NextStart && GM.ROUND.Count >= GetConVar("slashers_round_max"):GetInt() && GM.CONFIG["disabled_modules"]["votemap"] then
+	if not GM.ROUND.Active and GM.ROUND.NextStart and curtime >= GM.ROUND.NextStart and GM.ROUND.Count >= GetConVar("slashers_round_max"):GetInt() and GM.CONFIG["disabled_modules"]["votemap"] then
 		local mapindex = table.KeyFromValue(GM.MAPS, game.GetMap())
 		GM.ROUND.NextStart = nil
 		RunConsoleCommand("changelevel", mapindex == #GM.MAPS and GM.MAPS[1] or GM.MAPS[mapindex + 1])
 	end
 
 	-- Waiting Players
-	if GM.ROUND.WaitingPlayers && (!GM.ROUND.NextStart || curtime >= GM.ROUND.NextStart) then
+	if GM.ROUND.WaitingPlayers and (not GM.ROUND.NextStart or curtime >= GM.ROUND.NextStart) then
 		local count = 0
 		for _, v in ipairs(player.GetAll()) do
 			if v.initialKill then
@@ -312,7 +312,7 @@ local function Think()
 	end
 
 	-- Auto restart
-	if !GM.ROUND.Active && GM.ROUND.NextStart && curtime >= GM.ROUND.NextStart then
+	if not GM.ROUND.Active and GM.ROUND.NextStart and curtime >= GM.ROUND.NextStart then
 		GM.ROUND:Start()
 	end
 end
@@ -329,8 +329,8 @@ local function InitPostEntity()
 		zone = CreateZone(vec1, vec2)
 
 		function zone:OnPlayerEnter(ply)
-			if !GM.ROUND.Escape then return end
-			if ply:Team() != TEAM_SURVIVORS then return end
+			if not GM.ROUND.Escape then return end
+			if ply:Team() ~= TEAM_SURVIVORS then return end
 			ply:SetNWBool("Escaped", true)
 			ply:KillSilent()
 		end

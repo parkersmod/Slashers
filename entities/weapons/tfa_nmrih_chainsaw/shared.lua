@@ -63,18 +63,18 @@ SWEP.ViewModelBoneMods = {
 }
 
 function SWEP:Reload()
-	if !self:OwnerIsValid() then return end
-	if !self.Primary.Motorized then return end
-	if !self.Owner:KeyPressed(IN_RELOAD) then return end
+	if not self:OwnerIsValid() then return end
+	if not self.Primary.Motorized then return end
+	if not self.Owner:KeyPressed(IN_RELOAD) then return end
 	if self.Owner:KeyDown(IN_ATTACK) then return end
 	if ( self:GetNWInt("ChargeStatus",0)>0 ) or self.ChargeTransition or self:GetNextSecondaryFire()>CurTime() then return end
 	local am = self.Owner:GetAmmoCount(self:GetPrimaryAmmoType())
-	/*if !self:GetNWBool("On",false) then
+	--[[if not self:GetNWBool("On",false) then
 		if am<=0 and self:GetNWFloat("Clip",0)<=0 then return end
 		local ammototake = math.max(math.min(am,self.Primary.ClipSize-self:GetNWFloat("Clip",0)),0)
 		self:SetNWFloat("Clip",self:GetNWFloat("Clip",0)+ammototake)
 		self.Owner:SetAmmo(am-ammototake,self:GetPrimaryAmmoType())
-	end*/
+	end]]
 	
 	
 	local vm = self.Owner:GetViewModel()
@@ -93,7 +93,7 @@ function SWEP:Reload()
 			if IsValid(self) then
 				self:SetNWInt("ChargeStatus",0)
 				self.ChargeTransition = false	
-				if !on then
+				if not on then
 					self:SendWeaponSequence( "idle_on",vm,math.huge,false)
 					self:EmitSound(self.Primary.Motorized_IdleSound)
 				else
@@ -105,7 +105,7 @@ function SWEP:Reload()
 		
 		timer.Simple( on and 0.2 or self.Primary.Motorized_ToggleTime,function()
 			if IsValid(self) then
-				self:SetNWBool("On",!on)
+				self:SetNWBool("On",not on)
 			end		
 		end)
 		

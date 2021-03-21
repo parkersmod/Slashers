@@ -24,7 +24,7 @@ local function Spawn_SlashGen()
 			while (nbEntToSpawn >= 0) do
 				w = table.Random(v)
 
-				if !w.spw then
+				if not w.spw then
 					--get the type of entity
 					local entType = w.type
 					--spawn it

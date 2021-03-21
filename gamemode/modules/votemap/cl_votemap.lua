@@ -84,7 +84,7 @@ local function openVotemap()
 
   for k,v in pairs(slashersMaps) do
 
-    if v != game.GetMap()..".bsp" then
+    if v ~= game.GetMap()..".bsp" then
       oneMap = vgui.Create("DPanel",horizonBar,v)
       oneMap:SetDrawBackground(false)
       oneMapImage = vgui.Create("DImageButton",oneMap,v.."_button")
@@ -93,7 +93,7 @@ local function openVotemap()
       oneMapImage:SetSize(192,512)
       index = horizonBar:ChildCount() -1
 
-      if index != 0 then
+      if index ~= 0 then
         oneMap:MoveRightOf( horizonBar:GetChildren()[index], 25 )
       end
 
@@ -196,8 +196,8 @@ end)
 
 local function receiveVoteStat()
   local voteData = net.ReadTable()
-  if !IsValid(backVote) then return end
-  if !backVote.isOpen then return end
+  if not IsValid(backVote) then return end
+  if not backVote.isOpen then return end
   for k,v in pairs(oneMaps) do
 
     local nbCurVote = voteData[v:GetName()] or 0

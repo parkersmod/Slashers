@@ -95,16 +95,16 @@ SWEP.data.ironsights			= 0 --No ironsights
 
 function SWEP:HitSound(mat,heavy,hitnpc)
 	local snd = self.HitSounds[mat]
-	if !snd then snd = self.HitSounds[-1] end
+	if not snd then snd = self.HitSounds[-1] end
 	if mat==MAT_FLESH or mat==MAT_ALIENFLESH or hitnpc then
 		snd = heavy and self.Secondary.HitSound_Flesh[self.Secondary.Blunt and "blunt" or "sharp"] or self.Primary.HitSound_Flesh[self.Primary.Blunt and "blunt" or "sharp"] 
 	end
-	if snd and snd!="" then self:EmitSound(snd) end
+	if snd and snd ~= "" then self:EmitSound(snd) end
 end
 
 function SWEP:SendWeaponSequence(seq,vm,idledelay,noidle)
-	if !vm then vm = self.Owner:GetViewModel() end
-	if !IsValid(vm) then return end
+	if not vm then vm = self.Owner:GetViewModel() end
+	if not IsValid(vm) then return end
 	
 	local ind = seq
 	if self.AnimSequences[seq] then
@@ -123,7 +123,7 @@ function SWEP:SendWeaponSequence(seq,vm,idledelay,noidle)
 	end
 	]]--
 	local seq2 = vm:LookupSequence(ind)
-	if !seq2 or seq2<=-1 then return end
+	if not seq2 or seq2<=-1 then return end
 	vm:SendViewModelMatchingSequence(seq2)
 		
 	if game.SinglePlayer() then
@@ -131,7 +131,7 @@ function SWEP:SendWeaponSequence(seq,vm,idledelay,noidle)
 	end
 	
 	timer.Simple( idledelay and (idledelay - 0.1) or (60/self.Primary.RPM-0.1),function()
-		if IsValid(self) and !noidle then
+		if IsValid(self) and not noidle then
 			self:SendWeaponAnim(ACT_VM_IDLE)
 		end
 	end)

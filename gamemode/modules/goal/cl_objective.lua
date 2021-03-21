@@ -32,7 +32,7 @@ end )
 local EntityAlreadyActivited = false
 
 function ProgressBar(fraction)
-	if (!EntityAlreadyActivited) then
+	if (not EntityAlreadyActivited) then
 
 		DProgress = vgui.Create( "DPanel" )
 		DProgress:AlignBottom(100) -- Set the position of the panel
@@ -76,7 +76,7 @@ end
 ObjectiveAlreadySet = false
 
 function objectivePanel(objTextn,objType)
-	if (!ObjectiveAlreadySet && objTextn=='') then
+	if (not ObjectiveAlreadySet and objTextn=='') then
 		return
 	end
 -- Move down and the previous objective first

@@ -23,7 +23,7 @@ Purpose:  Utility function / Animation
 ]]--
 
 local function QerpIn(progress, startval, change, totaltime)
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	return startval + change * pow( progress/totaltime, 2)
@@ -37,7 +37,7 @@ Purpose:  Utility function / Animation
 ]]--
 
 local function QerpOut(progress, startval, change, totaltime)
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	return startval - change * pow( progress/totaltime, 2)
@@ -53,7 +53,7 @@ Purpose:  Utility function / Animation
 
 local function Qerp( progress, startval, endval, totaltime)
 	change = endval - startval
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	if progress < totaltime / 2 then return QerpIn(progress, startval, change/2, totaltime/2) end
@@ -68,7 +68,7 @@ Purpose:  Utility function / Animation
 ]]--
 
 local function QerpAngle( progress, startang, endang, totaltime )
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	return FastLerpAngle(Qerp(progress,0,1,totaltime),startang,endang)
@@ -82,7 +82,7 @@ Purpose:  Utility function / Animation
 ]]--
 
 local function QerpVector( progress, startang, endang, totaltime )
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	local startx, starty, startz, endx, endy, endz
@@ -106,7 +106,7 @@ function SWEP:DoBobFrame()
 	
 	ftv = ftv * 200/ws
 	
-	if !self.bobtimevar then
+	if not self.bobtimevar then
 		self.bobtimevar = 0
 	end
 	
@@ -127,19 +127,19 @@ function SWEP:DoBobFrame()
 	runfactorv = 18
 	sprintfactorv = 24
 	
-	if !self.bobtimehasbeensprinting then
+	if not self.bobtimehasbeensprinting then
 		self.bobtimehasbeensprinting = 0
 	end
-	if !self.tprevvel then
+	if not self.tprevvel then
 		self.tprevvel = owvel
 	end
-	if !meetssprintgate then
+	if not meetssprintgate then
 		self.bobtimehasbeensprinting = math.Approach( self.bobtimehasbeensprinting, 0, ftv/(self.IronSightTime/2))
 	else
 		self.bobtimehasbeensprinting = math.Approach( self.bobtimehasbeensprinting, 3, ftv)
 	end
 	
-	if !self.Owner:IsOnGround() then
+	if not self.Owner:IsOnGround() then
 		self.bobtimehasbeensprinting = math.Approach( self.bobtimehasbeensprinting, 0, ftv/(5/60))
 	end
 	
@@ -176,9 +176,9 @@ local customboboffsetx,customboboffsety,customboboffsetz,mypi,curtimecompensated
 
 function SWEP:CalculateBob(pos, ang, ci, igvmf)
 
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
-	if !ci then
+	if not ci then
 		ci = 1
 	end
 	
@@ -189,7 +189,7 @@ function SWEP:CalculateBob(pos, ang, ci, igvmf)
 	runspeed = self.Owner:GetWalkSpeed()
 	curtimecompensated = self.bobtimevar or 0
 	timehasbeensprinting = self.bobtimehasbeensprinting or 0
-	if !self.BobScaleCustom then
+	if not self.BobScaleCustom then
 		self.BobScaleCustom = 1
 	end
 	mypi=0.5*3.14159
@@ -257,7 +257,7 @@ Purpose:  Feature
 
 function SWEP:Footstep()
 	local ftv = FrameTime()
-	if !self.bobtimevar then
+	if not self.bobtimevar then
 		self.bobtimevar = 0 
 	end
 	local val1=math.Round(self.bobtimevar/stepinterval)*stepinterval+stepintervaloffset

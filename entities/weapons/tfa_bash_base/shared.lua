@@ -15,7 +15,7 @@ local lastresortanim = -2
 --SWEP.tmptoggle = true
 
 function SWEP:AltAttack()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 
 	if ( self:GetHolstering() ) then
 		if (self.ShootWhileHolster==false) then
@@ -26,7 +26,7 @@ function SWEP:AltAttack()
 		end
 	end
 	
-	if (self:GetReloading() and self.Shotgun and !self:GetShotgunPumping() and !self:GetShotgunNeedsPump()) then
+	if (self:GetReloading() and self.Shotgun and not self:GetShotgunPumping() and not self:GetShotgunNeedsPump()) then
 		self:SetShotgunCancel( true )
 		--[[
 		self:SetShotgunInsertingShell(true)
@@ -56,7 +56,7 @@ function SWEP:AltAttack()
 	--end
 	
 	
-	if !game.SinglePlayer() then
+	if not game.SinglePlayer() then
 		timer.Simple(vm:SequenceDuration()-0.05,function()
 			if IsValid(self) and self:OwnerIsValid() then
 				self:SendWeaponAnim(ACT_VM_IDLE)
@@ -72,7 +72,7 @@ function SWEP:AltAttack()
 		end)
 	end
 	
-	self.tmptoggle = !self.tmptoggle
+	self.tmptoggle = not self.tmptoggle
 	
 	self:SetNextPrimaryFire(CurTime()+(self.SequenceLengthOverride[ACT_VM_HITCENTER] or vm:SequenceDuration()))
 	self:SetNextSecondaryFire(CurTime()+(self.SequenceLengthOverride[ACT_VM_HITCENTER] or vm:SequenceDuration()))
@@ -99,7 +99,7 @@ function SWEP:AltAttack()
 				
 				
 				if slashtrace.Hit then
-					/*if slashtrace.Entity:GetClass() == "func_door_rotating" or slashtrace.Entity:GetClass() == "prop_door_rotating" then
+					--[[if slashtrace.Entity:GetClass() == "func_door_rotating" or slashtrace.Entity:GetClass() == "prop_door_rotating" then
 						local ply = self.Owner
 						ply:EmitSound("ambient/materials/door_hit1.wav", 100, math.random(80, 120))
 						
@@ -125,7 +125,7 @@ function SWEP:AltAttack()
 							end
 						end)
 						
-					end*/
+					end]]
 					self:EmitSound( (slashtrace.MatType == MAT_FLESH or slashtrace.MatType == MAT_ALIENFLESH) and self.Secondary.BashHitSound_Flesh or self.Secondary.BashHitSound  )
 					if game.GetTimeScale()>0.99 then
 						self.Owner:FireBullets({
@@ -181,11 +181,11 @@ function SWEP:AltAttack()
 end
 
 function SWEP:GetBashing()
-	if !self:OwnerIsValid() then return false end
+	if not self:OwnerIsValid() then return false end
 	local bash,vm,seq,actid
 	
 	vm = self.Owner:GetViewModel()
-	if !IsValid(vm) then return end
+	if not IsValid(vm) then return end
 	seq = vm:GetSequence()
 	actid = vm:GetSequenceActivity(seq)
 	bash = (actid==ACT_VM_HITCENTER) and vm:GetCycle()>0 and vm:GetCycle()<0.65

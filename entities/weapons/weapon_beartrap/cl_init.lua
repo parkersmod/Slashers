@@ -27,13 +27,13 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
-	if not IsFirstTimePredicted() or !IsValid(beartrap_holo) then return true end
+	if not IsFirstTimePredicted() or not IsValid(beartrap_holo) then return true end
 	beartrap_holo:Remove()
 	return true
 end
 
 function SWEP:Think()
-	if !IsValid(beartrap_holo) then return end
+	if not IsValid(beartrap_holo) then return end
 
 	local beartrap_pos, beartrap_angle = slashers_beartrap_place(LocalPlayer(), beartrap_holo)
 
@@ -65,7 +65,7 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:OnRemove()
-	if !IsValid(beartrap_holo) then return end
+	if not IsValid(beartrap_holo) then return end
 	beartrap_holo:Remove()
 end
 
@@ -77,7 +77,7 @@ end
 
 function SWEP:DrawWorldModel()
 	local bone = self.Owner:LookupBone("ValveBiped.Bip01_R_Hand")
-	if !bone then return end
+	if not bone then return end
 	local hand_pos = self.Owner:GetBonePosition(bone)
 	local hand_ang = Angle(self.Owner:EyeAngles().pitch + 90, self.Owner:EyeAngles().yaw - 30, 0)
 	hand_pos = hand_pos + hand_ang:Up() * 3 + hand_ang:Right() * -4

@@ -7,7 +7,7 @@ function SWEP:InitAttachments()
 	for keyv,tab in pairs(self.Attachments) do
 		if tab.atts then
 			for k,attid in pairs(tab.atts) do
-				if !self.AttachmentCache[attid] then
+				if not self.AttachmentCache[attid] then
 					self.AttachmentCache[attid] = {
 						active = false,
 						key = keyv
@@ -26,7 +26,7 @@ function SWEP:Attach( attid, nonetwork )
 		if self_tbl.active then return end
 		local tbl = TFA_ATT[attid]
 		if tbl then
-			if SERVER and !nonetwork then self:CallOnClient("Attach",attid) end
+			if SERVER and not nonetwork then self:CallOnClient("Attach",attid) end
 			tbl.AttachBase(tbl,self)
 			tbl.Attach(tbl,self)
 			self.AttachmentCache[attid].active = true
@@ -41,10 +41,10 @@ end
 function SWEP:Detach( attid, nonetwork )
 	local self_tbl = self.AttachmentCache[attid]
 	if self_tbl then
-		if !self_tbl.active then return end
+		if not self_tbl.active then return end
 		local tbl = TFA_ATT[attid]
 		if tbl then
-			if SERVER and !nonetwork then self:CallOnClient("Detach",attid) end
+			if SERVER and not nonetwork then self:CallOnClient("Detach",attid) end
 			tbl.DetachBase(tbl,self)
 			tbl.Detach(tbl,self)
 			self.AttachmentCache[attid].active = false

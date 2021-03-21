@@ -109,7 +109,7 @@ if CLIENT then
 	net.Receive("sls_kability_update_myersability",updateMyersAbility)
 
 	local function HUDPaintBackground()		
-		if LocalPlayer():Team() != TEAM_KILLER || !GM.ROUND.Active || !victimPos then return end
+		if LocalPlayer():Team() ~= TEAM_KILLER or not GM.ROUND.Active or not victimPos then return end
 		local curtime = CurTime()
 		local pos = victimPos:ToScreen()
 		surface.SetDrawColor(Color(255, 255, 255))
@@ -144,7 +144,7 @@ else
 
 	local function findVictim()
 		for _, v in ipairs(GM.ROUND:GetSurvivorsAlive()) do
-			if v.ClassID != CLASS_SURV_SHY then
+			if v.ClassID ~= CLASS_SURV_SHY then
 				return v
 			end
 		end
@@ -169,7 +169,7 @@ else
 
 			myersAbilityActivated = false
 			lastRequestMyers = CurTime()
-			if !GM.ROUND.Active then return end
+			if not GM.ROUND.Active then return end
 			net.Start("sls_kability_update_myersability")
 			net.WriteInt(0,2)
 			net.Send(GM.ROUND.Killer)
@@ -179,12 +179,12 @@ else
 	local function Think()
 		local curtime = CurTime()
 
-		if !GM.ROUND.Active || !IsValid(GM.ROUND.Killer) then
+		if not GM.ROUND.Active or not IsValid(GM.ROUND.Killer) then
 			myersAbilityActivated = false
 			return
 		end
 
-		if Timer1 < curtime && IsValid(VictimMyers) && VictimMyers.ClassID != CLASS_SURV_SHY  then
+		if Timer1 < curtime and IsValid(VictimMyers) and VictimMyers.ClassID ~= CLASS_SURV_SHY  then
 			if myersAbilityActivated then
 				net.Start("sls_kability_Wallhack")
 					net.WriteVector(VictimMyers:GetPos() + Vector(0, 0, 50))
@@ -207,9 +207,9 @@ else
 
 	local function PostPlayerDeath(ply)
 		-- Help Myers
-		if GM.ROUND.Active && IsValid(GM.ROUND.Killer) && GM.ROUND.Killer:Team() == TEAM_KILLER && ply == VictimMyers then
+		if GM.ROUND.Active and IsValid(GM.ROUND.Killer) and GM.ROUND.Killer:Team() == TEAM_KILLER and ply == VictimMyers then
 			VictimMyers = findVictim()
-			if !IsValid(VictimMyers) then
+			if not IsValid(VictimMyers) then
 				net.Start("sls_kability_Wallhack")
 					net.WriteVector(Vector(42, 42, 42))
 				net.Send(GM.ROUND.Killer)
@@ -219,7 +219,7 @@ else
 	hook.Add("PostPlayerDeath", "sls_kability_PostPlayerDeath", PostPlayerDeath)
 
 	local function PostStart()
-		if !GM.ROUND.Killer then return end
+		if not GM.ROUND.Killer then return end
 
 		VictimMyers = findVictim()
 	end

@@ -15,11 +15,11 @@ function SWEP:Initialize()
 	
 	self:SetHoldType(self.HoldType)
 	
-	if (!self.Primary.Damage) or (self.Primary.Damage<=0.01) then
+	if (not self.Primary.Damage) or (self.Primary.Damage<=0.01) then
 		self:AutoDetectDamage()
 	end
 	
-	if !self.Primary.Accuracy then
+	if not self.Primary.Accuracy then
 		if self.Primary.ConeSpray then
 			self.Primary.Accuracy  = ( 5 / self.Primary.ConeSpray) / 90
 		else
@@ -27,7 +27,7 @@ function SWEP:Initialize()
 		end
 	end
 	
-	if !self.Primary.IronAccuracy then
+	if not self.Primary.IronAccuracy then
 		self.Primary.IronAccuracy = self.Primary.Accuracy * 0.2
 	end
 	
@@ -86,7 +86,7 @@ function SWEP:Initialize()
 	self:DetectValidAnimations()
 	self:SetDeploySpeed(self.SequenceLength[ACT_VM_DRAW])
 	
-	if !self.Primary.ClipMax then
+	if not self.Primary.ClipMax then
 		self.Primary.ClipMax = self.Primary.ClipSize * 3
 	end
 	
@@ -99,7 +99,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:ChooseShootAnim()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	--self:ResetEvents()
 	local tanim=ACT_VM_THROW
 	local success = true
@@ -117,8 +117,8 @@ function SWEP:DoAmmoCheck()
 	if IsValid(self) then
 		if SERVER then 
 			local vm = self.Owner:GetViewModel()
-			if !IsValid(vm) then return end
-			if self:Clip1() <= 0 && self.Owner:GetAmmoCount( self:GetPrimaryAmmoType() ) == 0 then
+			if not IsValid(vm) then return end
+			if self:Clip1() <= 0 and self.Owner:GetAmmoCount( self:GetPrimaryAmmoType() ) == 0 then
 				timer.Simple(vm:SequenceDuration(), function()
 					if SERVER then
 						if IsValid(self) then
@@ -152,7 +152,7 @@ function SWEP:PrimaryAttack()
 		end
 	end
 	
-	if (self:GetReloading() and self.Shotgun and !self:GetShotgunPumping() and !self:GetShotgunNeedsPump()) then
+	if (self:GetReloading() and self.Shotgun and not self:GetShotgunPumping() and not self:GetShotgunNeedsPump()) then
 		self:SetShotgunCancel( true )
 		--[[
 		self:SetShotgunInsertingShell(true)
@@ -171,7 +171,7 @@ function SWEP:PrimaryAttack()
 		return
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	if self.FiresUnderwater == false and self.Owner:WaterLevel()>=3 then
 		if self:CanPrimaryAttack() then
@@ -183,9 +183,9 @@ function SWEP:PrimaryAttack()
 	
 	if (self.Owner:KeyDown(IN_USE) and self.CanBeSilenced and self.Owner:KeyPressed(ACT_VM_PRIMARYATTACK)  ) then
 	
-		if ( self:CanPrimaryAttack() and !self:GetChangingSilence() ) then
-			--self:SetSilenced(!self:GetSilenced())
-			local success, tanim = self:ChooseSilenceAnim(!self:GetSilenced())
+		if ( self:CanPrimaryAttack() and not self:GetChangingSilence() ) then
+			--self:SetSilenced(not self:GetSilenced())
+			local success, tanim = self:ChooseSilenceAnim(not self:GetSilenced())
 			self:SetChangingSilence(true)
 			self:SetNextSilenceChange(CurTime()+self.SequenceLength[tanim])
 			self:SetNextPrimaryFire(CurTime()+1/(self:GetRPM()/60))
@@ -200,7 +200,7 @@ function SWEP:PrimaryAttack()
 		self:CompleteReload()
 	end
 	
-	if !self:CanPrimaryAttack() then return end
+	if not self:CanPrimaryAttack() then return end
 	
 	if self:CanPrimaryAttack() and self.Owner:IsPlayer() then
 		if  self:GetRunSightsRatio()<0.1 then--and self:GetReloading()==false then
@@ -253,7 +253,7 @@ function SWEP:PrimaryAttack()
 			
 			self:SetNextPrimaryFire(CurTime()+1/(self:GetRPM()/60))
 			
-			if !self:GetSilenced() then
+			if not self:GetSilenced() then
 				if self.Primary.Sound then
 					self:PlaySound(self.Primary.SoundTable and self.Primary.SoundTable or self.Primary.Sound)
 				end

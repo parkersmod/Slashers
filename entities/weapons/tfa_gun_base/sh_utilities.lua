@@ -1,7 +1,7 @@
 local cyc, seq, act
 
 function SWEP:UpdateViewModel()
-	if !self.OwnerViewModel then self.OwnerViewModel=self.Owner:GetViewModel() end
+	if not self.OwnerViewModel then self.OwnerViewModel=self.Owner:GetViewModel() end
 end
 
 function SWEP:SetUnpredictedHolstering( val )
@@ -30,12 +30,12 @@ Purpose:  You ain't no muslim, bruv
 ]]--
 
 function SWEP:CanChamber()
-	if self.DisableChamberingNew!=nil then
-		return !self.DisableChamberingNew
+	if self.DisableChamberingNew ~= nil then
+		return not self.DisableChamberingNew
 	else
 		if self.Category == "TFA Pistols" and self.HoldType == "revolver" then self.Revolver = true end
 		self.DisableChamberingNew = self.BoltAction or self.Shotgun or self.Revolver or self.DisableChambering
-		return !self.DisableChamberingNew
+		return not self.DisableChamberingNew
 	end
 end
 
@@ -166,9 +166,9 @@ Purpose:  You ain't no muslim, bruv
 function SWEP:DoBodyGroups()
 	if SERVER then self:CallOnClient("DoBodyGroups","") end
 	
-	if !IsValid(self) then return end
+	if not IsValid(self) then return end
 	
-	if !self.WMBodyGroups then
+	if not self.WMBodyGroups then
 		self.WMBodyGroups = self.BodyGroups
 	end
 	
@@ -180,10 +180,10 @@ function SWEP:DoBodyGroups()
 		end
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	local vm = self.OwnerViewModel
 	
-	if !self.VMBodyGroups then
+	if not self.VMBodyGroups then
 		self.VMBodyGroups = self.BodyGroups
 	end
 	
@@ -208,13 +208,13 @@ Purpose:  Bruv
 
 function SWEP:ResetVMBodyGroups()
 	
-	if !IsValid(self) then return end
+	if not IsValid(self) then return end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	local vm = self.OwnerViewModel
 	
-	if !self.VMBodyGroups then
+	if not self.VMBodyGroups then
 		self.VMBodyGroups = self.BodyGroups
 	end
 	
@@ -237,20 +237,20 @@ Purpose:  Utility
 ]]--
 
 function SWEP:IsHidden()
-	if !self:OwnerIsValid() then return true end
+	if not self:OwnerIsValid() then return true end
 	local vm = self.OwnerViewModel
-	if !IsValid(vm) then return true end
+	if not IsValid(vm) then return true end
 	cyc = vm:GetCycle()
 	seq = vm:GetSequence()
 	act = vm:GetSequenceActivity(seq or 0)
 	local heldentindex = self.Owner:GetNWInt("LastHeldEntityIndex",-1)
 	local heldent = Entity(heldentindex)
-	if heldentindex!=-1 and IsValid(heldent) and heldent.IsPlayerHolding and !heldent:IsPlayerHolding() then
+	if heldentindex ~= -1 and IsValid(heldent) and heldent.IsPlayerHolding and not heldent:IsPlayerHolding() then
 		self.Owner:SetNWInt("LastHeldEntityIndex",-1)
 		heldent = nil
 	end
 	
-	return self:IsCurrentlyScoped() or ( IsValid(heldent) and (!heldent.IsPlayerHolding or heldent:IsPlayerHolding() ) ) or ( (act==ACT_VM_HOLSTER or act==ACT_VM_HOLSTER_EMPTY) and cyc>0.9) or ( (act==ACT_VM_DRAW or act==ACT_VM_DRAW_EMPTY or act==ACT_VM_DRAW_SILENCED) and cyc<0.05 and cyc!=0 )
+	return self:IsCurrentlyScoped() or ( IsValid(heldent) and (not heldent.IsPlayerHolding or heldent:IsPlayerHolding() ) ) or ( (act==ACT_VM_HOLSTER or act==ACT_VM_HOLSTER_EMPTY) and cyc>0.9) or ( (act==ACT_VM_DRAW or act==ACT_VM_DRAW_EMPTY or act==ACT_VM_DRAW_SILENCED) and cyc<0.05 and cyc ~= 0 )
 end
 
 --[[ 
@@ -263,9 +263,9 @@ Purpose:  Utility
 
 function SWEP:UpdateConDamage()
 	
-	if !IsValid(self) then return end
+	if not IsValid(self) then return end
 	
-	if !self.DamageConVar then
+	if not self.DamageConVar then
 		self.DamageConVar = GetConVar("sv_tfa_damage_multiplier")
 	end
 	
@@ -323,7 +323,7 @@ function SWEP:DoAmmoCheck()
 		end
 	
 		if SERVER and (GetConVar("sv_tfa_weapon_strip"):GetBool()) then 
-			if self:Clip1() == 0 && self.Owner:GetAmmoCount( self:GetPrimaryAmmoType() ) == 0 then
+			if self:Clip1() == 0 and self.Owner:GetAmmoCount( self:GetPrimaryAmmoType() ) == 0 then
 				timer.Simple(.1, function()
 					if SERVER then
 						if IsValid(self) then
@@ -353,8 +353,8 @@ function SWEP:PlaySound( snd )
 		if val then return val end
 	end
 	
-	if !snd then return end
-	if type(snd)!="table" then
+	if not snd then return end
+	if type(snd) ~= "table" then
 		self:EmitSound(snd)
 	else
 		local num = math.random(1,#snd)
@@ -432,7 +432,7 @@ function SWEP:IsSafety()
 		if val then return val end
 	end
 	
-	if !self.FireModes then return false end
+	if not self.FireModes then return false end
 	
 	local fm = self.FireModes[self:GetFireMode()]
 	local fmn = string.lower(fm and fm or self.FireModes[1] )
@@ -491,10 +491,10 @@ function SWEP:GetAmmoReserve()
 	end
 
 	local wep = self
-	if ( !IsValid( wep ) ) then return -1 end
+	if ( not IsValid( wep ) ) then return -1 end
 	
 	local ply = self.Owner
-	if ( !IsValid( ply ) ) then return -1 end
+	if ( not IsValid( ply ) ) then return -1 end
  
 	return ply:GetAmmoCount( wep:GetPrimaryAmmoType() )
 end
@@ -514,7 +514,7 @@ function SWEP:GetRPM()
 		if val then return val end
 	end
 	
-	if !self.Primary.Automatic then
+	if not self.Primary.Automatic then
 		if self.Primary.RPM_Burst and string.find( string.lower( self.FireModes[self:GetFireMode()] or "" ), "burst" ) then
 			return self.Primary.RPM_Burst
 		elseif self.Primary.RPM_Semi then
@@ -544,7 +544,7 @@ function SWEP:GetBurstDelay( bur )
 		if val then return val end
 	end
 	
-	if !bur then bur = self:GetMaxBurst() end
+	if not bur then bur = self:GetMaxBurst() end
 	
 	if bur<=1 then return 0 end
 	
@@ -576,7 +576,7 @@ function SWEP:GetMaxBurst()
 
 	local fm = self.FireModes[self:GetFireMode()] or "3Burst"
 	
-	if !self.BurstCountCache[fm] then
+	if not self.BurstCountCache[fm] then
 		bpos = string.find(string.lower(fm),"Burst") or 2
 		self.BurstCountCache[fm] = tonumber( string.sub(fm,1,bpos-1) ) or 1
 	end
@@ -621,7 +621,7 @@ function SWEP:IsFirstPerson()
 		if val then return val end
 	end
 	
-	if !IsValid(self) or !self:OwnerIsValid() then return false end
+	if not IsValid(self) or not self:OwnerIsValid() then return false end
 	
 	local gmsdlp
 	
@@ -641,7 +641,7 @@ function SWEP:IsFirstPerson()
 		end
 	end
 	
-	if !self:IsWeaponVisible() then
+	if not self:IsWeaponVisible() then
 		return false
 	end
 	
@@ -746,7 +746,7 @@ function SWEP:GetAmmoForceMultiplier()
 		if val then return val end
 	end
 	
-	if !self.PrintName then
+	if not self.PrintName then
 		self.PrintName = ""
 	end
 	
@@ -800,9 +800,9 @@ Purpose:  Utility
 
 function SWEP:OwnerIsValid()
 	
-	if !IsValid(self.Owner) then return false end
-	if !self.Owner:IsPlayer() then return false end
-	if !self.Owner:Alive() then return false end
+	if not IsValid(self.Owner) then return false end
+	if not self.Owner:IsPlayer() then return false end
+	if not self.Owner:Alive() then return false end
 	return true
 end
 
@@ -983,7 +983,7 @@ Purpose:  Utility
 
 function SWEP:CPTbl( tabl )
 	if (tabl == nil) then return end
-	if (!tabl) then return end 
+	if (not tabl) then return end 
 
 	if self.Callback.CPTbl then
 		local val = self.Callback.CPTbl(self, tabl)
@@ -994,7 +994,7 @@ function SWEP:CPTbl( tabl )
 	
 	for k, v in pairs( tabl ) do
 		if (type(v) == "table") then
-			if v != tabl then
+			if v ~= tabl then
 				result[k] = self:CPTbl(v) --Recursion, without the stack overflow.
 			end
 		elseif (type(v) == "Vector") then

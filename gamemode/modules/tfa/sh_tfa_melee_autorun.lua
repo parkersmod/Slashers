@@ -53,7 +53,7 @@ hook.Add("EntityTakeDamage","TFM_Block",function(ent, dmginfo)
 				if ( wep:GetIronSights() ) then
 					local damageinflictor,blockthreshold;
 					damageinflictor=dmginfo:GetInflictor()
-					if (!IsValid(damageinflictor)) then
+					if (not IsValid(damageinflictor)) then
 						damageinflictor=dmginfo:GetAttacker()
 					end
 					blockthreshold=wep.BlockAngle/2 or 90

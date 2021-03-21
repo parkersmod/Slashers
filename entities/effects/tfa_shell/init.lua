@@ -3,17 +3,17 @@ local uAng = Angle(90,0,0)
 function EFFECT:Init( data )
 	self.Position = bvec
 	self.WeaponEnt = data:GetEntity()
-	if !IsValid(self.WeaponEnt) then return end
+	if not IsValid(self.WeaponEnt) then return end
 	self.WeaponEntOG = self.WeaponEnt
 	self.Attachment = data:GetAttachment()
 	self.Dir = data:GetNormal()
 	
 	local owent = self.WeaponEnt.Owner or self.WeaponEnt:GetOwner()
-	if !IsValid(owent) then owent = self.WeaponEnt:GetParent() end
+	if not IsValid(owent) then owent = self.WeaponEnt:GetParent() end
 	if IsValid(owent) and owent:IsPlayer() then
-		if owent!=LocalPlayer() or owent:ShouldDrawLocalPlayer() then
+		if owent ~= LocalPlayer() or owent:ShouldDrawLocalPlayer() then
 			self.WeaponEnt = owent:GetActiveWeapon()
-			if !IsValid(self.WeaponEnt) then return end
+			if not IsValid(self.WeaponEnt) then return end
 		else
 			self.WeaponEnt = owent:GetViewModel()
 			local theirweapon = owent:GetActiveWeapon()
@@ -22,13 +22,13 @@ function EFFECT:Init( data )
 					self.Flipped = true
 				end
 			end
-			if !IsValid(self.WeaponEnt) then return end		
+			if not IsValid(self.WeaponEnt) then return end		
 		end
 	end
 	
 	if IsValid(self.WeaponEntOG) and self.WeaponEntOG.ShellAttachment then
 		self.Attachment = self.WeaponEnt:LookupAttachment(self.WeaponEntOG.ShellAttachment)
-		if !self.Attachment or self.Attachment<=0 then
+		if not self.Attachment or self.Attachment<=0 then
 			self.Attachment = 2
 		end
 	
@@ -39,7 +39,7 @@ function EFFECT:Init( data )
 	
 	local angpos = self.WeaponEnt:GetAttachment(self.Attachment)
 	
-	if !angpos or !angpos.Pos then angpos = {Pos = bvec,Ang=uAng} end
+	if not angpos or not angpos.Pos then angpos = {Pos = bvec,Ang=uAng} end
 	
 	if self.Flipped then
 		local tmpang = (self.Dir or angpos.Ang:Forward()):Angle()

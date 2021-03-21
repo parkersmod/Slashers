@@ -31,7 +31,7 @@ end
 local alpha_bg = 0
 local function HUDPaint()
 	local text
-	if LocalPlayer():GetNWInt("afk_warn") == 0 && alpha_bg == 0 then return end
+	if LocalPlayer():GetNWInt("afk_warn") == 0 and alpha_bg == 0 then return end
 	if LocalPlayer():GetNWInt("afk_warn") == 0 then
 		alpha_bg = Lerp(0.05, alpha_bg, 0)
 	else
@@ -43,7 +43,7 @@ local function HUDPaint()
 	surface.SetDrawColor(Color(0, 0, 0, alpha_bg))
 	surface.DrawRect(0, 0, scrW, scrH)
 
-	if LocalPlayer():GetNWInt("afk_warn") != 0 && LocalPlayer():GetNWInt("afk_warn") > CurTime() then
+	if LocalPlayer():GetNWInt("afk_warn") ~= 0 and LocalPlayer():GetNWInt("afk_warn") > CurTime() then
 		surface.SetTextColor(Color(255, 255, 255, 255))
 		surface.SetFont("Arial Big")
 		local tw, th = surface.GetTextSize(text)

@@ -44,7 +44,7 @@ function EFFECT:Init( data )
 	local wepent = Entity(math.Round(self.StartPacket.z))
 	
 	if IsValid(wepent) then
-		if wepent.IsFirstPerson and !wepent:IsFirstPerson() then
+		if wepent.IsFirstPerson and not wepent:IsFirstPerson() then
 			data:SetEntity(wepent)
 			self.Position = blankvec
 		end
@@ -68,7 +68,7 @@ function EFFECT:Init( data )
 		end
 	end
 	
-	if (!self.Position) or ( rvec(self.Position) == blankvec ) then
+	if (not self.Position) or ( rvec(self.Position) == blankvec ) then
 		self.WeaponEnt = data:GetEntity()
 		self.Attachment = data:GetAttachment()
 		if self.WeaponEnt and IsValid(self.WeaponEnt) then

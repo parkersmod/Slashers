@@ -446,7 +446,7 @@ Purpose:  Utility function / Animation
 ]]--
 
 local function QerpIn(progress, startval, change, totaltime)
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	return startval + change * pow( progress/totaltime, qerppower)
@@ -460,7 +460,7 @@ Purpose:  Utility function / Animation
 ]]--
 
 local function QerpOut(progress, startval, change, totaltime)
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	return startval - change * pow( progress/totaltime, qerppower)
@@ -476,7 +476,7 @@ Purpose:  Utility function / Animation
 
 local function Qerp( progress, startval, endval, totaltime)
 	change = endval - startval
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	if progress < totaltime / 2 then return QerpIn(progress, startval, change/2, totaltime/2) end
@@ -515,7 +515,7 @@ Purpose:  Utility function / Animation
 local myqerpvec = Vector()
 
 local function QerpVector( progress, startang, endang, totaltime )
-	if !totaltime then
+	if not totaltime then
 		totaltime = 1
 	end
 	local startx, starty, startz, endx, endy, endz
@@ -558,9 +558,9 @@ function SWEP:ResetEvents()
 		if val then return val end
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
-	if sp and !CLIENT then self:CallOnClient("ResetEvents","") end
+	if sp and not CLIENT then self:CallOnClient("ResetEvents","") end
 	
 	self.EventTimer = l_CT()
 	
@@ -668,11 +668,11 @@ function SWEP:Initialize()
 		if val then return val end
 	end
 	
-	if (!self.Primary.Damage) or (self.Primary.Damage<=0.01) then
+	if (not self.Primary.Damage) or (self.Primary.Damage<=0.01) then
 		self:AutoDetectDamage()
 	end
 	
-	if !self.Primary.IronAccuracy then
+	if not self.Primary.IronAccuracy then
 		self.Primary.IronAccuracy = ( self.Primary.Accuracy or self.Primary.Spread or 0 ) * 0.2
 	end
 	
@@ -760,7 +760,7 @@ function SWEP:Deploy()
 	
 	local success, anim = self:ChooseDrawAnim()
 	
-	if !IsValid(self.OwnerViewModel) then self.OwnerViewModel=self.Owner:GetViewModel() end
+	if not IsValid(self.OwnerViewModel) then self.OwnerViewModel=self.Owner:GetViewModel() end
 	
 	if IsValid(self.Owner) then self:CallOnClient("UpdateViewModel","") end
 	
@@ -941,12 +941,12 @@ function SWEP:CanPickup(ent)
 	local sizeLimit = 128
 	
 	--Must be valid
-	if !IsValid(ent) then print("noent") return false end
+	if not IsValid(ent) then print("noent") return false end
 		
 	local count = ent:GetPhysicsObjectCount()
 
 	--Must have a physics object
-	if (!count) then
+	if (not count) then
 		print("no count")
 		return false
 	end
@@ -960,7 +960,7 @@ function SWEP:CanPickup(ent)
 			if IsValid(phys) then
 				objectMass = objectMass + phys:GetMass()
 				
-				if ( !phys:IsMoveable() ) then
+				if ( not phys:IsMoveable() ) then
 					print(phys)
 					return false
 				end
@@ -973,7 +973,7 @@ function SWEP:CanPickup(ent)
 		if IsValid(phys) then
 			objectMass = objectMass + phys:GetMass()
 			
-			if ( !phys:IsMoveable() ) then
+			if ( not phys:IsMoveable() ) then
 				print(phys)
 				return false
 			end
@@ -1028,7 +1028,7 @@ local dt
 
 function SWEP:Holster( switchtowep )
 	
-	if !IsValid(switchtowep) then
+	if not IsValid(switchtowep) then
 		switchtowep = self.Owner
 	end
 	
@@ -1043,7 +1043,7 @@ function SWEP:Holster( switchtowep )
 		if SERVER then self:CallOnClient("WriteKills","") end
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	self:SetShotgunCancel( true )
 	
@@ -1071,8 +1071,8 @@ function SWEP:Holster( switchtowep )
 		return
 	end
 	
-	if !self:GetCanHolster() then
-		if !self:GetHolstering() then
+	if not self:GetCanHolster() then
+		if not self:GetHolstering() then
 			self:SetHolstering( true )
 			local success, anim = self:ChooseHolsterAnim()
 			
@@ -1198,7 +1198,7 @@ Purpose:  Standard SWEP Function
 local shouldflip
 function SWEP:ViewModelFlipFunc()
 
-	if !cl_vm_flip_cv then cl_vm_flip_cv = GetConVar("cl_tfa_viewmodel_flip") end
+	if not cl_vm_flip_cv then cl_vm_flip_cv = GetConVar("cl_tfa_viewmodel_flip") end
 
 	local righthanded = true
 	
@@ -1210,11 +1210,11 @@ function SWEP:ViewModelFlipFunc()
 	end
 	
 	shouldflip = self.ViewModelFlipDefault
-	if !righthanded then
-		shouldflip = !self.ViewModelFlipDefault
+	if not righthanded then
+		shouldflip = not self.ViewModelFlipDefault
 	end
 	
-	if self.ViewModelFlip!=shouldflip then self.ViewModelFlip = shouldflip end
+	if self.ViewModelFlip ~= shouldflip then self.ViewModelFlip = shouldflip end
 end
 
 --[[ 
@@ -1226,7 +1226,7 @@ Purpose:  Standard SWEP Function
 ]]--
 
 function SWEP:Think2()
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 
 	if self.Callback.Think2 then
 		local val = self.Callback.Think2(self)
@@ -1321,7 +1321,7 @@ function SWEP:MainUpdate()
 		hudhangtime = hudhangtime_cvar:GetFloat()
 	end
 	
-	if isfidgeting and !htv and hudhangtime then
+	if isfidgeting and not htv and hudhangtime then
 		self:SetHUDThreshold(true)
 		self:SetHUDThresholdEnd( self:GetNextIdleAnim() + hudhangtime)
 		htv = true
@@ -1341,12 +1341,12 @@ function SWEP:MainUpdate()
 		self:SetBoltTimerEnd(ct-1)
 	end
 	if isreloading and ct>self:GetReloadingEnd() then
-		if !self.Shotgun then
+		if not self.Shotgun then
 			self:CompleteReload()
 			isreloading = false
 		else
 			if (self:GetShotgunInsertingShell() == false) then
-				if !self:GetShotgunPumping() then
+				if not self:GetShotgunPumping() then
 					if self.StartAnimInsertShell then
 						local maxclip=self.Primary.ClipSize
 						local curclip = self:Clip1()
@@ -1363,7 +1363,7 @@ function SWEP:MainUpdate()
 						self.Weapon:SendWeaponAnim(ACT_VM_RELOAD)
 						self:ResetEvents()
 						if IsValid(self.Owner) then
-							if !self.ShellTime and IsValid(self.OwnerViewModel) then
+							if not self.ShellTime and IsValid(self.OwnerViewModel) then
 								self:SetReloadingEnd(ct+self.OwnerViewModel:SequenceDuration( self.OwnerViewModel:SelectWeightedSequence(ACT_VM_RELOAD) ) )
 								self:SetNextPrimaryFire( ct+ ( self.SequenceLengthOverride[ACT_VM_RELOAD] and self.SequenceLengthOverride[ACT_VM_RELOAD] or  self.OwnerViewModel:SequenceDuration( self.OwnerViewModel:SelectWeightedSequence(ACT_VM_RELOAD) ) )  )
 							else
@@ -1420,7 +1420,7 @@ function SWEP:MainUpdate()
 						self:SetReloading(true)
 						self:SetShotgunInsertingShell(true)
 						if IsValid(self.Owner) then
-							if !self.ShellTime and IsValid(self.OwnerViewModel) then
+							if not self.ShellTime and IsValid(self.OwnerViewModel) then
 								self:SetReloadingEnd(ct+self.OwnerViewModel:SequenceDuration( self.OwnerViewModel:SelectWeightedSequence(ACT_VM_RELOAD) ) )
 								self:SetNextPrimaryFire( ct+ ( self.SequenceLengthOverride[ACT_VM_RELOAD] and self.SequenceLengthOverride[ACT_VM_RELOAD] or  self.OwnerViewModel:SequenceDuration( self.OwnerViewModel:SelectWeightedSequence(ACT_VM_RELOAD) ) )  )
 							else
@@ -1466,7 +1466,7 @@ function SWEP:MainUpdate()
 						end
 					end)
 					timer.Simple(0.1,function()
-						if IsValid(self) and !IsValid( self:GetNWEntity("LastHeldEntityIndex") ) then
+						if IsValid(self) and not IsValid( self:GetNWEntity("LastHeldEntityIndex") ) then
 							self:Deploy()						
 						end
 					end)
@@ -1502,7 +1502,7 @@ function SWEP:MainUpdate()
 		htv = true
 	end
 	if ischangingsilence and ct>self:GetNextSilenceChange() then
-		self:SetSilenced(!self:GetSilenced())
+		self:SetSilenced(not self:GetSilenced())
 		self:SetChangingSilence(false)
 		self:SetNextSilenceChange(ct - 1)
 	end
@@ -1525,7 +1525,7 @@ function SWEP:MainUpdate()
 			local success, tanim 
 			if isfidgeting then
 				success, tanim = self:ChooseInspectAnim()
-			elseif !self.DisableIdleAnimations then
+			elseif not self.DisableIdleAnimations then
 				success, tanim = self:ChooseIdleAnim()
 			end
 			local animtime = self.SequenceLength[tanim]
@@ -1543,16 +1543,16 @@ function SWEP:MainUpdate()
 	issprinting=false
 	
 	if IsValid(owent) then
-		if !(self.data and self.data.ironsights == 0) then
+		if not (self.data and self.data.ironsights == 0) then
 			if CLIENT then
-				if !ironsights_toggle_cvar:GetBool() then
+				if not ironsights_toggle_cvar:GetBool() then
 					if owent:KeyDown(IN_ATTACK2) then
 						issighting=true
 					end			
 				else
 					issighting=self:GetIronSightsRaw()
 					if owent:KeyPressed(IN_ATTACK2) then
-						issighting=!issighting
+						issighting=not issighting
 						self:SetIronSightsRaw(issighting)
 					end			
 				end
@@ -1564,7 +1564,7 @@ function SWEP:MainUpdate()
 				else
 					issighting=self:GetIronSightsRaw()
 					if owent:KeyPressed(IN_ATTACK2) then
-						issighting=!issighting
+						issighting=not issighting
 						self:SetIronSightsRaw(issighting)
 					end			
 				end
@@ -1586,13 +1586,13 @@ function SWEP:MainUpdate()
 	
 	if owent.TFACasting or ( owent.tfacastoffset and owent.tfacastoffset>0.1) then issprinting = false end
 	
-	if self:Clip1() ==  0 and ( !dryfire_cvar:GetBool() ) then
+	if self:Clip1() ==  0 and ( not dryfire_cvar:GetBool() ) then
 		if self:GetBursting() then
 			self:SetBursting(false)
 			self:SetNextBurst(ct - 1)
 			self:SetBurstCount(0)
 		end
-	elseif self:Clip1() < 0 and IsValid(owent) and self:GetAmmoReserve()<=0 and ( !dryfire_cvar:GetBool() ) then
+	elseif self:Clip1() < 0 and IsValid(owent) and self:GetAmmoReserve()<=0 and ( not dryfire_cvar:GetBool() ) then
 		if self:GetBursting() then
 			self:SetBursting(false)
 			self:SetNextBurst(ct - 1)
@@ -1686,7 +1686,7 @@ function SWEP:MainUpdate()
 	end
 		
 	if (isdrawing) then
-		if !self.SightWhileDraw then
+		if not self.SightWhileDraw then
 			if isinspecting then
 				self:SetInspecting(false)
 				self:SetInspectingRatio(0)
@@ -1708,7 +1708,7 @@ function SWEP:MainUpdate()
 			isinspecting = false
 		end
 		self:SetBursting(false)
-		if !self.SightWhileHolster then
+		if not self.SightWhileHolster then
 			issighting=false
 		end
 		if isfidgeting then
@@ -1736,7 +1736,7 @@ function SWEP:MainUpdate()
 		end
 	end
 	
-	if (is_old!=issighting) then
+	if (is_old ~= issighting) then
 		if ( ( CLIENT and IsFirstTimePredicted() ) or ( SERVER and sp ) ) then
 			if (issighting==false) then
 				self:EmitSound("TFA.IronOut")
@@ -1745,12 +1745,12 @@ function SWEP:MainUpdate()
 			end
 		end
 		self:SetIronSights(issighting)
-		if ( (CLIENT and !ironsights_resight_cvar:GetBool() ) or ( SERVER and owent:GetInfoNum("cl_tfa_ironsights_resight",0)==0) ) then
+		if ( (CLIENT and not ironsights_resight_cvar:GetBool() ) or ( SERVER and owent:GetInfoNum("cl_tfa_ironsights_resight",0)==0) ) then
 			self:SetIronSightsRaw(issighting)
 		end
 	end
 	
-	if spr_old != issprinting then
+	if spr_old ~= issprinting then
 		self:SetSprinting(issprinting)
 	end
 	
@@ -1760,7 +1760,7 @@ function SWEP:MainUpdate()
 	rsnumber = (issprinting and 1 or 0)
 	
 	if SERVER then
-		--if !sp then
+		--if not sp then
 			self:CalculateNearWallSH()
 		--end
 		
@@ -1874,7 +1874,7 @@ function SWEP:CycleSafety()
 	ct = l_CT()
 	
 	local fm = self:GetFireMode()
-	if fm !=#self.FireModes then
+	if fm ~= #self.FireModes then
 		self.LastFireMode = fm
 		self:SetFireMode(#self.FireModes)
 	else
@@ -1908,8 +1908,8 @@ function SWEP:ProcessFireMode()
 		if val then return val end
 	end
 	
-	if self.Owner:KeyPressed(IN_RELOAD) and self.Owner:KeyDown(IN_USE) and !(CLIENT and !IsFirstTimePredicted() ) and !self:GetReloading() then
-		if self.SelectiveFire and !self.Owner:KeyDown(IN_SPEED) then
+	if self.Owner:KeyPressed(IN_RELOAD) and self.Owner:KeyDown(IN_USE) and not (CLIENT and not IsFirstTimePredicted() ) and not self:GetReloading() then
+		if self.SelectiveFire and not self.Owner:KeyDown(IN_SPEED) then
 			self:CycleFireMode()
 		elseif self.Owner:KeyDown(IN_SPEED) then
 			self:CycleSafety()
@@ -1935,7 +1935,7 @@ Purpose:  Main SWEP function
 
 function SWEP:CanPrimaryAttack()
 
-	if ( self.Weapon:Clip1() <= 0 and self.Primary.ClipSize!=-1 ) then
+	if ( self.Weapon:Clip1() <= 0 and self.Primary.ClipSize ~= -1 ) then
 
 		self:EmitSound( "Weapon_Pistol.Empty" )
 		self:SetNextPrimaryFire(l_CT()+1/(self:GetRPM()/60))
@@ -1967,7 +1967,7 @@ function SWEP:PrimaryAttack()
 		if val then return val end
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	self:UpdateConDamage()
 	
@@ -1980,7 +1980,7 @@ function SWEP:PrimaryAttack()
 		end
 	end
 	
-	if (self:GetReloading() and self.Shotgun and !self:GetShotgunPumping() and !self:GetShotgunNeedsPump()) then
+	if (self:GetReloading() and self.Shotgun and not self:GetShotgunPumping() and not self:GetShotgunNeedsPump()) then
 		self:SetShotgunCancel( true )
 		--[[
 		self:SetShotgunInsertingShell(true)
@@ -2007,7 +2007,7 @@ function SWEP:PrimaryAttack()
 		return
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	if self.FiresUnderwater == false and self.Owner:WaterLevel()>=3 then
 		if self:CanPrimaryAttack() then
@@ -2019,9 +2019,9 @@ function SWEP:PrimaryAttack()
 	
 	if (self.Owner:KeyDown(IN_USE) and self.CanBeSilenced and self.Owner:KeyPressed(ACT_VM_PRIMARYATTACK)  ) then
 	
-		if ( self:CanPrimaryAttack() and !self:GetChangingSilence() ) then
-			--self:SetSilenced(!self:GetSilenced())
-			local success, tanim = self:ChooseSilenceAnim(!self:GetSilenced())
+		if ( self:CanPrimaryAttack() and not self:GetChangingSilence() ) then
+			--self:SetSilenced(not self:GetSilenced())
+			local success, tanim = self:ChooseSilenceAnim(not self:GetSilenced())
 			self:SetChangingSilence(true)
 			self:SetNextSilenceChange(l_CT()+self.SequenceLength[tanim])
 			self:SetNextPrimaryFire(l_CT()+1/(self:GetRPM()/60))
@@ -2036,7 +2036,7 @@ function SWEP:PrimaryAttack()
 		self:CompleteReload()
 	end
 	
-	if !self:CanPrimaryAttack() then return end
+	if not self:CanPrimaryAttack() then return end
 	
 	--if self.Owner:IsPlayer() then
 		if  self:GetRunSightsRatio()<0.1 then--and self:GetReloading()==false then
@@ -2089,7 +2089,7 @@ function SWEP:PrimaryAttack()
 			
 			self:SetNextPrimaryFire(l_CT()+1/(self:GetRPM()/60))
 			
-			if !self:GetSilenced() then
+			if not self:GetSilenced() then
 				if self.Primary.Sound then
 					self:PlaySound(self.Primary.SoundTable and self.Primary.SoundTable or self.Primary.Sound)
 				end
@@ -2130,7 +2130,7 @@ function SWEP:PlayerThink( ply )
 	heldentindex = self.Owner:GetNWInt("LastHeldEntityIndex",-1)
 	heldent = Entity(heldentindex)
 	
-	if heldentindex!=-1 and IsValid(heldent) and heldent.IsPlayerHolding and !heldent:IsPlayerHolding() then
+	if heldentindex ~= -1 and IsValid(heldent) and heldent.IsPlayerHolding and not heldent:IsPlayerHolding() then
 		self.Owner:SetNWInt("LastHeldEntityIndex",-1)
 		heldent = nil
 	end
@@ -2198,20 +2198,20 @@ Purpose:  Main SWEP function
 
 function SWEP:ProcessEvents()
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 
 	if self.Callback.ProcessEvents then
 		local val = self.Callback.ProcessEvents(self)
 		if val then return val end
 	end
 	
-	--if sp and !CLIENT then self:CallOnClient("ProcessEvents","") end
+	--if sp and not CLIENT then self:CallOnClient("ProcessEvents","") end
 	
-	if !IsValid(self.OwnerViewModel) then return end
+	if not IsValid(self.OwnerViewModel) then return end
 	
 	local actv = self.lastact--[[self.OwnerViewModel:GetSequenceActivity(self.OwnerViewModel:GetSequence())
 	
-	if actv==ACT_VM_RELOAD and self.SequenceEnabled[ACT_VM_RELOAD_EMPTY] and self:Clip1()==0 and !self:GetSilenced() then
+	if actv==ACT_VM_RELOAD and self.SequenceEnabled[ACT_VM_RELOAD_EMPTY] and self:Clip1()==0 and not self:GetSilenced() then
 		actv=ACT_VM_RELOAD_EMPTY
 	end
 	
@@ -2224,11 +2224,11 @@ function SWEP:ProcessEvents()
 	
 	
 	
-	if !self.lastlastact then
+	if not self.lastlastact then
 		self.lastlastact = 0
 	end
 	
-	if self.lastlastact != self.lastact then
+	if self.lastlastact ~= self.lastact then
 		self:ResetEvents()
 	end
 	
@@ -2236,7 +2236,7 @@ function SWEP:ProcessEvents()
 	
 	if evtbl then
 		for k,v in pairs(evtbl) do
-			if !v.called then
+			if not v.called then
 				if l_CT()>self.EventTimer+v.time then
 					
 					v.called = true
@@ -2251,7 +2251,7 @@ function SWEP:ProcessEvents()
 							v.server = true
 						end	
 						
-						if ( v.client and CLIENT and (!v.client_predictedonly or self.Owner==LocalPlayer()) ) or ( v.server and SERVER ) then						
+						if ( v.client and CLIENT and (not v.client_predictedonly or self.Owner==LocalPlayer()) ) or ( v.server and SERVER ) then						
 							if v.value then v.value(self,self.OwnerViewModel) end
 						end
 						
@@ -2268,14 +2268,14 @@ function SWEP:ProcessEvents()
 								net.WriteString(v.value or "")
 								if sp then net.Broadcast() else net.SendOmit(self.Owner) end
 							elseif v.server then
-								if v.value and v.value!="" then
+								if v.value and v.value ~= "" then
 									self:EmitSound(v.value)
 								end
 							end
 						end
 						
-						if CLIENT and v.client and self.Owner==LocalPlayer() and !sp then
-							if v.value and v.value!="" then
+						if CLIENT and v.client and self.Owner==LocalPlayer() and not sp then
+							if v.value and v.value ~= "" then
 								self:EmitSound(v.value)
 							end
 						end
@@ -2314,7 +2314,7 @@ function SWEP:PlayerThinkClientFrame( ply )
 		if val then return val end
 	end
 	
-	if !sp then
+	if not sp then
 		self.ShouldDrawAmmoHUD = ( self.cl_cache_isreloading or self.cl_cache_isfmc or self.cl_cache_ishud or self.cl_cache_isbolting )
 	else
 		ct = l_CT()
@@ -2329,10 +2329,10 @@ function SWEP:PlayerThinkClientFrame( ply )
 	is = self:GetIronSights() and 1 or 0
 	insp = self:GetInspecting() and 1 or 0
 	
-	rel_proc = ( self:GetReloading() ) and !legacy_reloads_cv:GetBool()
+	rel_proc = ( self:GetReloading() ) and not legacy_reloads_cv:GetBool()
 	if self.Owner.TFACasting or ( self.Owner.tfacastoffset and self.Owner.tfacastoffset>0.1) then rel_proc = true end
 	
-	rs = ( ( self:GetSprinting() or self:IsSafety() ) and !rel_proc) and 1 or 0 
+	rs = ( ( self:GetSprinting() or self:IsSafety() ) and not rel_proc) and 1 or 0 
 	isr=self.CLIronSightsProgress
 	rsr=self.CLRunSightsProgress
 	inspr = self.CLInspectingProgress
@@ -2365,7 +2365,7 @@ function SWEP:PlayerThinkClientFrame( ply )
 	self.CLAmmoHUDProgress = l_mathApproach( self.CLAmmoHUDProgress, (self.ShouldDrawAmmoHUD  or self:GetInspecting()) and 1 or 0, l_FT() / ammo_fadein_cvar:GetFloat() )
 	self:DoBobFrame()
 	
-	if !self.Blowback_PistolMode or self:Clip1()==-1 or self:Clip1()>0.1 or ( self.Blowback_PistolMode_Disabled[act] and act!=-1 and self.lastact!=-2) then
+	if not self.Blowback_PistolMode or self:Clip1()==-1 or self:Clip1()>0.1 or ( self.Blowback_PistolMode_Disabled[act] and act ~= -1 and self.lastact ~= -2) then
 		self.BlowbackCurrent = l_mathApproach(self.BlowbackCurrent,0,self.BlowbackCurrent*ftv*15)
 	end
 	
@@ -2374,7 +2374,7 @@ function SWEP:PlayerThinkClientFrame( ply )
 	local heldentindex = self.Owner:GetNWInt("LastHeldEntityIndex",-1)
 	local heldent = Entity(heldentindex)
 	
-	if heldentindex!=-1 and IsValid(heldent) and heldent.IsPlayerHolding and !heldent:IsPlayerHolding() then
+	if heldentindex ~= -1 and IsValid(heldent) and heldent.IsPlayerHolding and not heldent:IsPlayerHolding() then
 		self.Owner:SetNWInt("LastHeldEntityIndex",-1)
 		heldent = nil
 	end
@@ -2383,7 +2383,7 @@ function SWEP:PlayerThinkClientFrame( ply )
 		self.Owner:DrawViewModel(false)
 		local vmod= self.Owner:GetViewModel()
 		if IsValid(vmod) then
-			if !self.hiddenHasYetToStopParticles then
+			if not self.hiddenHasYetToStopParticles then
 				vmod:StopParticles()
 				self.hiddenHasYetToStopParticles = true
 			end
@@ -2410,7 +2410,7 @@ function SWEP:PlayerThinkClientFrame( ply )
 	
 	self.ProceduralHolsterFactor = l_mathApproach(self.ProceduralHolsterFactor,nhf,(nhf-self.ProceduralHolsterFactor)*ftv*self.ProceduralHolsterTime*10)
 	
-	if self:GetDrawing() and !self:GetProceduralReloading() and nfh!=1 then
+	if self:GetDrawing() and not self:GetProceduralReloading() and nfh ~= 1 then
 		self.ProceduralHolsterFactor = 0
 	end
 end
@@ -2462,7 +2462,7 @@ Purpose:
 local ckeyvar
 
 function SWEP:CanCKeyInspect()
-	if !ckeyvar then
+	if not ckeyvar then
 		ckeyvar = GetConVar("cl_tfa_inspection_ckey")
 	end
 	if ckeyvar and CLIENT then
@@ -2543,7 +2543,7 @@ function SWEP:Reload()
 		return
 	end
 	
-	if (self:GetSprinting() ) and ( !self.AllowReloadWhileSprinting and legacy_reloads_cv:GetBool() ) then
+	if (self:GetSprinting() ) and ( not self.AllowReloadWhileSprinting and legacy_reloads_cv:GetBool() ) then
 		return
 	end
 	
@@ -2577,7 +2577,7 @@ function SWEP:Reload()
 		
 		if self.DoProceduralReload then
 			success, tanim = self:ChooseProceduralReloadAnim()			
-		elseif !self.Shotgun then
+		elseif not self.Shotgun then
 			success, tanim = self:ChooseReloadAnim()
 		else
 			success, tanim = self:ChooseShotgunReloadAnim()
@@ -2586,17 +2586,17 @@ function SWEP:Reload()
 		end
 		
 		timer.Simple(0, function()
-			if !IsValid(self) or !self:OwnerIsValid() then return end
+			if not IsValid(self) or not self:OwnerIsValid() then return end
 			self:SetHoldType(self.DefaultHoldType and self.DefaultHoldType or self.HoldType)
-			if !self.ThirdPersonReloadDisable and ( SERVER or ( CLIENT and !self:IsFirstPerson()  ) )  then
+			if not self.ThirdPersonReloadDisable and ( SERVER or ( CLIENT and not self:IsFirstPerson()  ) )  then
 				self.Owner:SetAnimation( PLAYER_RELOAD ) -- 3rd Person Animation
 			end
 		end)
 		
 		if (CLIENT) then
 			timer.Simple(0, function()
-				if !IsValid(self) or !self:OwnerIsValid() then return end
-				if !self.ThirdPersonReloadDisable and ( SERVER or ( CLIENT and !self:IsFirstPerson()  ) ) then
+				if not IsValid(self) or not self:OwnerIsValid() then return end
+				if not self.ThirdPersonReloadDisable and ( SERVER or ( CLIENT and not self:IsFirstPerson()  ) ) then
 					self.Owner:SetAnimation( PLAYER_RELOAD ) -- 3rd Person Animation
 				end
 			end)
@@ -2612,7 +2612,7 @@ function SWEP:Reload()
 		self:SetNextPrimaryFire( dt )
 		self:SetNextSecondaryFire( dt )
 		self:SetNextIdleAnim(l_CT() + AnimationTime)
-	elseif !self:CanCKeyInspect() and self.SequenceEnabled[ACT_VM_FIDGET] and !self:GetIronSights() and !self:GetSprinting() and !self:GetFidgeting() and !self:GetInspecting() then
+	elseif not self:CanCKeyInspect() and self.SequenceEnabled[ACT_VM_FIDGET] and not self:GetIronSights() and not self:GetSprinting() and not self:GetFidgeting() and not self:GetInspecting() then
 		if self:Clip1()>=1 then
 			self:SetFidgeting(true)
 			self:SetNextIdleAnim(-1)
@@ -2638,7 +2638,7 @@ local gunswaycvar = GetConVar("cl_tfa_gunbob_intensity")
 
 function SWEP:Sway(pos,ang)
 
-	if !self:OwnerIsValid() then return pos,ang end
+	if not self:OwnerIsValid() then return pos,ang end
 	
 	ang:Normalize()
 	
@@ -2741,7 +2741,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 		if val then return val,val2 end
 	end
 	
-	if !self.ogviewmodelfov then self.ogviewmodelfov = self.ViewModelFOV end
+	if not self.ogviewmodelfov then self.ogviewmodelfov = self.ViewModelFOV end
 	
 	
 	vmfov = self.ogviewmodelfov * fovmod_mult:GetFloat()
@@ -2762,14 +2762,14 @@ function SWEP:GetViewModelPosition(pos, ang)
 	tmp_rspos = self.RunSightsPos and self.RunSightsPos or tmp_ispos
 	tmp_rsa  = self.RunSightsAng and self.RunSightsAng or tmp_isa
 	
-	if !self.InspectPos then
+	if not self.InspectPos then
 		self.InspectPos = self.InspectPosDef * 1
 		if self.ViewModelFlip then
 			self.InspectPos.x= self.InspectPos.x * -1
 		end
 	end
 	
-	if ! self.InspectAng then
+	if not  self.InspectAng then
 		self.InspectAng = self.InspectAngDef * 1
 		
 		if self.ViewModelFlip then
@@ -2913,7 +2913,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 	end
 	
 	if self.BlowbackEnabled and self.BlowbackCurrentRoot>qerp_threshold then
-		--if !(  self.Blowback_PistolMode and !( self:Clip1()==-1 or self:Clip1()>0 ) ) then
+		--if not (  self.Blowback_PistolMode and not ( self:Clip1()==-1 or self:Clip1()>0 ) ) then
 			pos:Add( ang:Right() * (self.BlowbackVector.x) * self.BlowbackCurrentRoot )
 			pos:Add( ang:Forward() * (self.BlowbackVector.y) * self.BlowbackCurrentRoot )
 			pos:Add( ang:Up() * (self.BlowbackVector.z) * self.BlowbackCurrentRoot)
@@ -2928,7 +2928,7 @@ function SWEP:GetViewModelPosition(pos, ang)
 	
 	local qerp1 = l_Lerp(self.CLIronSightsProgress and self.CLIronSightsProgress or 0,0,self.ViewModelFlip and 1 or -1)*15
 	
-	if !ang then return end 
+	if not ang then return end 
 	
 	ang:RotateAroundAxis(ang:Forward(),-Qerp(self.CLIronSightsProgress and self.CLIronSightsProgress or 0,qerp1,0))
 	
@@ -2980,8 +2980,8 @@ function SWEP:CalculateConeRecoil()
 		if val then return val,val2 end
 	end
 	
-	if !IsValid(self) then return 0, 0 end
-	if !IsValid(self.Owner) then return 0, 0 end
+	if not IsValid(self) then return 0, 0 end
+	if not IsValid(self.Owner) then return 0, 0 end
 	local CurrentRecoil
 	local CurrentCone
 	local basedamage
@@ -3044,8 +3044,8 @@ Purpose:  Main SWEP function
 ]]--
 
 function SWEP:ClientCalculateConeRecoil()
-	if !IsValid(self) then return 0, 0 end
-	if !IsValid(self.Owner) then return 0, 0 end
+	if not IsValid(self) then return 0, 0 end
+	if not IsValid(self.Owner) then return 0, 0 end
 
 	if self.Callback.ClientCalculateConeRecoil then
 		local val,val2 = self.Callback.ClientCalculateConeRecoil(self)
@@ -3118,9 +3118,9 @@ local trent,bash
 
 function SWEP:CalculateNearWallSH()
 	
-	if !IsValid(self.Owner) then return end
+	if not IsValid(self.Owner) then return end
 	
-	if !nearwall_cvar:GetBool() then
+	if not nearwall_cvar:GetBool() then
 		return
 	end
 
@@ -3135,7 +3135,7 @@ function SWEP:CalculateNearWallSH()
 	
 	bash = self.GetBashing and self:GetBashing()
 	
-	if !bash then
+	if not bash then
 		local tracedata = {}
 		tracedata.start=self.Owner:GetShootPos()
 		tracedata.endpos=tracedata.start+self.Owner:EyeAngles():Forward()*self.WeaponLength
@@ -3146,7 +3146,7 @@ function SWEP:CalculateNearWallSH()
 		if traceres.Hit then
 			if traceres.Fraction>0 and traceres.Fraction<1 then
 				trent = traceres.Entity
-				if traceres.MatType!=MAT_FLESH and traceres.MatType!=MAT_GLASS and !( IsValid(trent) and trent:IsNPC() )then
+				if traceres.MatType ~= MAT_FLESH and traceres.MatType ~= MAT_GLASS and not ( IsValid(trent) and trent:IsNPC() )then
 					vnearwall = true
 				end
 			end
@@ -3172,10 +3172,10 @@ function SWEP:CalculateNearWallCLF( ft )
 	
 	ft = ft or l_FT()
 	
-	if !( CLIENT or sp ) then return end
-	if !IsValid(self.Owner) then return end
+	if not ( CLIENT or sp ) then return end
+	if not IsValid(self.Owner) then return end
 	
-	if !nearwall_cvar:GetBool() then
+	if not nearwall_cvar:GetBool() then
 		return
 	end
 
@@ -3190,7 +3190,7 @@ function SWEP:CalculateNearWallCLF( ft )
 	
 	bash = self.GetBashing and self:GetBashing()
 	
-	if !bash then
+	if not bash then
 		
 		local tracedata = {}
 		tracedata.start=self.Owner:GetShootPos()
@@ -3202,7 +3202,7 @@ function SWEP:CalculateNearWallCLF( ft )
 		if traceres.Hit then
 			if traceres.Fraction>0 and traceres.Fraction<1 then
 				trent = traceres.Entity
-				if traceres.MatType!=MAT_FLESH and traceres.MatType!=MAT_GLASS and !( IsValid(trent) and trent:IsNPC() )then
+				if traceres.MatType ~= MAT_FLESH and traceres.MatType ~= MAT_GLASS and not ( IsValid(trent) and trent:IsNPC() )then
 					vnearwall = true
 				end
 			end
@@ -3251,22 +3251,22 @@ function SWEP:ProcessHoldType()
 		if val then return val end
 	end
 	
-	if !self.DefaultHoldType then self.DefaultHoldType = self.HoldType or "ar2" end
-	if !self.SprintHoldType then
+	if not self.DefaultHoldType then self.DefaultHoldType = self.HoldType or "ar2" end
+	if not self.SprintHoldType then
 		self.SprintHoldType = self.SprintHoldTypes[self.DefaultHoldType] or "passive"
-		if self.SprintHoldTypeOverride and self.SprintHoldTypeOverride!="" then
+		if self.SprintHoldTypeOverride and self.SprintHoldTypeOverride ~= "" then
 			self.SprintHoldType = self.SprintHoldTypeOverride
 		end
 	end
-	if !self.IronHoldType then
+	if not self.IronHoldType then
 		self.IronHoldType = self.IronSightHoldTypes[self.DefaultHoldType] or "rpg"
-		if self.IronSightHoldTypeOverride and self.IronSightHoldTypeOverride!="" then
+		if self.IronSightHoldTypeOverride and self.IronSightHoldTypeOverride ~= "" then
 			self.IronHoldType = self.IronSightHoldTypeOverride
 		end
 	end
-	if !self.ReloadHoldType then
+	if not self.ReloadHoldType then
 		self.ReloadHoldType = self.ReloadHoldTypes[self.DefaultHoldType] or "ar2"
-		if self.ReloadHoldTypeOverride and self.ReloadHoldTypeOverride!="" then
+		if self.ReloadHoldTypeOverride and self.ReloadHoldTypeOverride ~= "" then
 			self.ReloadHoldType = self.ReloadHoldTypeOverride
 		end
 	end
@@ -3280,7 +3280,7 @@ function SWEP:ProcessHoldType()
 	if self:GetSprinting() or self:GetHolstering() or self:IsSafety() then targhold = self.SprintHoldType end
 	if self:GetReloading() then targhold = self.ReloadHoldType end
 	
-	if targhold != curhold then self:SetHoldType(targhold) end
+	if targhold ~= curhold then self:SetHoldType(targhold) end
 end
 
 function SWEP:CompleteReload()
@@ -3290,7 +3290,7 @@ function SWEP:CompleteReload()
 		if val then return val end
 	end
 	
-	if !self.Shotgun then
+	if not self.Shotgun then
 		local hudhangtime = 1
 		
 		if self:OwnerIsValid() then
@@ -3322,7 +3322,7 @@ function SWEP:ToggleInspect()
 		if val then return val end
 	end
 	
-	if self:CanCKeyInspect() and self:GetRunSightsRatio()<0.1 and self:GetNearWallRatio()<0.1 and !self:GetDrawing() and !self:GetHolstering() and !self:GetReloading() and !self:GetFidgeting() and !self:GetIronSights() and self.SequenceEnabled[ACT_VM_FIDGET] then
+	if self:CanCKeyInspect() and self:GetRunSightsRatio()<0.1 and self:GetNearWallRatio()<0.1 and not self:GetDrawing() and not self:GetHolstering() and not self:GetReloading() and not self:GetFidgeting() and not self:GetIronSights() and self.SequenceEnabled[ACT_VM_FIDGET] then
 		self:SetInspecting(false)
 		if CLIENT then
 			net.Start("tfaInspect")
@@ -3334,13 +3334,13 @@ function SWEP:ToggleInspect()
 		return
 	end
 	
-	if !self:GetIronSights() and self:GetRunSightsRatio()<0.1 and self:GetNearWallRatio()<0.1 and !self:GetDrawing() and !self:GetHolstering() and !self:GetReloading() and !self:GetFidgeting() then
+	if not self:GetIronSights() and self:GetRunSightsRatio()<0.1 and self:GetNearWallRatio()<0.1 and not self:GetDrawing() and not self:GetHolstering() and not self:GetReloading() and not self:GetFidgeting() then
 	
 		local oldinsp = self:GetInspecting()
-		self:SetInspecting(!oldinsp)
+		self:SetInspecting(not oldinsp)
 		if CLIENT then
 			net.Start("tfaInspect")
-			net.WriteBool(!oldinsp)
+			net.WriteBool(not oldinsp)
 			net.SendToServer()
 		end
 		self:SetNextIdleAnim( l_CT() - 1)
@@ -3355,7 +3355,7 @@ function SWEP:ShotgunInterrupt()
 		if val then return val end
 	end
 	
-	if (self:GetReloading() and self.Shotgun and !self:GetShotgunPumping() and !self:GetShotgunNeedsPump()) then
+	if (self:GetReloading() and self.Shotgun and not self:GetShotgunPumping() and not self:GetShotgunNeedsPump()) then
 		if CLIENT then
 			net.Start("tfaShotgunInterrupt")
 			net.SendToServer()

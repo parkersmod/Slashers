@@ -31,15 +31,15 @@ function SWEP:Deploy()
 end
 
 function SWEP:Holster()
-	if not IsFirstTimePredicted() or !IsValid(pulleywheel_holo) or !IsValid(axe_holo) then return true end
+	if not IsFirstTimePredicted() or not IsValid(pulleywheel_holo) or not IsValid(axe_holo) then return true end
 	pulleywheel_holo:Remove()
 	axe_holo:Remove()
 	return true
 end
 
 function SWEP:Think()
-	if !IsValid(pulleywheel_holo) or !IsValid(axe_holo) then return end
-	if !IsValid(LocalPlayer():GetEyeTrace().Entity) then
+	if not IsValid(pulleywheel_holo) or not IsValid(axe_holo) then return end
+	if not IsValid(LocalPlayer():GetEyeTrace().Entity) then
 		pulleywheel_holo:SetNoDraw(true)
 		axe_holo:SetNoDraw(true)
 		return
@@ -81,9 +81,9 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:OnRemove()
-	if !IsValid(pulleywheel_holo) then return end
+	if not IsValid(pulleywheel_holo) then return end
 	pulleywheel_holo:Remove()
-	if !IsValid(axe_holo) then return end
+	if not IsValid(axe_holo) then return end
 	axe_holo:Remove()
 end
 
@@ -96,7 +96,7 @@ end
 
 function SWEP:DrawWorldModel()
 	local bone = self.Owner:LookupBone("ValveBiped.Bip01_R_Hand")
-	if !bone then return end
+	if not bone then return end
 	local hand_pos = self.Owner:GetBonePosition(bone)
 	local hand_ang = Angle(self.Owner:EyeAngles().pitch + 180, self.Owner:EyeAngles().yaw - 30, 0)
 	hand_pos = hand_pos + hand_ang:Forward() * -3 + hand_ang:Right() * -7

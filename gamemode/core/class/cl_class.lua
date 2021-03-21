@@ -32,11 +32,11 @@ local function DrawHUDKiller()
 	surface.DrawTexturedRect(20, scrh - 84, 64, 64)
 
 	for k, v in ipairs(GM.ROUND.Survivors) do
-		if !GM.CLASS.Survivors[v.ClassID] then continue end
+		if not GM.CLASS.Survivors[v.ClassID] then continue end
 
 		surface.SetMaterial(GM.CLASS.Survivors[v.ClassID].icon)
 		surface.DrawTexturedRect(scrw - ((64 + 20) * k), scrh - 84, 64, 64)
-		if !v:Alive() then
+		if not v:Alive() then
 			surface.SetMaterial(v:GetNWBool("Escaped") and ICON_SAFE or ICON_CROSS)
 			surface.DrawTexturedRect(scrw - ((64 + 20) * k), scrh - 84, 64, 64)
 		end
@@ -44,11 +44,11 @@ local function DrawHUDKiller()
 end
 
 local function HUDPaint()
-	if !IsValid(LocalPlayer()) then return end
-	if !GM.ROUND.Active then return end
-	if !LocalPlayer().ClassID then return end
+	if not IsValid(LocalPlayer()) then return end
+	if not GM.ROUND.Active then return end
+	if not LocalPlayer().ClassID then return end
 
-	if LocalPlayer():Team() == TEAM_SURVIVORS  && GM.CLASS.Survivors[LocalPlayer().ClassID] then
+	if LocalPlayer():Team() == TEAM_SURVIVORS and GM.CLASS.Survivors[LocalPlayer().ClassID] then
 		DrawHUDSurvivor()
 		if LocalPlayer().ClassID == CLASS_SURV_BLACK then
 			if FIRST then
@@ -67,7 +67,7 @@ hook.Add("HUDPaint", "sls_class_HUDPaint", HUDPaint)
 
 local function getUseKey()
 	local cpt = 0
-	while input.LookupKeyBinding( cpt ) != "+use" && cpt < 159 do
+	while input.LookupKeyBinding( cpt ) ~= "+use" and cpt < 159 do
 		 cpt = cpt + 1
 	end
 

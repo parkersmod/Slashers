@@ -22,12 +22,12 @@ function EFFECT:Init( data )
 	local owent
 	if IsValid(self.WeaponEnt) then
 		owent = self.WeaponEnt.Owner or self.WeaponEnt:GetOwner()
-		if !IsValid(owent) then owent = self.WeaponEnt:GetParent() end
+		if not IsValid(owent) then owent = self.WeaponEnt:GetParent() end
 	end
 	if IsValid(owent) and owent:IsPlayer() then
-		if owent!=LocalPlayer() or owent:ShouldDrawLocalPlayer() then
+		if owent ~= LocalPlayer() or owent:ShouldDrawLocalPlayer() then
 			self.WeaponEnt = owent:GetActiveWeapon()
-			if !IsValid(self.WeaponEnt) then return end
+			if not IsValid(self.WeaponEnt) then return end
 		else
 			self.WeaponEnt = owent:GetViewModel()
 			local theirweapon = owent:GetActiveWeapon()
@@ -36,13 +36,13 @@ function EFFECT:Init( data )
 					self.Flipped = true
 				end
 			end
-			if !IsValid(self.WeaponEnt) then return end		
+			if not IsValid(self.WeaponEnt) then return end		
 		end
 	end
 	
 	if IsValid(self.WeaponEntOG) and self.WeaponEntOG.MuzzleAttachment then
 		self.Attachment = self.WeaponEnt:LookupAttachment(self.WeaponEntOG.MuzzleAttachment)
-		if !self.Attachment or self.Attachment<=0 then
+		if not self.Attachment or self.Attachment<=0 then
 			self.Attachment = 1
 		end
 	
@@ -56,7 +56,7 @@ function EFFECT:Init( data )
 		angpos = self.WeaponEnt:GetAttachment(self.Attachment)
 	end
 	
-	if !angpos or !angpos.Pos then angpos = {Pos = bvec,Ang=uAng} end
+	if not angpos or not angpos.Pos then angpos = {Pos = bvec,Ang=uAng} end
 	
 	if self.Flipped then
 		local tmpang = (self.Dir or angpos.Ang:Forward()):Angle()

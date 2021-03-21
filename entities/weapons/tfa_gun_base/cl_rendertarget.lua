@@ -65,7 +65,7 @@ local onevec = Vector(1, 1, 1)
 function RBP( vm )
 	
 	local bc = vm:GetBoneCount()
-	if !bc or bc<=0 then return end
+	if not bc or bc<=0 then return end
 	
 	for i=0, bc do
 		vm:ManipulateBoneScale( i, onevec )
@@ -93,15 +93,15 @@ if CLIENT then
 		
 		local lply = LocalPlayer()
 		
-		if !IsValid(lply) then return end
+		if not IsValid(lply) then return end
 		
 		local vm = lply:GetViewModel()
 		
-		if !IsValid(vm) then return end
+		if not IsValid(vm) then return end
 		
 		local self = lply:GetActiveWeapon()
 		
-		if oldVmModel != vm:GetModel() or ( IsValid(self) and oldwepclass != self:GetClass() ) then
+		if oldVmModel ~= vm:GetModel() or ( IsValid(self) and oldwepclass ~= self:GetClass() ) then
 		
 			RBP(vm)
 			
@@ -134,14 +134,14 @@ if CLIENT then
 		
 		oldwepclass = ""
 		
-		if !IsValid(self) then return end
+		if not IsValid(self) then return end
 		
 		oldwepclass = self:GetClass()
 		
 		if self.MaterialTable then
 			
 			local vm = self.Owner:GetViewModel()
-			if !self.MaterialCached then
+			if not self.MaterialCached then
 				self.MaterialCached = {}
 				
 				if #self.MaterialTable>=1 and #self:GetMaterials()<=1 then
@@ -156,7 +156,7 @@ if CLIENT then
 			end
 			
 			for k,v in ipairs(self.MaterialTable) do
-				if !self.MaterialCached[k] then
+				if not self.MaterialCached[k] then
 					self:SetSubMaterial(k-1,v)
 					vm:SetSubMaterial(k-1,v)
 					self.MaterialCached[k] = true
@@ -165,7 +165,7 @@ if CLIENT then
 			
 		end
 		
-		if !self.RTMaterialOverride or !self.RTCode then return end
+		if not self.RTMaterialOverride or not self.RTCode then return end
 		
 		oldVmModel = vm:GetModel()
 		
@@ -173,7 +173,7 @@ if CLIENT then
 		
 		local oldrt = render.GetRenderTarget()
 		
-		if !self.RTOpaque then
+		if not self.RTOpaque then
 			render.SetRenderTarget(TFA_RTScreen)
 		else
 			render.SetRenderTarget(TFA_RTScreenO)
@@ -184,7 +184,7 @@ if CLIENT then
 		render.SetRenderTarget(oldrt)
 		render.SetViewPort(0,0,w,h)
 		
-		if !self.RTOpaque then
+		if not self.RTOpaque then
 			TFA_RTMat:SetTexture("$basetexture",TFA_RTScreen)
 		else
 			TFA_RTMat:SetTexture("$basetexture",TFA_RTScreenO)

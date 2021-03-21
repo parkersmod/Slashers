@@ -64,7 +64,7 @@ function SWEP:UpdateScopeType()
 	if self:Do3DScope() then
 		self.Scoped = false
 		self.Scoped_3D = true
-		if !self.Secondary.ScopeZoom_Backup then
+		if not self.Secondary.ScopeZoom_Backup then
 			self.Secondary.ScopeZoom_Backup = self.Secondary.ScopeZoom		
 		end
 		if self.BoltAction then 
@@ -97,7 +97,7 @@ function SWEP:UpdateScopeType()
 	self.DefaultFOV = GetConVarNumber("fov_desired",90)
 end
 
-if !SWEP.Callback then
+if not SWEP.Callback then
 	SWEP.Callback = {}
 end
 
@@ -136,15 +136,15 @@ SWEP.RTOpaque = true
 
 SWEP.RTCode = function( self, rt, scrw, scrh )
 	
-	if !self.myshadowmask then self.myshadowmask = surface.GetTextureID(self.ScopeShadow or "vgui/scope_shadowmask_test") end
-	if !self.myreticule then self.myreticule = Material(self.ScopeReticule or "scope/gdcw_scopesightonly") end
-	if !self.mydirt then self.mydirt = Material(self.ScopeDirt or "vgui/scope_dirt") end
+	if not self.myshadowmask then self.myshadowmask = surface.GetTextureID(self.ScopeShadow or "vgui/scope_shadowmask_test") end
+	if not self.myreticule then self.myreticule = Material(self.ScopeReticule or "scope/gdcw_scopesightonly") end
+	if not self.mydirt then self.mydirt = Material(self.ScopeDirt or "vgui/scope_dirt") end
 	
-	if !flipcv then flipcv=GetConVar("cl_tfa_viewmodel_flip") end
+	if not flipcv then flipcv=GetConVar("cl_tfa_viewmodel_flip") end
 
 	local vm = self.Owner:GetViewModel()
 	
-	if !self.LastOwnerPos then self.LastOwnerPos = self.Owner:GetShootPos() end
+	if not self.LastOwnerPos then self.LastOwnerPos = self.Owner:GetShootPos() end
 	
 	local owoff = self.Owner:GetShootPos() - self.LastOwnerPos
 	
@@ -152,7 +152,7 @@ SWEP.RTCode = function( self, rt, scrw, scrh )
 	
 	
 	local att = vm:GetAttachment(3)
-	if !att then return end
+	if not att then return end
 	
 	local pos = att.Pos - owoff
 	
@@ -170,7 +170,7 @@ SWEP.RTCode = function( self, rt, scrw, scrh )
 	scrpos.x = scrpos.x * self.ScopeOverlayTransformMultiplier
 	scrpos.y = scrpos.y * self.ScopeOverlayTransformMultiplier
 	
-	if !self.scrpos then self.scrpos = scrpos end
+	if not self.scrpos then self.scrpos = scrpos end
 	
 	self.scrpos.x = math.Approach( self.scrpos.x, scrpos.x, (scrpos.x-self.scrpos.x)*FrameTime()*10 )
 	self.scrpos.y = math.Approach( self.scrpos.y, scrpos.y, (scrpos.y-self.scrpos.y)*FrameTime()*10 )
@@ -207,8 +207,8 @@ SWEP.RTCode = function( self, rt, scrw, scrh )
 	cd.angles = ang
 	cd.origin = self.Owner:GetShootPos()
 	
-	if !self.RTScopeOffset then self.RTScopeOffset = {0,0} end
-	if !self.RTScopeScale then self.RTScopeScale = {1,1} end
+	if not self.RTScopeOffset then self.RTScopeOffset = {0,0} end
+	if not self.RTScopeScale then self.RTScopeScale = {1,1} end
 	
 	local rtow,rtoh = self.RTScopeOffset[1], self.RTScopeOffset[2]
 	local rtw,rth = 512 * self.RTScopeScale[1], 512 * self.RTScopeScale[2]

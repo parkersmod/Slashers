@@ -10,7 +10,7 @@ local scrw, scrh = ScrW(), ScrH()
 
 local function HUDPaint()
 	local curtime = CurTime()
-	if GM.ROUND.Active && GM.ROUND.EndTime && GM.ROUND.EndTime > curtime then
+	if GM.ROUND.Active and GM.ROUND.EndTime and GM.ROUND.EndTime > curtime then
 		local text, duration
 
 		duration = math.floor((GM.ROUND.EndTime - curtime) / 60) .. ":" .. format.Seconde(math.floor(GM.ROUND.EndTime - curtime) % 60)
@@ -100,7 +100,7 @@ end
 hook.Add("sls_round_OnTeamWin", "sls_round_OnTeamWin", function(winner) timer.Simple(0.1, function() OnTeamWin(winner) end) end)
 
 local function CalcView(ply, pos, ang)
-	if GM.ROUND.CameraEnable && GM.ROUND.CameraPos && GM.ROUND.CameraAng then
+	if GM.ROUND.CameraEnable and GM.ROUND.CameraPos and GM.ROUND.CameraAng then
 		-- Start camera
 		local view = {}
 		view.origin = GM.ROUND.CameraPos

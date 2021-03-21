@@ -66,7 +66,7 @@ function EFFECT:Init(data)
 	emitter:Finish()
 	
 	self.WeaponEnt = data:GetEntity()
-	if !IsValid(self.WeaponEnt) then return end
+	if not IsValid(self.WeaponEnt) then return end
 	if self.WeaponEnt.TracerName then
 		local fx = EffectData()
 		fx:SetStart(self.StartPos)

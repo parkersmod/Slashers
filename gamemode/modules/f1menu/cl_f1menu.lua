@@ -28,7 +28,7 @@ function ShowPlayerScreen(TeamName,TeamText,CharacName,CharacText,ImageCharac,Ti
 
 	local img_charac = vgui.Create( "DImage", PersoPANEL )
 
-	if !ImageCharac then
+	if not ImageCharac then
 		ImageCharac = "/characteres/default.png"
 	end
 	img_charac:SetImage( ImageCharac )

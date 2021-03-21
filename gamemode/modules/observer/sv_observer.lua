@@ -8,7 +8,7 @@
 local GM = GM or GAMEMODE
 
 local function SpectatePlayer(ply, target)
-	if !IsValid(target) then return end
+	if not IsValid(target) then return end
 	ply:Spectate(OBS_MODE_CHASE)
 	ply:SpectateEntity(target)
 	ply:SetParent(target)
@@ -16,7 +16,7 @@ local function SpectatePlayer(ply, target)
 end
 
 local function SpectateNext(ply)
-	if !GM.ROUND.Active then return end
+	if not GM.ROUND.Active then return end
 
 	local survivorsAlive = {}
 	local indice
@@ -28,7 +28,7 @@ local function SpectateNext(ply)
 	end
 
 	indice = table.KeyFromValue(survivorsAlive, ply:GetObserverTarget())
-	if !indice then indice = 1 end
+	if not indice then indice = 1 end
 
 	indice = indice + 1
 	if indice > #survivorsAlive then
@@ -38,7 +38,7 @@ local function SpectateNext(ply)
 end
 
 local function SpectatePrev(ply)
-	if !GM.ROUND.Active then return end
+	if not GM.ROUND.Active then return end
 
 	local survivorsAlive = {}
 	local indice
@@ -50,7 +50,7 @@ local function SpectatePrev(ply)
 	end
 
 	indice = table.KeyFromValue(survivorsAlive, ply:GetObserverTarget())
-	if !indice then indice = 1 end
+	if not indice then indice = 1 end
 	indice = indice - 1
 	if indice <= 0 then
 		indice = #survivorsAlive
@@ -61,9 +61,9 @@ end
 local function PlayerDeath( ply )
 	-- Start Spectate
 	timer.Simple(4, function()
-		if !GM.ROUND.Active then return end
-		if !IsValid(ply) then return end
-		if ply:Team() != TEAM_SURVIVORS then return end
+		if not GM.ROUND.Active then return end
+		if not IsValid(ply) then return end
+		if ply:Team() ~= TEAM_SURVIVORS then return end
 
 		for _,v in pairs(GM.ROUND.Survivors) do
 			if v:Alive() then
@@ -88,7 +88,7 @@ hook.Add("PlayerDisconnected", "sls_observer_PlayerDisconnected", PostPlayerDeat
 
 local function EndRound()
 	for _, v in ipairs(player.GetAll()) do
-		if v:GetObserverMode() != OBS_MODE_NONE then
+		if v:GetObserverMode() ~= OBS_MODE_NONE then
 			v:UnSpectate()
 			v:SetObserverMode(OBS_MODE_NONE)
 			v:SetParent(nil)
@@ -115,7 +115,7 @@ hook.Add("KeyPress", "sls_observer_KeyPress", KeyPress)
 
 local function PlayerInitialSpawn(ply)
 	timer.Simple(15, function()
-		if IsValid(ply) && !ply:Alive() && GM.ROUND.Active then
+		if IsValid(ply) and not ply:Alive() and GM.ROUND.Active then
 			for _, v in ipairs(GM.ROUND.Survivors) do
 				if v:Alive() then
 					net.Start("sls_round_Camera")
@@ -131,7 +131,7 @@ hook.Add("PlayerInitialSpawn", "sls_round_PlayerInitialSpawn", PlayerInitialSpaw
 
 
 local function DeadChat(rext,teamOnly,listener,speaker)
-	if speaker:IsPlayer() and !speaker:Alive() and listener:Alive() then
+	if speaker:IsPlayer() and not speaker:Alive() and listener:Alive() then
 		return false
 	end
 end

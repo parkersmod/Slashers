@@ -31,7 +31,7 @@ local function loadMapsData()
 	if SERVER then
 		util.AddNetworkString("sls_mapsloader_useability")
 
-		if !table.HasValue(GM.MAPS, game.GetMap()) then
+		if not table.HasValue(GM.MAPS, game.GetMap()) then
 			timer.Create("sls_error_map", 5, 0, function()
 				print("ERROR: The current map isn't supported by gamemode.")
 			end)
@@ -42,7 +42,7 @@ local function loadMapsData()
 		end
 	else
 
-		if !table.HasValue(GM.MAPS, game.GetMap()) then
+		if not table.HasValue(GM.MAPS, game.GetMap()) then
 			timer.Create("sls_error_map", 5, 0, function()
 				print("ERROR: The current map isn't supported by gamemode.")
 			end)
@@ -65,16 +65,16 @@ else
 
 	local function getMenuKey()
 		local cpt = 0
-		while input.LookupKeyBinding( cpt ) != "+menu" && cpt < 159 do
+		while input.LookupKeyBinding( cpt ) ~= "+menu" and cpt < 159 do
 			 cpt = cpt + 1
 		end
 		return  cpt
 	end
 
 	local function PlayerButtonDown(ply, button)
-		if !IsFirstTimePredicted() then return end
+		if not IsFirstTimePredicted() then return end
 
-		if GM.ROUND.Active && ply:Team() == TEAM_KILLER && button == getMenuKey() then
+		if GM.ROUND.Active and ply:Team() == TEAM_KILLER and button == getMenuKey() then
 			net.Start("sls_mapsloader_useability")
 			net.SendToServer()
 			GM.MAP.Killer:UseAbility( ply )

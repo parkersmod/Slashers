@@ -46,7 +46,7 @@ local function GetPercentSurvivorDead()
 	local percent = 0
 
 	for _,v in pairs(GM.ROUND.Survivors) do
-		if IsValid(v) && not v:Alive() then
+		if IsValid(v) and not v:Alive() then
 			dead = dead + 1
 		end
 	end
@@ -73,7 +73,7 @@ local function StartAmbient(level)
 			timer.Create("sls_sambient", station:GetLength() + 0.1, 0, function()
 				local percent = GetPercentSurvivorDead()
 
-				if level != percent then
+				if level ~= percent then
 					timer.Remove("sls_sambient")
 					StartAmbient(percent)
 				else
@@ -116,9 +116,9 @@ hook.Add("sls_round_PreStart", "sls_soundscape_PreStart", EndRound)
 
 local function JumpScare()
 	local killer = team.GetPlayers(TEAM_KILLER)[1]
-	if !killer then return end
-	if !LocalPlayer():Alive() then return end
-	if !IsValid(killer) then return end
+	if not killer then return end
+	if not LocalPlayer():Alive() then return end
+	if not IsValid(killer) then return end
 	if killer:GetColor().a == 0 then return end
 
 	local shootPos = LocalPlayer():GetShootPos()
@@ -132,7 +132,7 @@ local function JumpScare()
 		if unitPos:Dot(aimVec) > 0.80 then
 			local trace = util.QuickTrace(shootPos, pos, LocalPlayer())
 			if trace.Hit and trace.Entity ~= killer then return end
-			if LocalPlayer().lastJumpscare && LocalPlayer().lastJumpscare + jumpscare.cooldown > CurTime() then return end
+			if LocalPlayer().lastJumpscare and LocalPlayer().lastJumpscare + jumpscare.cooldown > CurTime() then return end
 
 			if distance <= 100000 then
 				-- High

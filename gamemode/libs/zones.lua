@@ -37,7 +37,7 @@ end
 function Zones_meta:GetPlayers()
     local players = {}
     for _, v in ipairs(player.GetAll()) do
-        if IsValid(v) && v:Alive() && self:HasPlayer(v) then
+        if IsValid(v) and v:Alive() and self:HasPlayer(v) then
             table.insert(players, v)
         end
     end
@@ -53,7 +53,7 @@ function Zones_meta:Remove()
 end
 
 local function PlayerDK(ply)
-	if !ply.inzones then return end
+	if not ply.inzones then return end
 	
 	for _, v in ipairs(ply.inzones) do
 		if Zones[v] then Zones[v]:OnPlayerLeave(ply) end
@@ -65,12 +65,12 @@ hook.Add("PlayerDisconnected", "zones_PlayerDisconnected", PlayerDK)
 
 local function Think()
     for _, ply in ipairs(player.GetAll()) do
-    	if !ply:Alive() then continue end
+    	if not ply:Alive() then continue end
 
         for _, zone in ipairs(Zones) do
-            if ply.inzones && table.HasValue(ply.inzones, zone:GetID()) then
+            if ply.inzones and table.HasValue(ply.inzones, zone:GetID()) then
                 -- Leave
-                if !zone:HasPlayer(ply) then
+                if not zone:HasPlayer(ply) then
                     zone:OnPlayerLeave(ply)
                     table.RemoveByValue(ply.inzones, zone:GetID())
                 end

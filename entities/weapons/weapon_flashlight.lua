@@ -11,7 +11,7 @@ SWEP.PrintName = "Maglite"
 
 SWEP.ViewModel			= "models/weapons/tfa_nmrih/v_item_maglite.mdl" --Viewmodel path
 SWEP.ViewModelFOV = 50
-//SWEP.RenderGroup = RENDERGROUP_BOTH
+--SWEP.RenderGroup = RENDERGROUP_BOTH
 
 SWEP.WorldModel			= "models/weapons/tfa_nmrih/w_item_maglite.mdl" --Viewmodel path
 SWEP.HoldType = "slam"
@@ -67,17 +67,17 @@ local matLight = Material( "sprites/light_ignorez" )
 
 function SWEP:PrimaryAttack()
 	if CLIENT then return end
-	if !IsValid(self) || !IsValid(self.Owner) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self then return end
+	if not IsValid(self) or not IsValid(self.Owner) or not self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() ~= self then return end
 
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self.Owner:EmitSound("slashers/effects/flashlight_toggle.wav", 75, 100, 0.6)
 
-	if !IsValid(self.projectedLight) then
+	if not IsValid(self.projectedLight) then
 		self:BuildLight()
 		return
 	end
 
-	self.Active = !self.Active
+	self.Active = not self.Active
 	if self.Active then
 		self.projectedLight:Fire("TurnOn")
 	else
@@ -110,7 +110,7 @@ end
 
 function SWEP:BuildLight()
 	if CLIENT then return end
-	if !IsValid(self) || !IsValid(self.Owner) || !self.Owner:GetActiveWeapon() || self.Owner:GetActiveWeapon() != self then return end
+	if not IsValid(self) or not IsValid(self.Owner) or not self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() ~= self then return end
 
 	self.projectedLight = ents.Create( "env_projectedtexture" )
 	self.projectedLight:SetLagCompensated(true)
@@ -130,7 +130,7 @@ function SWEP:BuildLight()
 end
 
 function SWEP:Think()
-	if SERVER && IsValid(self.projectedLight) then
+	if SERVER and IsValid(self.projectedLight) then
 		self.projectedLight:SetPos( self.Owner:EyePos() + self.Owner:GetAimVector() * 2 );
 		self.projectedLight:SetAngles( self.Owner:EyeAngles() );
 	end
@@ -167,47 +167,49 @@ function SWEP:CalcViewModelView( ent, oldPos, oldAng, pos, ang )
 	end
 end
 
-//function SWEP:DrawWorldModel()
-	//if SERVER then return end
-	//self:DrawModel()
-	/*local LightNrm = self.Owner:GetViewModel():GetAngles():Forward()
+--[[
+function SWEP:DrawWorldModel()
+	if SERVER then return end
+	self:DrawModel()
+	local LightNrm = self.Owner:GetViewModel():GetAngles():Forward()
 	local ViewNormal = self.Owner:GetViewModel():GetPos() - EyePos()
 	local Distance = ViewNormal:Length()
 	ViewNormal:Normalize()
 	local ViewDot = ViewNormal:Dot( LightNrm * -1 )
-	local LightPos = self.Owner:GetViewModel():GetPos() + LightNrm * 5*/
+	local LightPos = self.Owner:GetViewModel():GetPos() + LightNrm * 5
 
-	//if ( ViewDot >= 0 ) then
+	if ( ViewDot >= 0 ) then
 
-		//render.SetMaterial( matLight )
-		//local Visibile = util.PixelVisible( LightPos, 16, self.PixVis )
+		render.SetMaterial( matLight )
+		local Visibile = util.PixelVisible( LightPos, 16, self.PixVis )
 
-		//if ( !Visibile ) then return end
+		if ( not Visibile ) then return end
 
-		//local Size = math.Clamp( Distance * Visibile * ViewDot * 2, 64, 512 )
+		local Size = math.Clamp( Distance * Visibile * ViewDot * 2, 64, 512 )
 
-		/*Distance = math.Clamp( Distance, 32, 800 )
+		Distance = math.Clamp( Distance, 32, 800 )
 		local Alpha = math.Clamp( ( 1000 - Distance ) * Visibile * ViewDot, 0, 100 )
 		local Col = Color(150, 255, 255, 255)
 		Col.a = Alpha
 
 		render.DrawSprite( LightPos, Size, Size, Col, Visibile * ViewDot )
-		render.DrawSprite( LightPos, Size * 0.4, Size * 0.4, Color( 150, 255, 255, Alpha ), Visibile * ViewDot )*/
+		render.DrawSprite( LightPos, Size * 0.4, Size * 0.4, Color( 150, 255, 255, Alpha ), Visibile * ViewDot )
 
-		//render.DrawSprite(self.Owner:GetAttachment(3).Pos, 25, 25, Color(150, 255, 255))
+		render.DrawSprite(self.Owner:GetAttachment(3).Pos, 25, 25, Color(150, 255, 255))
 
-	//end
-//end
+	end
+end
+--]]
 
 
 if SERVER then
 	local function EntityTakeDamage(target, dmg)
-		if !target:IsPlayer() || !dmg:GetAttacker() || !dmg:GetAttacker().GetActiveWeapon || !dmg:GetAttacker():GetActiveWeapon() ||
-			dmg:GetAttacker():GetActiveWeapon():GetClass() != "weapon_flashlight" then return end
+		if not target:IsPlayer() or not dmg:GetAttacker() or not dmg:GetAttacker().GetActiveWeapon or not dmg:GetAttacker():GetActiveWeapon() or
+			dmg:GetAttacker():GetActiveWeapon():GetClass() ~= "weapon_flashlight" then return end
 		if target:Team() == TEAM_SURVIVORS then return true end
-		if target:Team() == TEAM_KILLER && !target.stun then
+		if target:Team() == TEAM_KILLER and not target.stun then
 			timer.Create("stunlight_" .. target:UniqueID(), math.random(1, 3), 1, function()
-				if !IsValid(target) then return end
+				if not IsValid(target) then return end
 				if target:Alive() then 
 					target:SetRunSpeed(target.stungun_runspeed)
 					target:SetWalkSpeed(target.stungun_walkspeed)
@@ -228,8 +230,8 @@ end
 
 -- if SERVER then
 -- 	local function EntityTakeDamage(target, dmg)
--- 		if !target:IsPlayer() || !dmg:GetAttacker() || !dmg:GetAttacker():GetActiveWeapon() ||
--- 			dmg:GetAttacker():GetActiveWeapon():GetClass() != "weapon_flashlight" then return end
+-- 		if not target:IsPlayer() or not dmg:GetAttacker() or not dmg:GetAttacker():GetActiveWeapon() or
+-- 			dmg:GetAttacker():GetActiveWeapon():GetClass() ~= "weapon_flashlight" then return end
 -- 		return true
 -- 		if target:Team() == TEAM_SURVIVORS then return true end
 -- 	end

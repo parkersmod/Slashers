@@ -70,17 +70,17 @@ if CLIENT then
 	net.Receive("sls_trapspos",getEntityToDrawHalo)
 
 	hook.Add( "PreDrawHalos", "AddHalos", function()
-		if LocalPlayer().ClassID != CLASS_SURV_SHY then return end
+		if LocalPlayer().ClassID ~= CLASS_SURV_SHY then return end
 		halo.Add( trapsEntity, Color( 255, 0, 0 ), 5, 5, 2 )
 	end )
 else
 	util.AddNetworkString("sls_trapspos")
 	local timerTrap = 0
 	local function sendTrapProximity()
-			if IsValid(GM.ROUND.Killer)  &&   GM.ROUND.Active && timerTrap < CurTime()  then
+			if IsValid(GM.ROUND.Killer) and GM.ROUND.Active and timerTrap < CurTime()  then
 			timerTrap = CurTime() + 1
 			local shygirl = getSurvivorByClass(CLASS_SURV_SHY)
-			if !shygirl then return end
+			if not shygirl then return end
 			local entsAround = ents.FindInSphere( shygirl:GetPos(), 700 )
 			local trapsAround = {}
 			for k,v in pairs(entsAround) do

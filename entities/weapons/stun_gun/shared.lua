@@ -97,12 +97,12 @@ end
 
 if SERVER then
 	local function EntityTakeDamage(target, dmg)
-		if !target:IsPlayer() || !dmg:GetAttacker() || !dmg:GetAttacker().GetActiveWeapon || !dmg:GetAttacker():GetActiveWeapon() ||
-			dmg:GetAttacker():GetActiveWeapon():GetClass() != "stun_gun" then return end
+		if not target:IsPlayer() or not dmg:GetAttacker() or not dmg:GetAttacker().GetActiveWeapon or not dmg:GetAttacker():GetActiveWeapon() or
+			dmg:GetAttacker():GetActiveWeapon():GetClass() ~= "stun_gun" then return end
 		if target:Team() == TEAM_SURVIVORS then return true end
-		if target:Team() == TEAM_KILLER && !target.stun then
+		if target:Team() == TEAM_KILLER and not target.stun then
 			timer.Create("stungun_" .. target:UniqueID(), math.random(6, 8), 1, function()
-				if !IsValid(target) then return end
+				if not IsValid(target) then return end
 				if target:Alive() then 
 					target:SetRunSpeed(target.stungun_runspeed)
 					target:SetWalkSpeed(target.stungun_walkspeed)

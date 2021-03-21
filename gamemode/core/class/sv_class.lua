@@ -9,7 +9,7 @@ local GM = GM or GAMEMODE
 local playermeta = FindMetaTable("Player")
 
 function playermeta:SetSurvClass(class)
-	if !GM.CLASS.Survivors[class] then return false end
+	if not GM.CLASS.Survivors[class] then return false end
 
 	print(Format("Player %s is set to class %s", self:Nick(), GM.CLASS.Survivors[class].name))
 
@@ -78,7 +78,7 @@ function GM.CLASS.GetClassIDTable()
 	local tbl = {}
 
 	for _, v in ipairs(player.GetAll()) do
-		if v.ClassID != nil then
+		if v.ClassID ~= nil then
 			table.insert(tbl, {ply = v, ClassID = v.ClassID})
 		end
 	end
@@ -87,7 +87,7 @@ end
 
 -- Disable TeamKill
 local function PlayerShouldTakeDamage(ply, attacker)
-	if !IsValid(ply) || !IsValid(attacker) || !attacker:IsPlayer() then return end
+	if not IsValid(ply) or not IsValid(attacker) or not attacker:IsPlayer() then return end
 	if ply:Team() == attacker:Team() then
 		return false
 	end

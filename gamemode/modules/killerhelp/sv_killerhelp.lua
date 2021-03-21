@@ -12,7 +12,7 @@ util.AddNetworkString("sls_popularhelp_AddExit")
 util.AddNetworkString("sls_killerseesurvivor")
 
 local function AddExit(pos)
-	if !GM.ROUND.Active || !IsValid(GM.ROUND.Killer) then return end
+	if not GM.ROUND.Active or not IsValid(GM.ROUND.Killer) then return end
 	net.Start("sls_popularhelp_AddExit")
 		net.WriteVector(pos)
 	net.Send(GM.ROUND.Survivors)
@@ -33,7 +33,7 @@ function FindNearestEntity( Name, pos, range )
 end
 
 local function ExitAppear()
-	if !IsValid(GM.ROUND.EscapeButton) then return end
+	if not IsValid(GM.ROUND.EscapeButton) then return end
 
 	local ButtonPos
 	local EscapePos
@@ -62,14 +62,14 @@ hook.Add("sls_round_StartEscape", "sls_round_exitIcon", ExitAppear)
 local DIST_RESET = 350 ^ 2
 local CAMP_DELAY = 15
 local function Think()
-	if !GM.ROUND.Active || !IsValid(GM.ROUND.Killer) || !GM.ROUND.Survivors then return end
+	if not GM.ROUND.Active or not IsValid(GM.ROUND.Killer) or not GM.ROUND.Survivors then return end
 
 	local curtime = CurTime()
 
 	-- Anti camp
 	for _, v in ipairs(GM.ROUND.Survivors) do
-		if IsValid(v) && v:Alive() then
-			if !v.kh_lastpos then
+		if IsValid(v) and v:Alive() then
+			if not v.kh_lastpos then
 				v.kh_lastpos = v:GetPos()
 				v.kh_camptime = curtime
 			end
@@ -79,7 +79,7 @@ local function Think()
 				v.kh_lastpos = v:GetPos()
 				v:SetNWBool("killerhelp_camp", false)
 
-			elseif curtime > v.kh_camptime + CAMP_DELAY && !v:GetNWBool("killerhelp_camp") && GAMEMODE.CLASS.Survivors[v.ClassID].name != "Emo" then
+			elseif curtime > v.kh_camptime + CAMP_DELAY and not v:GetNWBool("killerhelp_camp") and GAMEMODE.CLASS.Survivors[v.ClassID].name ~= "Emo" then
 				-- Camp
 				v:SetNWBool("killerhelp_camp", true)
 			end

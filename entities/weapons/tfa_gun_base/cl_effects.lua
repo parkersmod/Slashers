@@ -7,7 +7,7 @@ Purpose:  FX
 ]]--
 
 function SWEP:FireAnimationEvent(pos, ang, event, options)
-	if self.CustomMuzzleFlash or !self.DoMuzzleFlash then
+	if self.CustomMuzzleFlash or not self.DoMuzzleFlash then
 	
 		-- Disables animation based muzzle event
 		if ( event == 21 ) then return true end	
@@ -30,7 +30,7 @@ function SWEP:FireAnimationEvent(pos, ang, event, options)
 		end 
 	end
 	if self.LuaShellEject then
-		if (  event!= 5004 ) then return true end		
+		if (  event ~=  5004 ) then return true end		
 	end
 end
 
@@ -49,7 +49,7 @@ function SWEP:MakeMuzzleSmoke(entity,attachment)
 	local ht = self.DefaultHoldType and self.DefaultHoldType or self.HoldType
 	if ( (CLIENT ) and GetTFAMZSmokeEnabled() ) then
 		if IsValid(entity) then
-			if attachment and attachment!=0 then
+			if attachment and attachment ~= 0 then
 				ParticleEffectAttach(self.SmokeParticles[ht],PATTACH_POINT_FOLLOW,entity,attachment)
 			end
 		end
@@ -73,7 +73,7 @@ function SWEP:DoImpactEffect(tr,dmgtype)
 	
 	local dmginfo = DamageInfo()
 	dmginfo:SetDamageType(dmgtype)
-	if dmginfo:IsDamageType(DMG_SLASH) or (ib and self.Secondary.BashDamageType == DMG_SLASH and tr.MatType != MAT_FLESH and tr.MatType != MAT_ALIENFLESH ) or  (self and self.DamageType and self.DamageType==DMG_SLASH) then
+	if dmginfo:IsDamageType(DMG_SLASH) or (ib and self.Secondary.BashDamageType == DMG_SLASH and tr.MatType ~= MAT_FLESH and tr.MatType ~= MAT_ALIENFLESH ) or  (self and self.DamageType and self.DamageType==DMG_SLASH) then
 		util.Decal("ManhackCut", tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal )
 		return true
 	end
@@ -86,7 +86,7 @@ function SWEP:DoImpactEffect(tr,dmgtype)
 		self:ImpactEffectFunc(tr.HitPos,tr.HitNormal,tr.MatType)
 	end
 	
-	if self.ImpactDecal and self.ImpactDecal != "" then
+	if self.ImpactDecal and self.ImpactDecal ~= "" then
 		util.Decal(self.ImpactDecal, tr.HitPos + tr.HitNormal, tr.HitPos - tr.HitNormal )
 		return true
 	end

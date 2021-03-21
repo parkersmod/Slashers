@@ -6,7 +6,7 @@ local ang
 function EFFECT:Init( data )
 	
 	self.WeaponEnt = data:GetEntity()
-	if !IsValid(self.WeaponEnt) then return end
+	if not IsValid(self.WeaponEnt) then return end
 	self.Attachment = data:GetAttachment()
 	
 	self.Position = self:GetTracerShootPos( data:GetOrigin(), self.WeaponEnt, self.Attachment )
@@ -48,7 +48,7 @@ function EFFECT:Init( data )
 	local dotang = math.deg( math.acos( math.abs(dot) ) )	
 	local halofac =  math.sqrt(math.Clamp( 1 - (dotang/90), 0, 1))
 	
-	if CLIENT and !IsValid(ownerent) then ownerent = LocalPlayer() end
+	if CLIENT and not IsValid(ownerent) then ownerent = LocalPlayer() end
 	
 	local dlight = DynamicLight( ownerent:EntIndex() )
 	if ( dlight ) then

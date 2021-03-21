@@ -17,14 +17,14 @@ for _, mod in ipairs(directories) do
 	end
 	for _, v in ipairs(files) do
 		local ext = string.sub(v, 1, 3)
-		if ext == "cl_" || ext == "sh_" then
+		if ext == "cl_" or ext == "sh_" then
 			if SERVER then
 				AddCSLuaFile(modulesPath .. "/" .. mod .. "/" .. v)
 			else
 				include(modulesPath .. "/" .. mod .. "/" .. v)
 			end
 		end
-		if ext == "sv_" || ext == "sh_" then
+		if ext == "sv_" or ext == "sh_" then
 			if SERVER then
 				include(modulesPath .. "/" .. mod .. "/" .. v)
 			end

@@ -27,7 +27,7 @@ function ENT:Draw()
 end
 
 local function HUDPaintBackground()
-	if LocalPlayer():Team() != TEAM_KILLER || !GM.ROUND.Active || !IsValid(GM.MommyEntity) then return end
+	if LocalPlayer():Team() ~= TEAM_KILLER or not GM.ROUND.Active or not IsValid(GM.MommyEntity) then return end
 	
 	local pos = GM.MommyEntity:GetPos():ToScreen()
 	local color = Color(255,255,255)
@@ -48,7 +48,7 @@ end
 hook.Add("HUDPaintBackground", "sls_kability_HUDPaintBackground", HUDPaintBackground)
 
 function ENT:DrawTranslucent()
-	if LocalPlayer():IsLineOfSightClear( self.Entity ) and self.Entity:GetPos():Distance( LocalPlayer():GetPos()) < 150 and  LocalPlayer():Team() != TEAM_KILLER   then
+	if LocalPlayer():IsLineOfSightClear( self.Entity ) and self.Entity:GetPos():Distance( LocalPlayer():GetPos()) < 150 and  LocalPlayer():Team() ~= TEAM_KILLER   then
 		DrawIndicator(self.Entity)
 	end
 end

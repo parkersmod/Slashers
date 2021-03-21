@@ -245,7 +245,7 @@ SWEP.Callback.UserInput = function(self)
 		--else
 			--is=self:GetIronSightsRaw()
 			--if self.Owner:KeyPressed(IN_ATTACK2) then
-			--	is=!is
+			--	is = not is
 			--end
 		--end
 	end
@@ -301,10 +301,10 @@ function SWEP:HitThing(ent, posv, normalv, damage, tr)
 		tr.start=posv
 		tr.endpos=posv+normalv*self.HitRange
 		tr.filter=ply 
-		tr.mask=2147483647--MASK_SOLID && MASK_SHOT && MASK_VISIBLE_AND_NPCS--MASK_SHOT
+		tr.mask=2147483647--MASK_SOLID and MASK_SHOT and MASK_VISIBLE_AND_NPCS--MASK_SHOT
 		tres=util.TraceLine(tr)
 		ply:LagCompensation(false)
-		if tres.Hit and tres.Fraction<1 and !tres.HitSky then
+		if tres.Hit and tres.Fraction<1 and not tres.HitSky then
 		]]--
 			local bullet = {}
 
@@ -322,8 +322,8 @@ function SWEP:HitThing(ent, posv, normalv, damage, tr)
 			
 			bullet.Callback = function(a,b,c)
 				local self = a:GetActiveWeapon()
-				if !IsValid(self) then return end
-				if !self.sounds then return end
+				if not IsValid(self) then return end
+				if not self.sounds then return end
 				c:SetDamageType(self.DamageType)
 				if (self.sounds<self.SlashSounds) then
 					local hitmat=b.MatType
@@ -344,7 +344,7 @@ function SWEP:HitThing(ent, posv, normalv, damage, tr)
 			end
 			
 			if CLIENT and SERVER then
-				if self.Owner!=LocalPlayer() then
+				if self.Owner ~= LocalPlayer() then
 					self.Owner:FireBullets( bullet )
 				end
 			else
@@ -360,9 +360,9 @@ function SWEP:PrimaryAttack()
 	
 	math.randomseed(sharedrandomval)
 	
-	if CLIENT and !IsFirstTimePredicted() then return end
+	if CLIENT and not IsFirstTimePredicted() then return end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	if CurTime()<self:GetNextPrimaryFire() then return end
 	
@@ -447,7 +447,7 @@ SWEP.Callback.IronsSprint = function(self)
 end
 
 SWEP.Callback.Think2 = function(self)
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
 	local isr = self:GetIronSightsRatio()
 	
@@ -509,8 +509,8 @@ function SWEP:ChooseShootAnim( mynewvar )
 	
 	local sharedrandomval = self:GetNWFloat("SharedRandomVal",0)
 	
-	if !self:OwnerIsValid() then return end
-	if !IsValid(self) or !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
+	if not IsValid(self) or not self:OwnerIsValid() then return end
 	local ply = self.Owner
 	local vm = ply:GetViewModel()
 	local selection = {}

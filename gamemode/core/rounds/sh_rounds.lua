@@ -19,7 +19,7 @@ function GM.ROUND:GetSurvivorsAlive()
 	local alive = {}
 	if GM.ROUND.Survivors then
 		for _, v in ipairs(GM.ROUND.Survivors) do
-			if IsValid(v) && v:Alive() then
+			if IsValid(v) and v:Alive() then
 				table.insert(alive, v)
 			end
 		end
@@ -30,7 +30,7 @@ end
 function getSurvivorByClass(class)
 	if GM.ROUND.Survivors then
 		for _, v in ipairs(GM.ROUND.Survivors) do
-			if IsValid(v) && v:Alive() && v.ClassID == class then
+			if IsValid(v) and v:Alive() and v.ClassID == class then
 				return v
 			end
 		end

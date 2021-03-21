@@ -34,14 +34,14 @@ local hostilenpcmaps = {
 local mymap
 local function GetTeamColor(ent)
 		
-	if !cl_tfa_hud_crosshair_color_teamcvar then cl_tfa_hud_crosshair_color_teamcvar = GetConVar("cl_tfa_hud_crosshair_color_team")	end
+	if not cl_tfa_hud_crosshair_color_teamcvar then cl_tfa_hud_crosshair_color_teamcvar = GetConVar("cl_tfa_hud_crosshair_color_team")	end
 	
-	if !cl_tfa_hud_crosshair_color_teamcvar:GetBool() then return color_white end
+	if not cl_tfa_hud_crosshair_color_teamcvar:GetBool() then return color_white end
 	
-	if !mymap then mymap = game.GetMap() end
+	if not mymap then mymap = game.GetMap() end
 	
 	local ply = LocalPlayer()
-	if !IsValid(ply) then return color_white end
+	if not IsValid(ply) then return color_white end
 	
 	if ent:IsPlayer() then
 		if GAMEMODE.TeamBased then
@@ -59,7 +59,7 @@ local function GetTeamColor(ent)
 				return c_grn
 			end
 		end
-		if IsFriendEntityName( ent:GetClass() ) and !hostilenpcmaps[mymap] then
+		if IsFriendEntityName( ent:GetClass() ) and not hostilenpcmaps[mymap] then
 			return c_grn
 		else
 			return c_red
@@ -90,7 +90,7 @@ local smallfont = nil
 function SWEP:MakeFonts()
 
 		
-		if !titlefont then
+		if not titlefont then
 			surface.CreateFont( "TFA_INSPECTION_TITLE", {
 				font = "Aral", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 				size = 64,
@@ -110,7 +110,7 @@ function SWEP:MakeFonts()
 			titlefont = true
 		end
 		
-		if !descriptionfont then
+		if not descriptionfont then
 			surface.CreateFont( "TFA_INSPECTION_DESCR", {
 				font = "Aral", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 				size = 32,
@@ -130,7 +130,7 @@ function SWEP:MakeFonts()
 			descriptionfont = true
 		end
 		
-		if !smallfont then
+		if not smallfont then
 			surface.CreateFont( "TFA_INSPECTION_SMALL", {
 				font = "Aral", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 				size = 24,
@@ -188,7 +188,7 @@ local function PanelPaintBars(myself,w,h)
 end
 
 local function TextShadowPaint(myself,w,h)
-	if !myself.TextColor then myself.TextColor = color_white end
+	if not myself.TextColor then myself.TextColor = color_white end
 	draw.NoTexture()
 	draw.SimpleText(myself.Text,myself.Font,2,2,ColorAlpha(color_black,myself.TextColor.a),TEXT_ALIGN_LEFT,TEXT_ALIGN_TOP)
 	draw.SimpleText(myself.Text,myself.Font,0,0,myself.TextColor,TEXT_ALIGN_LEFT,TEXT_ALIGN_TOP)
@@ -298,9 +298,9 @@ function SWEP:GenerateInspectionDerma()
 		
 		TFA_INSPECTIONPANEL.Think = function(myself,w,h)
 			local ply = LocalPlayer()
-			if !IsValid(ply) then myself:Remove() return end
+			if not IsValid(ply) then myself:Remove() return end
 			local wep = ply:GetActiveWeapon()
-			if !IsValid(wep) or !wep.IsTFAWeapon or !(wep.CLInspectingProgress>0.01) then myself:Remove() return end
+			if not IsValid(wep) or not wep.IsTFAWeapon or not (wep.CLInspectingProgress>0.01) then myself:Remove() return end
 			myself.Player = ply
 			myself.Weapon = wep
 		end
@@ -313,8 +313,8 @@ function SWEP:GenerateInspectionDerma()
 				myself.SecondaryColor = ColorAlpha(INSPECTION_SECONDARYCOLOR,TFA_INSPECTIONPANEL.Alpha)
 				myself.BackgroundColor = ColorAlpha(INSPECTION_BACKGROUND,TFA_INSPECTIONPANEL.Alpha)
 				myself.ActiveColor =  ColorAlpha(INSPECTION_ACTIVECOLOR,TFA_INSPECTIONPANEL.Alpha)
-				if !myself.SideBar then myself.SideBar = surface.GetTextureID("vgui/inspectionhud/sidebar") end
-				if !myself.Hex then myself.Hex = surface.GetTextureID("vgui/inspectionhud/hex") end
+				if not myself.SideBar then myself.SideBar = surface.GetTextureID("vgui/inspectionhud/sidebar") end
+				if not myself.Hex then myself.Hex = surface.GetTextureID("vgui/inspectionhud/hex") end
 			end
 			--Derma_DrawBackgroundBlur( myself, SysTime()-wep.CLInspectingProgress )
 			--draw.NoTexture()
@@ -401,7 +401,7 @@ function SWEP:GenerateInspectionDerma()
 		
 		local an = game.GetAmmoName(self:GetPrimaryAmmoType())
 		
-		if an and an!="" and string.len(an)>1 then
+		if an and an ~= "" and string.len(an)>1 then
 		
 			local ammotypetext = contentpanel:Add("DPanel")
 			ammotypetext.Text = infotextpad .. "Ammo: " .. ( self.AmmoTypeStrings[self.Primary.Ammo or "ammo" ] or language.GetPhrase( an .. "_ammo" ) )
@@ -417,7 +417,7 @@ function SWEP:GenerateInspectionDerma()
 		
 		local makertext = contentpanel:Add("DPanel")
 		local mymaker = ( self.Manufacturer or self.Author)
-		if !mymaker or string.Trim(mymaker)=="" then mymaker = "The Forgotten Architect" end
+		if not mymaker or string.Trim(mymaker)=="" then mymaker = "The Forgotten Architect" end
 		makertext.Text = infotextpad .. "Maker: " .. mymaker
 		makertext.Think = function(myself)
 			myself.TextColor = TFA_INSPECTIONPANEL.SecondaryColor
@@ -436,7 +436,7 @@ function SWEP:GenerateInspectionDerma()
 			contentpanel.attpanel.Paint = function(myself,w,h) end
 			
 			local tbl = TFA_ATT[attid]			
-			if !tbl then return end			
+			if not tbl then return end			
 		
 			local header = contentpanel.attpanel:Add("DPanel")
 			print(tbl.Name)
@@ -492,17 +492,17 @@ function SWEP:GenerateInspectionDerma()
 		local accuracypanel = statspanel:Add("DPanel")
 		accuracypanel:SetSize(400,24)
 		accuracypanel.Think = function(myself)
-			if !IsValid(self) then return end
-			myself.Bars = math.Clamp(math.Round( (1-(self.Secondary.Ironsights!=0 and (self.Primary.IronAccuracy or self.Primary.IronSpread) or (self.Primary.Spread or self.Primary.Accuracy) )/worstaccuracy)*10 ),0,10)
+			if not IsValid(self) then return end
+			myself.Bars = math.Clamp(math.Round( (1-(self.Secondary.Ironsights ~= 0 and (self.Primary.IronAccuracy or self.Primary.IronSpread) or (self.Primary.Spread or self.Primary.Accuracy) )/worstaccuracy)*10 ),0,10)
 		end
 		accuracypanel.Paint = PanelPaintBars
 		accuracypanel:Dock(TOP)
 		
 		local accuracytext = accuracypanel:Add("DPanel")
 		accuracytext.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			local accuracystr = "Accuracy: " .. math.Round((self.Primary.Spread or self.Primary.Accuracy)*90) .. "°"
-			if self.Secondary.Ironsights!=0 then
+			if self.Secondary.Ironsights ~= 0 then
 				accuracystr = accuracystr .. " || " .. math.Round((self.Primary.IronAccuracy or self.Primary.IronSpread)*90) .. "°"
 			end
 			myself.Text =  accuracystr 
@@ -518,7 +518,7 @@ function SWEP:GenerateInspectionDerma()
 		local fireratepanel = statspanel:Add("DPanel")
 		fireratepanel:SetSize(400,24)
 		fireratepanel.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			myself.Bars = math.Clamp(math.Round( (self.Primary.RPM)/bestrpm *10),0,10)
 		end
 		fireratepanel.Paint = PanelPaintBars
@@ -526,7 +526,7 @@ function SWEP:GenerateInspectionDerma()
 		
 		local fireratetext = fireratepanel:Add("DPanel")
 		fireratetext.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			local fireratestr = "Firerate: " .. self.Primary.RPM .. "RPM"
 			myself.Text =  fireratestr 
 			myself.TextColor = TFA_INSPECTIONPANEL.SecondaryColor
@@ -541,7 +541,7 @@ function SWEP:GenerateInspectionDerma()
 		local mobilitypanel = statspanel:Add("DPanel")
 		mobilitypanel:SetSize(400,24)
 		mobilitypanel.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			myself.Bars = math.Clamp(math.Round((self.MoveSpeed-worstmove)/(1-worstmove) * 10),0,10)
 		end
 		mobilitypanel.Paint = PanelPaintBars
@@ -549,7 +549,7 @@ function SWEP:GenerateInspectionDerma()
 		
 		local mobilitytext = mobilitypanel:Add("DPanel")
 		mobilitytext.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			myself.Text = "Mobility: " .. math.Round(self.MoveSpeed*100) .. "%"
 			myself.TextColor = TFA_INSPECTIONPANEL.SecondaryColor
 		end
@@ -563,7 +563,7 @@ function SWEP:GenerateInspectionDerma()
 		local damagepanel = statspanel:Add("DPanel")
 		damagepanel:SetSize(400,24)
 		damagepanel.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			myself.Bars = math.Clamp(math.Round( (self.Primary.Damage*math.Round(self.Primary.NumShots*0.75))/bestdamage *10),0,10)
 		end
 		damagepanel.Paint = PanelPaintBars
@@ -571,9 +571,9 @@ function SWEP:GenerateInspectionDerma()
 		
 		local damagetext = damagepanel:Add("DPanel")
 		damagetext.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			local dmgstr = "Damage: " .. math.Round(self.Primary.Damage)
-			if self.Primary.NumShots!=1 then dmgstr = dmgstr .. "x" .. math.Round(self.Primary.NumShots) end
+			if self.Primary.NumShots ~= 1 then dmgstr = dmgstr .. "x" .. math.Round(self.Primary.NumShots) end
 			myself.Text =  dmgstr 
 			myself.TextColor = TFA_INSPECTIONPANEL.SecondaryColor
 		end
@@ -587,7 +587,7 @@ function SWEP:GenerateInspectionDerma()
 		local rangepanel = statspanel:Add("DPanel")
 		rangepanel:SetSize(400,24)
 		rangepanel.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			myself.Bars = math.Clamp(math.Round( (self.Primary.Range)/bestrange * 10),0,10)
 		end
 		rangepanel.Paint = PanelPaintBars
@@ -596,7 +596,7 @@ function SWEP:GenerateInspectionDerma()
 		local rangetext = rangepanel:Add("DPanel")
 		rangetext.Text = rangestr
 		rangetext.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			local rangestr = "Range: " .. math.Round(feettokm(sourcetofeet(self.Primary.Range)) * 100)/100 .. "K"
 			myself.Text =  rangestr 			
 			myself.TextColor = TFA_INSPECTIONPANEL.SecondaryColor
@@ -611,7 +611,7 @@ function SWEP:GenerateInspectionDerma()
 		local stabilitypanel = statspanel:Add("DPanel")
 		stabilitypanel:SetSize(400,24)
 		stabilitypanel.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			myself.Bars = math.Clamp(math.Round( (1-math.abs(self.Primary.KickUp + self.Primary.KickDown)/2/ worstrecoil) * 10),0,10)
 		end
 		stabilitypanel.Paint = PanelPaintBars
@@ -620,7 +620,7 @@ function SWEP:GenerateInspectionDerma()
 		local stabilitytext = stabilitypanel:Add("DPanel")
 		stabilitytext.Text = stabilitystr
 		stabilitytext.Think = function(myself)
-			if !IsValid(self) then return end
+			if not IsValid(self) then return end
 			local stabilitystr = "Stability: " .. math.Clamp(math.Round( (1-math.abs(self.Primary.KickUp + self.Primary.KickDown)/2/1)*100 ),0,100) .. "%"
 			myself.Text =  stabilitystr 		
 			myself.TextColor = TFA_INSPECTIONPANEL.SecondaryColor
@@ -633,17 +633,17 @@ function SWEP:GenerateInspectionDerma()
 end
 
 function SWEP:DoInspectionDerma()
-	if !IsValid(TFA_INSPECTIONPANEL) and self.CLInspectingProgress>0.01 then
+	if not IsValid(TFA_INSPECTIONPANEL) and self.CLInspectingProgress>0.01 then
 		self:GenerateInspectionDerma()
 	end
 	
-	if !IsValid(TFA_INSPECTIONPANEL) then
+	if not IsValid(TFA_INSPECTIONPANEL) then
 		return
 	end
 	
-	if !self:OwnerIsValid() then return end
+	if not self:OwnerIsValid() then return end
 	
-	if !self.AttachmentUICache then self:BuildAttachmentUICache() end
+	if not self.AttachmentUICache then self:BuildAttachmentUICache() end
 		
 	cam.Start3D(); cam.End3D();
 		
@@ -653,7 +653,7 @@ function SWEP:DoInspectionDerma()
 	
 	local padfac = 0.1
 	
-	if !TFA_INSPECTIONPANEL.AttachmentPanels then
+	if not TFA_INSPECTIONPANEL.AttachmentPanels then
 		TFA_INSPECTIONPANEL.AttachmentPanels = {}
 		for category,tab in pairs(self.AttachmentUICache) do
 			local i = tab.attachment
@@ -680,9 +680,9 @@ function SWEP:DoInspectionDerma()
 				p.key = tab.key
 				p.Paint = function(myself,w,h)
 				
-					if !myself.selbar then myself.selbar = Material("vgui/inspectionhud/selector_bar") end
+					if not myself.selbar then myself.selbar = Material("vgui/inspectionhud/selector_bar") end
 					
-					if !myself.lastpaint then
+					if not myself.lastpaint then
 						myself.lastpaint = RealTime()-FrameTime()
 					end
 					
@@ -691,7 +691,7 @@ function SWEP:DoInspectionDerma()
 					myself.lastpaint = RealTime()
 					
 					local ang = math.NormalizeAngle(-90 + ( myself.activehex - 1 ) * 60)
-					if !myself.ang then myself.ang = ang end
+					if not myself.ang then myself.ang = ang end
 					myself.ang = math.ApproachAngle(myself.ang,ang,(ang-myself.ang)*delta*15)
 					
 					myself.ang = math.NormalizeAngle(myself.ang)
@@ -722,9 +722,9 @@ function SWEP:DoInspectionDerma()
 					hex.hexi = hexi
 					hex.Paint = function(myself,w,h)
 					
-						if !IsValid(self) then return end
+						if not IsValid(self) then return end
 					
-						if !myself.iconmat then myself.iconmat = surface.GetTextureID(myself.icon) end
+						if not myself.iconmat then myself.iconmat = surface.GetTextureID(myself.icon) end
 					
 						local mys_isactive = self.AttachmentCache[myself.attachment].active
 						
@@ -757,9 +757,9 @@ function SWEP:DoInspectionDerma()
 				hex.hexi = hexi
 				hex.Paint = function(myself,w,h)
 					
-					if !IsValid(self) then return end
+					if not IsValid(self) then return end
 				
-					if !myself.iconmat then myself.iconmat = surface.GetTextureID(myself.icon) end
+					if not myself.iconmat then myself.iconmat = surface.GetTextureID(myself.icon) end
 					
 					local mys_isactive = true
 					
@@ -791,7 +791,7 @@ function SWEP:DoInspectionDerma()
 	for i=1,attachmentcount do
 		local att = vm:GetAttachment(i)
 		if att and att.Pos and att.Ang then
-			if !IsValid(TFA_INSPECTIONPANEL.AttachmentPanels[i]) then return end
+			if not IsValid(TFA_INSPECTIONPANEL.AttachmentPanels[i]) then return end
 			
 			local p = TFA_INSPECTIONPANEL.AttachmentPanels[i]
 			p = TFA_INSPECTIONPANEL.AttachmentPanels[i]
@@ -845,7 +845,7 @@ function SWEP:DrawHUD()
 		if val then return val end
 	end
 	
-	if !cvar_tfa_inspection_old:GetBool() then
+	if not cvar_tfa_inspection_old:GetBool() then
 		self:DoInspectionDerma()
 	end
 	
@@ -853,7 +853,7 @@ function SWEP:DrawHUD()
 	local drawcrossy
 	
 	drawcrossy=self.DrawCrosshairDefault
-	if !drawcrossy then
+	if not drawcrossy then
 		drawcrossy=self.DrawCrosshair
 	end
 	
@@ -861,25 +861,25 @@ function SWEP:DrawHUD()
 	
 	self.clrelp = math.Approach( self.clrelp, ( self:GetReloading() and 0 or 1 ), ( ( self:GetReloading() and 0 or 1 )-self.clrelp ) * FrameTime() * 15 )
 	
-	local crossa = crossa_cvar:GetFloat() * math.pow(math.min(1-( (self.CLIronSightsProgress and !self.DrawCrosshairIS ) and self.CLIronSightsProgress  or 0), 1-self.CLRunSightsProgress, 1-self.CLOldNearWallProgress, 1-self.CLInspectingProgress, self.clrelp),2)
-	local outa = outa_cvar:GetFloat() * math.pow(math.min(1-( (self.CLIronSightsProgress and !self.DrawCrosshairIS) and self.CLIronSightsProgress  or 0), 1-self.CLRunSightsProgress, 1-self.CLOldNearWallProgress, 1-self.CLInspectingProgress, self.clrelp),2)
+	local crossa = crossa_cvar:GetFloat() * math.pow(math.min(1-( (self.CLIronSightsProgress and not self.DrawCrosshairIS ) and self.CLIronSightsProgress  or 0), 1-self.CLRunSightsProgress, 1-self.CLOldNearWallProgress, 1-self.CLInspectingProgress, self.clrelp),2)
+	local outa = outa_cvar:GetFloat() * math.pow(math.min(1-( (self.CLIronSightsProgress and not self.DrawCrosshairIS) and self.CLIronSightsProgress  or 0), 1-self.CLRunSightsProgress, 1-self.CLOldNearWallProgress, 1-self.CLInspectingProgress, self.clrelp),2)
 	self.DrawCrosshair = false
 	if drawcrossy then
 		if crosscustomenable_cvar:GetBool() then
 			if IsValid(LocalPlayer()) and self.Owner == LocalPlayer() then
 				ply = LocalPlayer()
 				
-				if !ply.interpposx then
+				if not ply.interpposx then
 					ply.interpposx = ScrW()/2
 				end
 				
-				if !ply.interpposy then
+				if not ply.interpposy then
 					ply.interpposy = ScrH()/2
 				end
 				
 				local x, y -- local, always
 				local s_cone,recoil
-				if !game.SinglePlayer() then
+				if not game.SinglePlayer() then
 					s_cone,recoil = self:ClientCalculateConeRecoil()
 				else
 					s_cone,recoil = self:CalculateConeRecoil()
@@ -906,7 +906,7 @@ function SWEP:DrawHUD()
 					x, y = ScrW() / 2.0, ScrH() / 2.0 -- Center of screen
 				end
 				
-				if !self.selftbl then
+				if not self.selftbl then
 					self.selftbl = {ply,self}
 				end
 				
@@ -932,7 +932,7 @@ function SWEP:DrawHUD()
 				
 				local gap = scale
 				local length = 1
-				if !clen_usepixels:GetBool() then
+				if not clen_usepixels:GetBool() then
 					length = gap + ScrH()*1.777*crosslen
 				else
 					length = gap + crosslen*100
@@ -974,7 +974,7 @@ function SWEP:DrawHUD()
 	end
 	--HUD
 	local mzpos = self:GetMuzzlePos()
-	if mzpos and mzpos.Pos and !self:IsHidden() then
+	if mzpos and mzpos.Pos and not self:IsHidden() then
 		if ( hudenabled_cvar:GetBool() ) then
 			local pos = mzpos.Pos
 			local textsize = self.textsize and self.textsize or 1
@@ -990,9 +990,9 @@ function SWEP:DrawHUD()
 			local postoscreen = pos:ToScreen()
 			xx = postoscreen.x
 			yy = postoscreen.y
-			if self:GetInspectingRatio()<0.01 and self.Primary.Ammo!="" and self.Primary.Ammo != 0 then
+			if self:GetInspectingRatio()<0.01 and self.Primary.Ammo ~= "" and self.Primary.Ammo ~= 0 then
 				local str
-				if self.Primary.ClipSize and self.Primary.ClipSize != -1 then
+				if self.Primary.ClipSize and self.Primary.ClipSize ~= -1 then
 					str =  string.upper( "MAG: "..self:Clip1() )
 					if (self:Clip1() > self.Primary.ClipSize) then
 						str =  string.upper( "MAG: "..self.Primary.ClipSize.." + "..( self:Clip1()-self.Primary.ClipSize ) )
@@ -1076,7 +1076,7 @@ function SWEP:DrawHUD()
 		if self.Secondary.ScopeTable then
 			tbl=self.Secondary.ScopeTable		
 		end
-		if !tbl then tbl = TFA_SCOPE_MILDOT end
+		if not tbl then tbl = TFA_SCOPE_MILDOT end
 		local w,h = ScrW(), ScrH()
 		for k,v in pairs(tbl) do
 			local dimension = h

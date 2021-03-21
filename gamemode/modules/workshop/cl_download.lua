@@ -12,7 +12,7 @@ local WorkShopAddonIDList = {"788009163","857992903"}
 function WorkshopDownloadCheck()
 	local AlreadyDownloaded = true
 	for k, v in pairs(WorkShopAddonIDList) do
-		if !steamworks.IsSubscribed(v) then
+		if not steamworks.IsSubscribed(v) then
 			AlreadyDownloaded = false
 		end
 	end

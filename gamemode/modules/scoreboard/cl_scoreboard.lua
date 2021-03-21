@@ -18,9 +18,9 @@ local canScoreboard = true
 
 local opacity = 0
 local function HUDDrawScoreBoard()
-	if showScoreboard && opacity < 255 then
+	if showScoreboard and opacity < 255 then
 		opacity = Lerp(0.1, opacity, 255)
-	elseif !showScoreboard && opacity > 0 then
+	elseif not showScoreboard and opacity > 0 then
 		opacity = Lerp(0.1, opacity, 0)
 	end
 	if opacity == 0 then return end
@@ -31,7 +31,7 @@ local function HUDDrawScoreBoard()
 	table.Add(players, team.GetPlayers(TEAM_KILLER))
 	table.Add(players, team.GetPlayers(TEAM_SURVIVORS))
 	for _, v in ipairs(player.GetAll()) do
-		if !table.HasValue(players, v) then
+		if not table.HasValue(players, v) then
 			table.insert(players, v)
 		end
 	end
@@ -39,7 +39,7 @@ local function HUDDrawScoreBoard()
 	yStartInit = scrH / 2 - ((playerscount * bgHeight) / 2)
 
 	for k, v in ipairs(players) do
-		if !IsValid(v) then continue end
+		if not IsValid(v) then continue end
 
 		-- BG
 		surface.SetDrawColor(Color(255, 255, 255, opacity))
@@ -51,7 +51,7 @@ local function HUDDrawScoreBoard()
 		if v:Team() == TEAM_KILLER then
 			surface.SetMaterial(GM.MAP.Killer.Icon)
 			drawIcon = true
-		elseif v:Team() == TEAM_SURVIVORS && v.ClassID != 0 && GM.CLASS.Survivors[v.ClassID] then
+		elseif v:Team() == TEAM_SURVIVORS and v.ClassID ~= 0 and GM.CLASS.Survivors[v.ClassID] then
 			surface.SetMaterial(GM.CLASS.Survivors[v.ClassID].icon)
 			drawIcon = true
 		end
@@ -60,7 +60,7 @@ local function HUDDrawScoreBoard()
 			if v:GetNWBool("Escaped") then
 				surface.SetMaterial(ICON_CHECK)
 				surface.DrawTexturedRect(scrW / 2 - bgWidth / 2 + 30, yStartInit + ((k - 1) * bgHeight + 3), 64, 64)
-			elseif !v:Alive() && v:Team() != TEAM_KILLER then
+			elseif not v:Alive() and v:Team() ~= TEAM_KILLER then
 				surface.SetMaterial(ICON_CROSS)
 				surface.DrawTexturedRect(scrW / 2 - bgWidth / 2 + 30, yStartInit + ((k - 1) * bgHeight + 3), 64, 64)
 			end
@@ -105,11 +105,11 @@ hook.Add("sls_round_PostStart", "sls_scoreboard_PostStart", PostStart)
 local function OnTeamWin(winner)
 	canScoreboard = false
 	timer.Simple(11, function()
-		if !GM.ROUND.Active then
+		if not GM.ROUND.Active then
 			canScoreboard = false
 			showScoreboard = true
 			timer.Simple(GM.CONFIG["round_duration_end"] - 13, function()
-				if !GM.ROUND.Active then
+				if not GM.ROUND.Active then
 					showScoreboard = false
 					canScoreboard = true
 				end

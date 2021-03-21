@@ -54,7 +54,7 @@ if CLIENT then
 		local Change = FrameTime() * 5
 
 		local ply = LocalPlayer()
-		if !GAMEMODE.ROUND.Active || !IsValid(GAMEMODE.ROUND.Killer) || !GAMEMODE.ROUND.Survivors  then return end
+		if not GAMEMODE.ROUND.Active or not IsValid(GAMEMODE.ROUND.Killer) or not GAMEMODE.ROUND.Survivors  then return end
 		if table.HasValue(GAMEMODE.ROUND.Survivors, ply )  then
 
 			if 	ply.Stamina >= 10 then
@@ -66,7 +66,7 @@ if CLIENT then
 				AlreadyBreathing = false
 			end
 
-			if 	!ply:Alive() then
+			if 	not ply:Alive() then
 				net.Start("stopSound")
 				net.WriteString("Breathing")
 				net.SendToServer()
@@ -75,7 +75,7 @@ if CLIENT then
 				AlreadyBreathing = false
 			end
 
-			if cmd:KeyDown(IN_JUMP) and ply:OnGround() and !ply:InVehicle() then
+			if cmd:KeyDown(IN_JUMP) and ply:OnGround() and not ply:InVehicle() then
 
 				if not AlreadyBreathing and ply.Stamina<=30 then
 
@@ -102,7 +102,7 @@ if CLIENT then
 
 			end
 
-			if cmd:KeyDown(IN_SPEED) and ( cmd:KeyDown(IN_FORWARD) or cmd:KeyDown(IN_BACK) or cmd:KeyDown(IN_MOVELEFT) or cmd:KeyDown(IN_MOVERIGHT) ) and (ply:GetVelocity():Length() > 100) and ( ply:OnGround() or ply:WaterLevel() ~= 0 ) and !ply:InVehicle() then
+			if cmd:KeyDown(IN_SPEED) and ( cmd:KeyDown(IN_FORWARD) or cmd:KeyDown(IN_BACK) or cmd:KeyDown(IN_MOVELEFT) or cmd:KeyDown(IN_MOVERIGHT) ) and (ply:GetVelocity():Length() > 100) and ( ply:OnGround() or ply:WaterLevel() ~= 0 ) and not ply:InVehicle() then
 
 				if ply.Stamina <= 0 then
 
@@ -168,7 +168,7 @@ if CLIENT then
 	-- A function to draw a certain part of a texture
 	local function DrawPartialTexturedRect( x, y, w, h, partx, party, partw, parth, texw, texh )
 		-- Verify that we recieved all arguments
-		if not( x && y && w && h && partx && party && partw && parth && texw && texh ) then
+		if not( x and y and w and h and partx and party and partw and parth and texw and texh ) then
 			ErrorNoHalt("surface.DrawPartialTexturedRect: Missing argument!");
 
 			return;
@@ -214,12 +214,12 @@ if CLIENT then
 	local function HUDPaint()
 		local ply = LocalPlayer()
 		local bwide
-		if ply:Team() != TEAM_SURVIVORS || !ply:Alive() then return end
-		if !ply.ClassID || !GAMEMODE.ROUND.Active || !GAMEMODE.CLASS.Survivors[ply.ClassID].stamina then return end
+		if ply:Team() ~= TEAM_SURVIVORS or not ply:Alive() then return end
+		if not ply.ClassID or not GAMEMODE.ROUND.Active or not GAMEMODE.CLASS.Survivors[ply.ClassID].stamina then return end
 		bwide = 256 * ply.Stamina / GAMEMODE.CLASS.Survivors[ply.ClassID].stamina
-		if ply.Stamina == GAMEMODE.CLASS.Survivors[ply.ClassID].stamina && alpha_stamina > 0 then
+		if ply.Stamina == GAMEMODE.CLASS.Survivors[ply.ClassID].stamina and alpha_stamina > 0 then
 			alpha_stamina = math.max(0, alpha_stamina - 4)
-		elseif ply.Stamina < GAMEMODE.CLASS.Survivors[ply.ClassID].stamina && alpha_stamina < 255 then
+		elseif ply.Stamina < GAMEMODE.CLASS.Survivors[ply.ClassID].stamina and alpha_stamina < 255 then
 			alpha_stamina = math.min(alpha_stamina + 4, 255)
 		end
 		surface.SetDrawColor(Color(150, 150, 150, alpha_stamina))

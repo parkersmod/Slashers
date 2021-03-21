@@ -9,7 +9,7 @@
 
 local function getUseKey()
 	local cpt = 0
-	while input.LookupKeyBinding( cpt ) != "+use" && cpt < 159 do
+	while input.LookupKeyBinding( cpt ) ~= "+use" and cpt < 159 do
 		 cpt = cpt + 1
 	end
 
@@ -31,14 +31,14 @@ function DrawIndicator(ent)
 	local name = string.Explode( " ", ent.PrintName )[1]
 	local description = ent.Information
 
-	local x = ent:GetPos().x + ent:OBBCenter().x			//Get the X position of our player
-	local y = ent:GetPos().y	+ ent:OBBCenter().y		//Get the Y position of our player
-	local z = ent:GetPos().z	+ ent:OBBCenter().z		//Get the Z position of our player
+	local x = ent:GetPos().x + ent:OBBCenter().x			--Get the X position of our player
+	local y = ent:GetPos().y	+ ent:OBBCenter().y		--Get the Y position of our player
+	local z = ent:GetPos().z	+ ent:OBBCenter().z		--Get the Z position of our player
 	local zOffset = 0
 
 
 	local pos = Vector(x,y,z+zOffset)
-	local pos2d = pos:ToScreen()		//Change the 3D vector to a 2D one
+	local pos2d = pos:ToScreen()		--Change the 3D vector to a 2D one
 	local TitleSize = draw.GetFontHeight( "SlashersTypewriterSTitle" )
 	local KeySize = draw.GetFontHeight( "KeyboardFont" )
 	-- local usekey = input.LookupKeyBinding( KEY_E )

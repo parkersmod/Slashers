@@ -28,14 +28,14 @@ if SERVER then
 
 	AddCSLuaFile()
 
-	/*---------------------------------------------------------
+	--[[-------------------------------------------------------
 	   Name: ENT:Initialize()
-	---------------------------------------------------------*/
+	---------------------------------------------------------]]
 	function ENT:Initialize()
 		
 		local mdl = self:GetModel()
 		
-		if !mdl or mdl=="" or string.find(mdl,"error") then
+		if not mdl or mdl=="" or string.find(mdl,"error") then
 			self:SetModel("models/weapons/w_knife_t.mdl")
 		end
 		
@@ -99,11 +99,11 @@ if SERVER then
 		end
 		
 		local ent = data.HitEntity
-		if !IsValid(ent) and !(ent and ent:IsWorld() )then return end
+		if not IsValid(ent) and not (ent and ent:IsWorld() )then return end
 		
 		local dmg = self:GetNWInt("Damage",40)*math.sqrt(data.Speed/1500)
 		
-		if dmg>5 and ent and !ent:IsWorld() then
+		if dmg>5 and ent and not ent:IsWorld() then
 			
 			local dmginfo = DamageInfo()
 			dmginfo:SetDamage( dmg)
@@ -113,8 +113,8 @@ if SERVER then
 			dmginfo:SetDamageType(DMG_SLASH)
 			local att = self:GetPhysicsAttacker()
 			
-			if !IsValid(att) then att = self.Owner end
-			if !IsValid(att) then att = self end
+			if not IsValid(att) then att = self.Owner end
+			if not IsValid(att) then att = self end
 			
 			dmginfo:SetAttacker(att)
 			ent:TakeDamageInfo(dmginfo)
@@ -123,7 +123,7 @@ if SERVER then
 		
 		local traceres = util.QuickTrace(self:GetPos(),data.OurOldVelocity,self)
 		
-		if !traceres.HitPos then return end
+		if not traceres.HitPos then return end
 		
 		if data.Speed>50 then
 			local soundtbl
@@ -195,12 +195,12 @@ if SERVER then
 	
 	function ENT:Use(ply, caller)
 		local ow = self.Owner 	
-		if !IsValid(ow) then ow = self:GetPhysicsAttacker()end
-		if !IsValid(ow) then return end
-		if ow != ply then return end
+		if not IsValid(ow) then ow = self:GetPhysicsAttacker()end
+		if not IsValid(ow) then return end
+		if ow ~= ply then return end
 		
 		local classname = self:GetNWString("Wep")
-		if !classname or classname=="" then return end
+		if not classname or classname=="" then return end
 
 		if (ply:IsPlayer()) and ply:GetWeapon(classname) == NULL then
 			ply:Give(classname)

@@ -11,7 +11,7 @@ ENT.Instructions	= "Arrow that's stuck in ground"
 function ENT:Initialize()
 	if SERVER then
 		
-			if GetConVarNumber("sv_tfa_arrow_lifetime",-1)!=-1 then
+			if GetConVarNumber("sv_tfa_arrow_lifetime",-1) ~= -1 then
 				timer.Simple(GetConVarNumber("sv_tfa_arrow_lifetime",30), function()
 					if IsValid(self) then
 						self:Remove()

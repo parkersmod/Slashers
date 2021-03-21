@@ -12,7 +12,7 @@ function GM.ROUND:ChooseKiller()
 	local tbl = {}
 	local winkey = 0
 	for _, v in ipairs(player.GetAll()) do
-		if !tbl[v.choosekiller] then
+		if not tbl[v.choosekiller] then
 			tbl[v.choosekiller] = {}
 		end
 		table.insert(tbl[v.choosekiller], v)
@@ -24,23 +24,23 @@ function GM.ROUND:ChooseKiller()
 end
 
 local function PlayerLoad(ply)
-	if !IsValid(ply) then return end
+	if not IsValid(ply) then return end
 	if ply:IsBot() then ply.choosekiller = 100 return end
-	if !file.Exists(folder .. ply:SteamID64(), "DATA") then
+	if not file.Exists(folder .. ply:SteamID64(), "DATA") then
 		file.CreateDir(folder .. ply:SteamID64())
 	end
-	if !file.Exists(folder .. ply:SteamID64() .. "/choosekiller.txt", "DATA") then
+	if not file.Exists(folder .. ply:SteamID64() .. "/choosekiller.txt", "DATA") then
 		file.Write(folder .. ply:SteamID64() .. "/choosekiller.txt", "100")
 		ply.choosekiller = 100
 	end
-	if !ply.choosekiller then
+	if not ply.choosekiller then
 		ply.choosekiller = tonumber(file.Read(folder .. ply:SteamID64() .. "/choosekiller.txt", "DATA"))
 	end
 end
 
 local function PlayerSave(ply)
-	if !IsValid(ply) || ply:IsBot() then return end
-	if !file.Exists(folder .. ply:SteamID64(), "DATA") then
+	if not IsValid(ply) or ply:IsBot() then return end
+	if not file.Exists(folder .. ply:SteamID64(), "DATA") then
 		file.CreateDir(folder .. ply:SteamID64())
 	end
 	file.Write(folder .. ply:SteamID64() .. "/choosekiller.txt", ply.choosekiller or "100")

@@ -98,7 +98,7 @@ if CLIENT then
 	net.Receive("sls_kability_InvisibleIndic", isVisible)
 
 	local function InvisibleVision()
-		if !GM.ROUND.Active || !GM.ROUND.Survivors || LocalPlayer():Team() != TEAM_KILLER then return end
+		if not GM.ROUND.Active or not GM.ROUND.Survivors or LocalPlayer():Team() ~= TEAM_KILLER then return end
 
 		if PlyInvisible and LocalPlayer():Alive() then
 
@@ -114,7 +114,7 @@ if CLIENT then
 		local curtime = CurTime()
 		local ply = LocalPlayer()
 
-		if !ply:IsLineOfSightClear( v )  or !v:IsValid() or v == ply then return end
+		if not ply:IsLineOfSightClear( v )  or not v:IsValid() or v == ply then return end
 
 
 		local TargetPosMax= v:GetPos()+ v:OBBMaxs() - Vector(10,0,0)
@@ -154,7 +154,7 @@ if CLIENT then
 	net.Receive("sls_proxy_sendpos",receiveProxyPos)
 
 	local function drawIconOnProxy()
-		if !showProxy or !proxyPos  then return end
+		if not showProxy or not proxyPos  then return end
 		local pos = proxyPos:ToScreen()
 		surface.SetDrawColor(Color(255, 255, 255))
 		surface.SetMaterial(GM.MAP.Killer.Icon)
@@ -205,7 +205,7 @@ else
 			return
 		end
 
-		if !ply.InvisibleActive  and !KillerInView then
+		if not ply.InvisibleActive  and not KillerInView then
 
 			ply:EmitSound( "slashers/effects/proxy_power_on.wav" )
 
@@ -228,7 +228,7 @@ else
 
 			end)
 
-		elseif ply.InvisibleActive and !KillerInView  then
+		elseif ply.InvisibleActive and not KillerInView  then
 			ply:EmitSound( "slashers/effects/proxy_power_off.wav" )
 
 			timer.Simple( 1, function ()
@@ -264,7 +264,7 @@ else
 		v:SetRenderMode(RENDERMODE_TRANSALPHA )
 		v:SetColor(Color(255,255,255))
 	end
-	if (!GAMEMODE.ROUND.Killer) then return end
+	if (not GAMEMODE.ROUND.Killer) then return end
 		net.Start("sls_kability_Invisible")
 			net.WriteBool(false)
 		net.Send(GAMEMODE.ROUND.Killer)
@@ -274,11 +274,11 @@ hook.Add("sls_round_PostStart","sls_kability_ResetViewKillerAfterEnd",ResetVisib
 
 local timerSend = 0
 local function sendPosWhenInvisible()
-	if IsValid(GM.ROUND.Killer) &&   GM.ROUND.Active && timerSend < CurTime()  then
+	if IsValid(GM.ROUND.Killer) and GM.ROUND.Active and timerSend < CurTime()  then
 		timerSend = CurTime() + 0.5
 		local shygirl = getSurvivorByClass(CLASS_SURV_SHY)
-		if !shygirl then return end
-		if !shygirl:IsLineOfSightClear(GM.ROUND.Killer) or  !GM.ROUND.Killer.InvisibleActive then
+		if not shygirl then return end
+		if not shygirl:IsLineOfSightClear(GM.ROUND.Killer) or  not GM.ROUND.Killer.InvisibleActive then
 			net.Start("sls_proxy_sendpos")
 			net.WriteVector(Vector(0,0,0))
 			net.WriteBool(false)
@@ -291,7 +291,7 @@ local function sendPosWhenInvisible()
 		net.WriteBool(true)
 		net.Send(shygirl)
 	end
-	if !GM.ROUND.Active && timerSend < CurTime() then
+	if not GM.ROUND.Active and timerSend < CurTime() then
 			timerSend = CurTime() + 1
 			net.Start("sls_proxy_sendpos")
 			net.WriteVector(Vector(0,0,0))

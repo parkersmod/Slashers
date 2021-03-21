@@ -29,7 +29,7 @@ local function LoadLanguage(lang)
 end
 
 local function OnLangChange(convar_name, value_old, value_new)
-	if value_new != value_old then
+	if value_new ~= value_old then
 		LoadLanguage(value_new)
 	end
 end

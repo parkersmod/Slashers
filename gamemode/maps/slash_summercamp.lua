@@ -83,7 +83,7 @@ if CLIENT then
 		else
 			fpos = fpos + ang:Right() * -5
 		end
-		ply.LastFoot = !ply.LastFoot
+		ply.LastFoot = not ply.LastFoot
 
 		local trace = {}
 		trace.start = fpos
@@ -133,8 +133,8 @@ else
 
 	local function PlayerFootstep(ply, pos, foot, sound, volume, filter)
 		if ply:GetColor() == Color(255,255,255,0) then return true end
-		if !GM.ROUND.Active || !IsValid(GM.ROUND.Killer) then return end
-		if ply:Team() != TEAM_SURVIVORS then return end
+		if not GM.ROUND.Active or not IsValid(GM.ROUND.Killer) then return end
+		if ply:Team() ~= TEAM_SURVIVORS then return end
 		if ply.ClassID == CLASS_SURV_SHY then return end
 
 		net.Start("sls_kability_AddStep")

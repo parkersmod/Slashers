@@ -14,7 +14,7 @@ mat_ColorMod:SetTexture( "$fbtexture", render.GetScreenEffectTexture() )
 local tab = {}
 
 local function DrawColorModify( tab )
-	if LocalPlayer():GetObserverMode() != OBS_MODE_NONE then -- Spectate vision (but not for round start/end)
+	if LocalPlayer():GetObserverMode() ~= OBS_MODE_NONE then -- Spectate vision (but not for round start/end)
 		tab[ "$pp_colour_addr" ] 		= 0
 		tab[ "$pp_colour_addg" ] 		= 0
 		tab[ "$pp_colour_addb" ] 		= 0
@@ -24,7 +24,7 @@ local function DrawColorModify( tab )
 		tab[ "$pp_colour_mulr" ] 		= 0
 		tab[ "$pp_colour_mulg" ] 		= 0
 		tab[ "$pp_colour_mulb" ] 		= 0
-	elseif LocalPlayer():Team() == TEAM_KILLER && GM.ROUND.Active then -- Killer vision
+	elseif LocalPlayer():Team() == TEAM_KILLER and GM.ROUND.Active then -- Killer vision
 		tab["$pp_colour_addr"] = 0
 	    tab["$pp_colour_addg"] = 0
 	    tab["$pp_colour_addb"] = 0
@@ -34,7 +34,7 @@ local function DrawColorModify( tab )
 	    tab["$pp_colour_mulr"] = .1
 	    tab["$pp_colour_mulg"] = .1
 	    tab["$pp_colour_mulb"] = .1
-	elseif GM.ROUND.Survivors && GM.ROUND.Active && LocalPlayer().ClassID == CLASS_SURV_JUNKY then -- Weed vision
+	elseif GM.ROUND.Survivors and GM.ROUND.Active and LocalPlayer().ClassID == CLASS_SURV_JUNKY then -- Weed vision
 		tab[ "$pp_colour_addr" ] 		= 0
 		tab[ "$pp_colour_addg" ] 		= 0
 		tab[ "$pp_colour_addb" ] 		= 0
@@ -69,7 +69,7 @@ local function DrawColorModify( tab )
 end
 
 hook.Add( "Think", "Killer_Light", function()
-	if LocalPlayer():Team() ~= TEAM_KILLER or !GM.ROUND.Active then return end
+	if LocalPlayer():Team() ~= TEAM_KILLER or not GM.ROUND.Active then return end
 	local dlight = DynamicLight( LocalPlayer():EntIndex() )
 	clr = Color(90,20,0,255)
 	if ( dlight ) then

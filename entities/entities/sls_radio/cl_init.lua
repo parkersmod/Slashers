@@ -17,7 +17,7 @@ function ENT:Draw()
 end
 
 function ENT:DrawTranslucent()
-	if LocalPlayer():IsLineOfSightClear( self.Entity ) and self.Entity:GetPos():Distance( LocalPlayer():GetPos()) < 150 and  LocalPlayer():Team() != TEAM_KILLER   then
+	if LocalPlayer():IsLineOfSightClear( self.Entity ) and self.Entity:GetPos():Distance( LocalPlayer():GetPos()) < 150 and  LocalPlayer():Team() ~= TEAM_KILLER   then
 		DrawIndicator(self.Entity)
 	end
 end

@@ -20,8 +20,8 @@ sound.Add({
 local function AddExit()
 	local pos, endtime
 	pos = net.ReadVector()
-	if LocalPlayer().ClassID != CLASS_SURV_POPULAR then return end
-	if !LocalPlayer():Alive() then return end
+	if LocalPlayer().ClassID ~= CLASS_SURV_POPULAR then return end
+	if not LocalPlayer():Alive() then return end
 
 	exit_police = pos
 end
@@ -31,8 +31,8 @@ local function HUDPaintBackground()
 	local curtime = CurTime()
 
 	-- Popularhelp
-	if  LocalPlayer():Team() != TEAM_KILLER && exit_police then
-		if !GM.ROUND.Active then
+	if  LocalPlayer():Team() ~= TEAM_KILLER and exit_police then
+		if not GM.ROUND.Active then
 			exit_police = nil
 		else
 			local pos1 = exit_police:ToScreen()
@@ -46,12 +46,12 @@ hook.Add("HUDPaintBackground", "sls_killerhelp_HUDPaintBackground", HUDPaintBack
 
 
 local function Think()
-	if !GM.ROUND.Active || !GM.ROUND.Survivors || LocalPlayer():Team() != TEAM_KILLER then return end
+	if not GM.ROUND.Active or not GM.ROUND.Survivors or LocalPlayer():Team() ~= TEAM_KILLER then return end
 	for _, v in ipairs(GM.ROUND.Survivors) do
-		if v:GetNWBool("killerhelp_camp") && !v.kh_play then
+		if v:GetNWBool("killerhelp_camp") and not v.kh_play then
 			v:EmitSound("killerhelp.heartbeat")
 			v.kh_play = true
-		elseif !v:GetNWBool("killerhelp_camp") && v.kh_play then
+		elseif not v:GetNWBool("killerhelp_camp") and v.kh_play then
 			v:StopSound("killerhelp.heartbeat")
 			v.kh_play = false
 		end
