@@ -70,7 +70,7 @@ GM.MAP.Killer.Name = "Freddy Krueger"
 GM.MAP.Killer.Model = "models/player/FreddyKrueger.mdl"
 GM.MAP.Killer.WalkSpeed = 200
 GM.MAP.Killer.RunSpeed = 200
-GM.MAP.Killer.ExtraWeapons = {}
+GM.MAP.Killer.ExtraWeapons = {"weapon_freddyglove"}
 
 if CLIENT then
 	GM.MAP.Killer.Desc = GM.LANG:GetString("class_desc_proxy")
@@ -79,7 +79,7 @@ end
 
 
 -- Ability
-
+--[[
 if CLIENT then
 	local PlyInvisible = false
 
@@ -326,3 +326,4 @@ local function ShouldCollide( ent1, ent2 )
 	return true
 end
 hook.Add("ShouldCollide", "sls_kability_ShouldCollide", ShouldCollide)
+--]]
