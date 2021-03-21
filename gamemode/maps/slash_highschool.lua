@@ -68,7 +68,7 @@ GM.MAP.Killer.Name = "Ghostface"
 GM.MAP.Killer.Model = "models/error/ghostface/classic_ghostface_pm.mdl"
 GM.MAP.Killer.WalkSpeed = 190
 GM.MAP.Killer.RunSpeed = 200
-GM.MAP.Killer.ExtraWeapons = {}
+GM.MAP.Killer.ExtraWeapons = {"weapon_ghostlight"}
 
 if CLIENT then
 	GM.MAP.Killer.Desc = GM.LANG:GetString("class_desc_ghostface")
