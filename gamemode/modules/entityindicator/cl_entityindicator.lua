@@ -39,12 +39,12 @@ function DrawIndicator(ent)
 
 	local pos = Vector(x,y,z+zOffset)
 	local pos2d = pos:ToScreen()		//Change the 3D vector to a 2D one
-	local TitleSize = draw.GetFontHeight( "Bohemian typewriter STITLE" )
+	local TitleSize = draw.GetFontHeight( "SlashersTypewriterSTitle" )
 	local KeySize = draw.GetFontHeight( "KeyboardFont" )
 	-- local usekey = input.LookupKeyBinding( KEY_E )
   cam.Start2D()
-  draw.DrawText(name,"Bohemian typewriter STITLE",pos2d.x,pos2d.y,Color(255,0,0,255),TEXT_ALIGN_CENTER)
+  draw.DrawText(name,"SlashersTypewriterSTitle",pos2d.x,pos2d.y,Color(255,0,0,255),TEXT_ALIGN_CENTER)
 	draw.DrawText(usekey.."           ","KeyboardFont",pos2d.x  ,pos2d.y + TitleSize + 10,Color(255,255,255,255),TEXT_ALIGN_CENTER)
-	draw.DrawText(description,"Bohemian typewriter SA",pos2d.x + 5, pos2d.y + TitleSize + 10 ,Color(255,255,255,255),TEXT_ALIGN_CENTER)
+	draw.DrawText(description,"SlashersTypewriterSA",pos2d.x + 5, pos2d.y + TitleSize + 10 ,Color(255,255,255,255),TEXT_ALIGN_CENTER)
   cam.End2D()
 end

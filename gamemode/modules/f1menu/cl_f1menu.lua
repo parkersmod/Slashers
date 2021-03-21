@@ -52,7 +52,7 @@ function ShowPlayerScreen(TeamName,TeamText,CharacName,CharacText,ImageCharac,Ti
 
 			local TitleSpe = vgui.Create("DLabel",DescriptionBox)
 			TitleSpe:SetText(GM.LANG:GetString("f1menu_you_are", CharacName))
-			TitleSpe:SetFont( "Bohemian typewriter TITLE" )
+			TitleSpe:SetFont( "SlashersTypewriterTitle" )
 			TitleSpe:SetColor(Color(168,0,0,255))
 			TitleSpe:SizeToContents()
 			TitleSpe:SetWrap( true )
@@ -61,7 +61,7 @@ function ShowPlayerScreen(TeamName,TeamText,CharacName,CharacText,ImageCharac,Ti
 
 			local SpecificDescription = vgui.Create("DLabel",DescriptionBox)
 			SpecificDescription:SetText(CharacText)
-			SpecificDescription:SetFont( "Bohemian typewriter SA" )
+			SpecificDescription:SetFont( "SlashersTypewriterSA" )
 			SpecificDescription:MoveBelow( TitleSpe, 5 )
 			SpecificDescription:SizeToContents()
 			SpecificDescription:SetWidth((1/1.45)*ScrH())
@@ -73,7 +73,7 @@ function ShowPlayerScreen(TeamName,TeamText,CharacName,CharacText,ImageCharac,Ti
 			--Title1:Dock(TOP)
 			TitleGen:SetText(GM.LANG:GetString("f1menu_you_are", TeamName))
 			TitleGen:MoveBelow( SpecificDescription, 1/4*ScrH() )
-			TitleGen:SetFont( "Bohemian typewriter TITLE" )
+			TitleGen:SetFont( "SlashersTypewriterTitle" )
 			TitleGen:SetColor(Color(168,0,0,255))
 			TitleGen:SizeToContents()
 			TitleGen:SetWrap( true )
@@ -82,7 +82,7 @@ function ShowPlayerScreen(TeamName,TeamText,CharacName,CharacText,ImageCharac,Ti
 
 			local GenericDescription = vgui.Create("DLabel",DescriptionBox)
 			GenericDescription:SetText(TeamText)
-			GenericDescription:SetFont( "Bohemian typewriter SA" )
+			GenericDescription:SetFont( "SlashersTypewriterSA" )
 			GenericDescription:MoveBelow( TitleGen, 5 )
 			GenericDescription:SizeToContents()
 			GenericDescription:SetWrap( true )
@@ -163,7 +163,7 @@ function ShowTitle(Title,Second)
 
 	local titleLabel = vgui.Create("DLabel",BackGroundPanel)
 	titleLabel:Center()
-	titleLabel:SetFont( "Friday13" )
+	titleLabel:SetFont( "SlashersFriday13" )
 	titleLabel:Dock(FILL)
 	titleLabel:SetContentAlignment( 5 )
 

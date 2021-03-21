@@ -1560,7 +1560,7 @@ end
 
 if !TFASleekFontCreated and CLIENT then
 	local fontdata = {}
-	fontdata.font = "Roboto-Regular"
+	fontdata.font = "Roboto"
 	fontdata.size = 36
 	fontdata.antialias = true
 	fontdata.shadow = false

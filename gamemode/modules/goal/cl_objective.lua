@@ -137,7 +137,7 @@ end
 	objText:SetTextColor( Color( 255, 255, 255 ) )
 	objText:SetPos( 95, -30 )
 	objText:SetContentAlignment(5)
-	objText:SetFont( "Bohemian typewriter" )
+	objText:SetFont( "SlashersTypewriter" )
 	objText:SetSize( 402,128 )
 
 	---

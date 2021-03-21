@@ -29,7 +29,7 @@ surface.CreateFont("horrormid", {
 	size = 28
 })
 
-surface.CreateFont( "Bohemian typewriter", {
+surface.CreateFont( "SlashersTypewriter", {
 	font = "Bohemian typewriter",
 	extended = true,
 	size = 20,
@@ -47,7 +47,7 @@ surface.CreateFont( "Bohemian typewriter", {
 	outline = false,
 })
 
-surface.CreateFont( "Bohemian typewriter STITLE", {
+surface.CreateFont( "SlashersTypewriterSTitle", {
 	font = "Bohemian typewriter", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 	extended = true,
 	size = ScreenScale(10),
@@ -83,7 +83,7 @@ surface.CreateFont( "KeyboardFont", {
 } )
 
 
-surface.CreateFont( "Friday13", {
+surface.CreateFont( "SlashersFriday13", {
 	font = "Friday13", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 	extended = true,
 	size = ScreenScale(75),
@@ -102,7 +102,7 @@ surface.CreateFont( "Friday13", {
 } )
 
 
-surface.CreateFont( "Bohemian typewriter SA", {
+surface.CreateFont( "SlashersTypewriterSA", {
 	font = "Bohemian typewriter", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 	extended = true,
 	size = ScreenScale(8),
@@ -120,7 +120,7 @@ surface.CreateFont( "Bohemian typewriter SA", {
 	outline = false,
 } )
 
-surface.CreateFont( "Bohemian typewriter TITLE", {
+surface.CreateFont( "SlashersTypewriterTitle", {
 	font = "Bohemian typewriter", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
 	extended = true,
 	size = ScreenScale(18),
@@ -138,7 +138,7 @@ surface.CreateFont( "Bohemian typewriter TITLE", {
 	outline = false,
 } )
 
-surface.CreateFont( "Friday13 title", {
+surface.CreateFont( "SlashersFriday13Title", {
   font = "Friday13", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
   extended = true,
   size = ScreenScale(30),
@@ -148,7 +148,7 @@ surface.CreateFont( "Friday13 title", {
   antialias = true,
 } )
 
-surface.CreateFont( "Friday13 mapLabel", {
+surface.CreateFont( "SlashersFriday13MapLabel", {
   font = "Friday13", -- Use the font-name which is shown to you by your operating system Font Viewer, not the file name
   extended = true,
   size = ScreenScale(12),

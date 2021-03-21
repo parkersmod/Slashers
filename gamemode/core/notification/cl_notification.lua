@@ -61,7 +61,7 @@ function notificationPanel(notifText,notificationType)
 	Text:SetTextColor( Color( 255, 255, 255 ) )
 	Text:SetPos( 95, -30 )
 	Text:SetContentAlignment(5)
-	Text:SetFont( "Bohemian typewriter" )
+	Text:SetFont( "SlashersTypewriter" )
 	Text:SetSize( 402,128 )
 
 	---
