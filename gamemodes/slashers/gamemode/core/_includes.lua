@@ -42,9 +42,6 @@ if SERVER then
 	AddCSLuaFile("rounds/sh_rounds.lua")
 	AddCSLuaFile("rounds/cl_network.lua")
 	AddCSLuaFile("rounds/cl_rounds.lua")
-
-	-- Slot CheckPassword
-	include ("slot/sv_slotcheck.lua")
 else
 	-- Convars
 	include("convars.lua")

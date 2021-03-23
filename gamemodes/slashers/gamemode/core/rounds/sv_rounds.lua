@@ -73,13 +73,10 @@ function GM.ROUND:Start(forceKiller)
 		GM.ROUND.Killer = GM.ROUND:ChooseKiller()
 	end
 
-	local i = 0
 	for _, v in ipairs(player.GetAll()) do
-		if i > 10 then break end
 		if GM.ROUND.Killer ~= v then
 			table.insert(GM.ROUND.Survivors, v)
 		end
-		i = i + 1
 	end
 	GM.ROUND:ViewInitCam(false)
 

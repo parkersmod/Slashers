@@ -65,9 +65,13 @@ function playermeta:SetupKiller()
 end
 
 function GM.CLASS:SetupSurvivors()
-	local classes = table.GetKeys(GM.CLASS.Survivors)
+	local classes = {}
 
 	for _, v in ipairs(GM.ROUND.Survivors) do
+		if #classes < 1 then -- No choices left, need to repopulate list
+			classes = table.GetKeys(GM.CLASS.Survivors)
+		end
+
 		local class, key = table.Random(classes)
 		v:SetSurvClass(class)
 		table.remove(classes, key)
