@@ -2,8 +2,8 @@
 -- @Date:   2018-01-09 10:40:07
 -- @Email:  guilhempech@gmail.com
 -- @Project: Slashers
--- @Last modified by:   Guilhem PECH
--- @Last modified time: 2018-01-11 15:50:02
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-21 03:27:00
 
 include("shared.lua")
 SWEP.Slot = 1

@@ -2,8 +2,8 @@
 --
 -- @Author: Vyn
 -- @Date:   2017-07-26 12:14:08
--- @Last Modified by:   Daryl_Winters
--- @Last Modified time: 2017-08-09T19:14:23+02:00
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-21 03:27:00
 
 if SERVER then
 	hook.Add( "PlayerUse", "slashers_dooraxe_playeruse", function(ply, ent)

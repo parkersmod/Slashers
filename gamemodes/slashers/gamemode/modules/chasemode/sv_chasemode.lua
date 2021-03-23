@@ -2,8 +2,8 @@
 -- @Date:   21-Oct-2018
 -- @Email:  guilhempech@gmail.com
 -- @Project: Slashers
--- @Last modified by:   Guilhem PECH
--- @Last modified time: 21-Oct-2018
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-21 03:27:00
 
 
 util.AddNetworkString( "sls_killerseesurvivor" )

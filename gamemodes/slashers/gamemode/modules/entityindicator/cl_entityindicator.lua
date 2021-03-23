@@ -2,8 +2,8 @@
 --
 -- @Author: Guilhem PECH <Daryl_Winters>
 -- @Date:   2017-08-09T14:06:19+02:00
--- @Last Modified by:   Daryl_Winters
--- @Last Modified time: 2017-08-09T14:56:48+02:00
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-21 03:27:00
 
 --- Show stuff on objective entity
 

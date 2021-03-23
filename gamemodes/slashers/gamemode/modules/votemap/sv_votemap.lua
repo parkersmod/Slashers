@@ -2,8 +2,8 @@
 --
 -- @Author: Guilhem PECH <Daryl_Winters>
 -- @Date:   2017-08-06T09:44:00+02:00
--- @Last modified by:   Guilhem PECH
--- @Last modified time: 2018-01-01T18:45:28+01:00
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-21 03:27:00
 
 util.AddNetworkString("slash_sendvotedata")
 util.AddNetworkString("slash_summitvote")

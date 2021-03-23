@@ -2,8 +2,9 @@
 --
 -- @Author: Garrus2142
 -- @Date:   2017-07-27 17:07:04
--- @Last modified by:   Guilhem PECH
--- @Last modified time: 21-Oct-2018
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-21 03:27:00
+
 local modulesPath = "slashers/gamemode/modules"
 local _, directories = file.Find(modulesPath .. "/*", "LUA")
 

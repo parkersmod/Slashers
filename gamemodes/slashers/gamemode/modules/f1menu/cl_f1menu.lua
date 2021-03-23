@@ -2,8 +2,8 @@
 --
 -- @Author: Guilhem PECH
 -- @Date:   2017-07-26T13:50:55+02:00
--- @Last Modified by:   Garrus2142
--- @Last Modified time: 2017-08-07T17:46:37+02:00
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-21 03:27:00
 
 local GM = GAMEMODE or GM
 local BackGroundPanel, timed
