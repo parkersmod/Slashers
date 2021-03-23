@@ -1,14 +1,4 @@
-"slashers_antiafk_afkmsgtime" = "15"
- game server_can_execute lua_server
- - Set afk message duration before being kick
-
-"slashers_antiafk_afktime" = "60"
- game server_can_execute lua_server
- - Set afktime duration in seconds
-
-"slashers_antiafk_enable" = "0" ( def. "1" )
- game server_can_execute lua_server
- - Enable / Disable antiafk
+BASE:
 
 "slashers_round_max" = "5"
  game replicated server_can_execute lua_server
@@ -41,3 +31,18 @@
 "slashers_lang_default" = "en"
  game replicated server_can_execute lua_server
  - Set default language of gamemode.
+
+
+ANTI-AFK MODULE:
+
+"slashers_antiafk_enable" = "1"
+ game server_can_execute lua_server
+ - Enable / Disable antiafk
+
+"slashers_antiafk_afktime" = "60"
+ game server_can_execute lua_server
+ - Set afktime duration in seconds
+
+"slashers_antiafk_afkmsgtime" = "15"
+ game server_can_execute lua_server
+ - Set afk message duration before being kicked

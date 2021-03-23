@@ -3,7 +3,7 @@
 -- @Author: Garrus2142
 -- @Date:   2017-07-26 01:30:34
 -- @Last Modified by:   Valafi
--- @Last Modified time: 2021-03-21 03:27:00
+-- @Last Modified time: 2021-03-23 06:46:48
 
 local function PlayerSpawn(ply)
 	ply.lastpos = ply:GetPos()
@@ -13,9 +13,9 @@ end
 hook.Add("PlayerSpawn", "antiafk_PlayerSpawn", PlayerSpawn)
 
 local function Think()
-	local CV_enable = GetConVar("slashers_antiafk_enable")
-	local CV_afktime = GetConVar("slashers_antiafk_afktime")
-	local CV_afkmsgtime = GetConVar("slashers_antiafk_afkmsgtime")
+	local CV_enable = GetConVar("slash_antiafk_enable")
+	local CV_afktime = GetConVar("slash_antiafk_afktime")
+	local CV_afkmsgtime = GetConVar("slash_antiafk_afkmsgtime")
 	local curtime = CurTime()
 
 	if not CV_enable or not CV_afktime or not CV_afkmsgtime then return end
