@@ -3,7 +3,7 @@
 -- @Author: Garrus2142
 -- @Date:   2017-07-25 16:15:46
 -- @Last Modified by:   Valafi
--- @Last Modified time: 2021-03-19 09:10:55
+-- @Last Modified time: 2021-03-24 09:44:44
 
 -- Main Content
 resource.AddWorkshop("788009163") -- Utopia Games - Slashers content 1
@@ -19,3 +19,7 @@ resource.AddWorkshop("1091061063") -- slash_lodge
 -- Season 2 Maps
 resource.AddWorkshop("1247351614") -- Slashers Season 2 Map Content
 resource.AddWorkshop("1247285424") -- slash_motel
+
+-- TFA
+resource.AddWorkshop("415143062") -- TFA Base [ Reduxed ]
+--resource.AddWorkshop("582366370") -- [TFA] No More Room in Hell Melee SWEPs
