@@ -110,7 +110,7 @@ GM.CLASS.Survivors[CLASS_SURV_EMO].life = 110
 GM.CLASS.Survivors[CLASS_SURV_EMO].stamina = 150
 GM.CLASS.Survivors[CLASS_SURV_EMO].model = "models/steinman/slashers/emo_pm.mdl"
 GM.CLASS.Survivors[CLASS_SURV_EMO].die_sound = "slashers/effects/scream_girl_1.wav"
-GM.CLASS.Survivors[CLASS_SURV_EMO].weapons = {}
+GM.CLASS.Survivors[CLASS_SURV_EMO].weapons = {"weapon_pepperspray"}
 if CLIENT then
 	GM.CLASS.Survivors[CLASS_SURV_EMO].dispname = "Audrey"
 	GM.CLASS.Survivors[CLASS_SURV_EMO].description = GM.LANG:GetString("class_desc_emo")
