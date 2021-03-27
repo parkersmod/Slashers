@@ -39,7 +39,7 @@ ANTI-AFK MODULE:
  game server_can_execute lua_server
  - Enable / Disable antiafk
 
-"slashers_antiafk_afktime" = "60"
+"slashers_antiafk_afktime" = "120"
  game server_can_execute lua_server
  - Set afktime duration in seconds
 
