@@ -3,7 +3,7 @@
 -- @Author: Garrus2142
 -- @Date:   2017-07-25 16:15:49
 -- @Last Modified by:   Valafi
--- @Last Modified time: 2021-03-21 03:27:00
+-- @Last Modified time: 2021-03-27 09:35:12
 
 local Zones_meta = {}
 local Zones = {}
@@ -65,7 +65,7 @@ hook.Add("PlayerDisconnected", "zones_PlayerDisconnected", PlayerDK)
 
 local function Think()
     for _, ply in ipairs(player.GetAll()) do
-    	if not ply:Alive() then continue end
+    	if not ply:Alive() then goto cont end
 
         for _, zone in ipairs(Zones) do
             if ply.inzones and table.HasValue(ply.inzones, zone:GetID()) then
@@ -83,6 +83,8 @@ local function Think()
                 end
             end
         end
+
+        ::cont::
     end
 end
 hook.Add("Think", "zones_Think", Think)

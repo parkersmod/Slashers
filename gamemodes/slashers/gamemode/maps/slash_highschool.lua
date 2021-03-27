@@ -3,7 +3,7 @@
 -- @Author: Garrus2142
 -- @Date:   2017-08-09 16:16:18
 -- @Last Modified by:   Valafi
--- @Last Modified time: 2021-03-21 03:27:00
+-- @Last Modified time: 2021-03-27 09:35:12
 
 local GM = GM or GAMEMODE
 
@@ -104,12 +104,14 @@ local function HUDPaintBackground()
 	for k, v in ipairs(doors) do
 		if curtime > v.endtime then
 			table.remove(doors, k)
-			continue
+			goto cont
 		end
 		local pos1 = v.pos:ToScreen()
 		surface.SetDrawColor(Color(255, 255, 255))
 		surface.SetMaterial(ICON_DOOR)
 		surface.DrawTexturedRect(pos1.x - 64, pos1.y - 64, 128, 128)
+
+		::cont::
 	end
 end
 hook.Add("HUDPaintBackground", "sls_kability_HUDPaintBackground", HUDPaintBackground)

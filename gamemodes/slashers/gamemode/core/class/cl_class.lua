@@ -3,7 +3,7 @@
 -- @Author: Garrus2142
 -- @Date:   2017-07-25 16:15:46
 -- @Last Modified by:   Valafi
--- @Last Modified time: 2021-03-21 03:27:00
+-- @Last Modified time: 2021-03-27 09:35:12
 
 local GM = GM or GAMEMODE
 local scrw, scrh = ScrW(), ScrH()
@@ -32,7 +32,7 @@ local function DrawHUDKiller()
 	surface.DrawTexturedRect(20, scrh - 84, 64, 64)
 
 	for k, v in ipairs(GM.ROUND.Survivors) do
-		if not GM.CLASS.Survivors[v.ClassID] then continue end
+		if not GM.CLASS.Survivors[v.ClassID] then goto cont end
 
 		surface.SetMaterial(GM.CLASS.Survivors[v.ClassID].icon)
 		surface.DrawTexturedRect(scrw - ((64 + 20) * k), scrh - 84, 64, 64)
@@ -40,6 +40,8 @@ local function DrawHUDKiller()
 			surface.SetMaterial(v:GetNWBool("Escaped") and ICON_SAFE or ICON_CROSS)
 			surface.DrawTexturedRect(scrw - ((64 + 20) * k), scrh - 84, 64, 64)
 		end
+
+		::cont::
 	end
 end
 

@@ -3,7 +3,7 @@
 -- @Author: Garrus2142
 -- @Date:   2017-08-09 13:41:40
 -- @Last Modified by:   Valafi
--- @Last Modified time: 2021-03-21 03:27:00
+-- @Last Modified time: 2021-03-27 09:35:12
 
 local GM = GM or GAMEMODE
 
@@ -112,11 +112,13 @@ if CLIENT then
 			for k, v in ipairs(steps) do
 				if CurTime() > v.endtime then
 					table.remove(steps, k)
-					continue
+					goto cont
 				end
 				if (v.pos - pos):LengthSqr() < maxDistance then
 					render.DrawQuadEasy(v.pos + v.normal, v.normal, 10, 20, Color(255, 255, 255), v.angle)
 				end
+
+				::cont::
 			end
 		cam.End3D()
 	end

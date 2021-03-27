@@ -2,8 +2,8 @@
 --
 -- @Author: Garrus2142
 -- @Date:   2017-07-25 16:15:47
--- @Last Modified by:   Garrus2142
--- @Last Modified time: 2017-07-26 14:47:38
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-27 09:35:12
 
 local scrW, scrH = ScrW(), ScrH()
 local msg_print = {}
@@ -16,7 +16,7 @@ local function HUDPaint()
 	for k, v in ipairs(msg_print) do
 		if v.endtime < curtime then
 			table.remove(msg_print, k)
-			continue
+			goto cont
 		end
 
 		surface.SetFont(v.font)
@@ -24,15 +24,17 @@ local function HUDPaint()
 		surface.SetTextColor(v.color)
 		surface.SetTextPos(scrW / 2 - tw / 2, v.ypos - th / 2)
 		surface.DrawText(v.msg)
+
+		::cont::
 	end
 
 	-- PrintFade
 	for k, v in ipairs(msg_printfade) do
 		if v.endtime < curtime then
 			table.remove(msg_printfade, k)
-			continue
+			goto cont
 		end
-		if v.starttime > curtime then continue end
+		if v.starttime > curtime then goto cont end
 
 		surface.SetFont(v.font)
 		local tw, th = surface.GetTextSize(v.msg)
@@ -44,6 +46,8 @@ local function HUDPaint()
 		surface.SetTextColor(v.color)
 		surface.SetTextPos(scrW / 2 - tw / 2, v.ypos - th / 2)
 		surface.DrawText(v.msg)
+
+		::cont::
 	end
 end
 hook.Add("HUDPaint", "sls_messages_HUDPaint", HUDPaint)

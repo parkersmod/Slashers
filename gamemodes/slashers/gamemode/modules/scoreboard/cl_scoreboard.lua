@@ -3,7 +3,7 @@
 -- @Author: Garrus2142
 -- @Date:   2017-07-25 16:15:51
 -- @Last Modified by:   Valafi
--- @Last Modified time: 2021-03-21 03:27:00
+-- @Last Modified time: 2021-03-27 09:35:12
 
 local GM = GM or GAMEMODE
 
@@ -39,7 +39,7 @@ local function HUDDrawScoreBoard()
 	yStartInit = scrH / 2 - ((playerscount * bgHeight) / 2)
 
 	for k, v in ipairs(players) do
-		if not IsValid(v) then continue end
+		if not IsValid(v) then goto cont end
 
 		-- BG
 		surface.SetDrawColor(Color(255, 255, 255, opacity))
@@ -77,6 +77,8 @@ local function HUDDrawScoreBoard()
 		end
 		surface.SetTextPos(scrW / 2 - bgWidth / 2 + 104, yStartInit + ((k - 1) * bgHeight + 35 - th / 2))
 		surface.DrawText(nick)
+
+		::cont::
 	end
 end
 hook.Add("HUDDrawScoreBoard", "scoreboard_HUDDrawScoreBoard", HUDDrawScoreBoard)

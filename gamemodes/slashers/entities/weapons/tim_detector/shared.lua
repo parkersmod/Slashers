@@ -1,3 +1,10 @@
+-- Utopia Games - Slashers
+--
+-- @Author: Garrus2142
+-- @Date:   Jul 26, 2017, 7:06 AM PDT
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-27 09:35:12
+
 SWEP.PrintName			= "Nerd Detector"
 SWEP.Base               = "weapon_base"
 SWEP.Slot				= 3
@@ -109,7 +116,7 @@ if CLIENT then
         local found = false
         self.echos = {}
         for _, v in ipairs(player.GetAll()) do
-        	if not v:Alive() then continue end
+        	if not v:Alive() then goto cont end
             local ang = LocalPlayer():GetAngles();
             local pos = LocalPlayer():GetPos() - v:GetPos();
             pos:Rotate(Angle(0, -1*ang.Yaw, 0));
@@ -121,6 +128,8 @@ if CLIENT then
                 found = true
                 table.insert(self.echos, {x1, y1, 255})
             end
+
+			::cont::
         end
         if found then
             surface.PlaySound("slashers/effects/detector_echo.wav")
@@ -256,7 +265,7 @@ if CLIENT then
 
 			for k, v in pairs( loopthrough ) do
 				local bone = vm:LookupBone(k)
-				if (not bone) then continue end
+				if (not bone) then goto cont end
 
 				-- !! WORKAROUND !! --
 				local s = Vector(v.scale.x,v.scale.y,v.scale.z)
@@ -283,6 +292,8 @@ if CLIENT then
 				if vm:GetManipulateBonePosition(bone) ~= p then
 					vm:ManipulateBonePosition( bone, p )
 				end
+
+				::cont::
 			end
 		else
 			self:ResetBonePositions(vm)
