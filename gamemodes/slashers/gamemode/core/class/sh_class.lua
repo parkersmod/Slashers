@@ -7,6 +7,18 @@
 
 local GM = GM or GAMEMODE
 
+-- TODO: Move this and probably jumppower var too
+-- Prevent players from crouch jumping
+hook.Add("StartCommand", "NoCrouchJump_StartCommand", function(ply, cmd)
+	if cmd:KeyDown(IN_DUCK) then -- The player is crouched
+		if not ply:IsOnGround() then -- If they are trying to crouch while jumping, block crouch (if falling, they are uncrouched)
+			cmd:RemoveKey(IN_DUCK)
+		elseif cmd:KeyDown(IN_JUMP) then -- If they are crouched on the ground, don't let them jump (mostly prevents glitchy stuff)
+			cmd:RemoveKey(IN_JUMP)
+		end
+	end
+end)
+
 GM.CLASS = {}
 GM.CLASS.Survivors = {}
 GM.CLASS.Killers = {}

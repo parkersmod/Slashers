@@ -8,6 +8,9 @@
 local GM = GM or GAMEMODE
 local playermeta = FindMetaTable("Player")
 
+-- TODO: Make convars for this and preventing crouch jump
+local jumppower = 240 -- Not quite as powerful as default crouch jump, but allows getting on top tables (have to be crouched for some of them)
+
 function playermeta:SetSurvClass(class)
 	if not GM.CLASS.Survivors[class] then return false end
 
@@ -31,13 +34,12 @@ function playermeta:SetSurvClass(class)
 	end
 	self:SetWalkSpeed(GM.CLASS.Survivors[class].walkspeed)
 	self:SetRunSpeed(GM.CLASS.Survivors[class].runspeed)
+	self:SetJumpPower(240)
 	self:SetMaxHealth(GM.CLASS.Survivors[class].life)
 	self:GodDisable()
 	--self:SetNWInt("ClassID", class)
 	self.ClassID = class
 end
-
-
 
 function playermeta:SetupKiller()
 	self:StripWeapons()
@@ -59,6 +61,7 @@ function playermeta:SetupKiller()
 
 	self:SetWalkSpeed(GM.MAP.Killer.WalkSpeed)
 	self:SetRunSpeed(GM.MAP.Killer.RunSpeed)
+	self:SetJumpPower(240)
 	self:SetMaxHealth(100)
 	self:GodEnable()
 	self.ClassID = CLASS_KILLER
