@@ -23,3 +23,7 @@ resource.AddWorkshop("1247285424") -- slash_motel
 -- TFA
 resource.AddWorkshop("415143062") -- TFA Base [ Reduxed ]
 --resource.AddWorkshop("582366370") -- [TFA] No More Room in Hell Melee SWEPs
+
+-- Custom
+resource.AddWorkshop("2429310778") -- [WIP] Slashers VIGNN3TIK
+resource.AddWorkshop("2431084162") -- [WIP] Slashers Freddy Glove
