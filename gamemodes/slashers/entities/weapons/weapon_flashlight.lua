@@ -1,3 +1,10 @@
+-- Utopia Games - Slashers
+--
+-- @Author: Garrus2142
+-- @Date:   Jul 25, 2017, 3:32 PM PDT
+-- @Last Modified by:   Valafi
+-- @Last Modified time: 2021-03-27 12:16:13
+
 if SERVER then
 	util.AddNetworkString("sls_flashlight")
 end
@@ -68,6 +75,15 @@ local matLight = Material( "sprites/light_ignorez" )
 function SWEP:PrimaryAttack()
 	if CLIENT then return end
 	if not IsValid(self) or not IsValid(self.Owner) or not self.Owner:GetActiveWeapon() or self.Owner:GetActiveWeapon() ~= self then return end
+
+	-- Quick workaround for double fire problem (IsFirstTimePredicted just kept returning true, so it's probably due to TFA base updates)
+	if self.lastActive == nil then -- First run?
+		self.lastActive = CurTime()
+	elseif self.lastActive + self.Primary.Delay > CurTime() then -- Check if our delay was ignored
+		return
+	else -- The gate keeper is pleased and logs the time of entry
+		self.lastActive = CurTime()
+	end
 
 	self:SetNextPrimaryFire(CurTime() + self.Primary.Delay)
 	self.Owner:EmitSound("slashers/effects/flashlight_toggle.wav", 75, 100, 0.6)
