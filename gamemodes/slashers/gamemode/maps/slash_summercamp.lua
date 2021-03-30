@@ -49,7 +49,7 @@ GM.MAP.Goal = {
 GM.MAP.Killer.Name = "Jason"
 GM.MAP.Killer.Model = "models/player/mkx_jason.mdl"
 GM.MAP.Killer.WalkSpeed = 190
-GM.MAP.Killer.RunSpeed = 240
+GM.MAP.Killer.RunSpeed = 190
 GM.MAP.Killer.ExtraWeapons = {}
 
 if CLIENT then
@@ -58,7 +58,7 @@ if CLIENT then
 end
 
 -- Convars
-CreateConVar("slashers_jason_step_duration", 30, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Set duration when the footstep is displayed for Jason.")
+CreateConVar("slashers_jason_step_duration", 7, {FCVAR_SERVER_CAN_EXECUTE, FCVAR_ARCHIVE, FCVAR_REPLICATED}, "Set duration when the footstep is displayed for Jason.")
 
 -- Ability
 

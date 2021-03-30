@@ -25,6 +25,8 @@ LANG["class_desc_myers"] = "You're the slowest killer and have the ability to fo
 LANG["class_desc_proxy"] = "You have Freddy's glove. With it, you can place 2 pairs of portals which you and survivors can use. Don't place them like an idiot or you'll get stuck!" --"You have the ability to appear and disappear when not visible by a survivor. Use it to sneak and surprise your victims. Press your menu key ('Q' by default) to use it. Listen carefully, you may hear survivors' heartbeat."
 LANG["class_desc_intruder"] = "You have the ability to place traps to help you killing the survivors. Use your alert ropes to spot the survivors, your bear traps to neutralize them and the door axe to kill them by surprise.Listen carefully, you may hear survivors' heartbeat."
 LANG["class_desc_bates"] = "Use the corpse of your dead mother to help you locate the survivors. The more a survivor is near the body, the more your speed will increase but be careful, if someone finds it, the police will be called immediately. Listen carefully, you may hear survivors' heartbeat."
+LANG["class_desc_penny"] = "Use your traps to corner the survivors"
+
 
 LANG["round_mission_police"] = "Police arrives in %s"
 LANG["round_mission_police_killer"] = "Kill them all %s"
