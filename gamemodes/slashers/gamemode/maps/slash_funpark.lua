@@ -9,8 +9,8 @@ local GM = GM or GAMEMODE
 
 GM.MAP.Name = "Funpark"
 GM.MAP.EscapeDuration = 90
-GM.MAP.StartMusic = "slashers_start_game_jason.wav"
-GM.MAP.ChaseMusic = "slashers/ambient/chase_jason.wav"
+GM.MAP.StartMusic = "slashers_start_game_penny.wav"
+GM.MAP.ChaseMusic = "slashers/ambient/chase_penny.wav"
 GM.MAP.Goal = {
 	Generator = {
 	--[[setpos -1623.627441 -682.468262 64.031250;setang 16.488054 -81.840904 0.000000
@@ -74,9 +74,9 @@ setpos -464.098999 964.909729 64.031250;setang 54.328030 126.416641 0.000000]]
 -- Killer
 GM.MAP.Killer.Name = "Pennywise"
 GM.MAP.Killer.Model = "models/auditor/com/clown/pennywise_pm.mdl"
-GM.MAP.Killer.WalkSpeed = 200
-GM.MAP.Killer.RunSpeed = 200
-GM.MAP.Killer.ExtraWeapons = {}
+GM.MAP.Killer.WalkSpeed = 180
+GM.MAP.Killer.RunSpeed = 180
+GM.MAP.Killer.ExtraWeapons = {"swep_penny" ,"weapon_alertropes" }
 
 if CLIENT then
 	GM.MAP.Killer.Desc = GM.LANG:GetString("class_desc_penny")
