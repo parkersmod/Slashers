@@ -74,8 +74,8 @@ setpos -464.098999 964.909729 64.031250;setang 54.328030 126.416641 0.000000]]
 -- Killer
 GM.MAP.Killer.Name = "Pennywise"
 GM.MAP.Killer.Model = "models/auditor/com/clown/pennywise_pm.mdl"
-GM.MAP.Killer.WalkSpeed = 180
-GM.MAP.Killer.RunSpeed = 180
+GM.MAP.Killer.WalkSpeed = 190
+GM.MAP.Killer.RunSpeed = 190
 GM.MAP.Killer.ExtraWeapons = {"swep_penny" ,"weapon_alertropes" }
 
 if CLIENT then
