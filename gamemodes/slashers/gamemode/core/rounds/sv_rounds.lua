@@ -315,23 +315,34 @@ local function Think()
 end
 hook.Add("Think", "sls_round_Think", Think)
 
-local function InitPostEntity()
+-- Called from InitPostEntity and PostCleanupMap
+local function CreateEscapeZones()
 	-- Create zones
 	for _, v in ipairs(ents.FindByName("trigger_escape")) do
-		local zone
+		--local zone
 		local vec1, vec2
 
 		vec1 = v:LocalToWorld(v:OBBMins())
 		vec2 = v:LocalToWorld(v:OBBMaxs())
-		zone = CreateZone(vec1, vec2)
+		OrderVectors(vec1, vec2)
+		--[[zone = CreateZone(vec1, vec2)
 
 		function zone:OnPlayerEnter(ply)
 			if not GM.ROUND.Escape then return end
 			if ply:Team() ~= TEAM_SURVIVORS then return end
 			ply:SetNWBool("Escaped", true)
 			ply:KillSilent()
-		end
+		end]]
+		
+		local trigger = ents.Create("trigger_zone")
+		trigger.PointA = vec1
+		trigger.PointB = vec2
+    	trigger:Spawn()
 	end
+end
+
+local function InitPostEntity()
+	CreateEscapeZones() -- Future proofing in case if we don't call a map cleanup on round start
 
 	-- Get Cam pos
 	local camera = ents.FindByName("camera_view")[1]
@@ -339,3 +350,8 @@ local function InitPostEntity()
 	GM.ROUND.CameraAng = camera:GetAngles()
 end
 hook.Add("InitPostEntity", "sls_round_InitPostEntity", InitPostEntity)
+
+local function PostCleanupMap()
+	CreateEscapeZones()
+end
+hook.Add("PostCleanupMap", "sls_round_PostCleanupMap", PostCleanupMap)
