@@ -8,7 +8,6 @@
 DEFINE_BASECLASS( "gamemode_base" )
 include("shared.lua")
 include("config.lua")
-include("libs/zones.lua")
 include("core/_includes.lua")
 include("modulesloader.lua")
 AddCSLuaFile("cl_init.lua")

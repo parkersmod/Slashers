@@ -141,6 +141,27 @@ function GM.ROUND:StartWaitingPolice()
 	net.Broadcast()
 end
 
+local function CreateEscapeZones()
+	-- Create zones
+	for _, v in ipairs(ents.FindByName("trigger_escape")) do
+		local vec1 = v:LocalToWorld(v:OBBMins())
+		local vec2 = v:LocalToWorld(v:OBBMaxs())
+		OrderVectors(vec1, vec2)
+
+		local trigger = ents.Create("trigger_zone")
+		trigger.PointA = vec1
+		trigger.PointB = vec2
+		function trigger:OnEnter(ent)
+			if not GM.ROUND.Escape or not ent:IsPlayer() then return end
+			if ent:Team() ~= TEAM_SURVIVORS or not ent:Alive() then return end
+			
+			ent:SetNWBool("Escaped", true)
+			ent:KillSilent()
+		end
+    	trigger:Spawn()
+	end
+end
+
 function GM.ROUND:StartEscape()
 	objectifComplete()
 	GM.ROUND.WaitingPolice = false
@@ -150,6 +171,9 @@ function GM.ROUND:StartEscape()
 	-- Button escape
 	GM.ROUND.EscapeButton = table.Random(ents.FindByName("button_escape"))
 	GM.ROUND.EscapeButton:Fire("Press")
+
+	-- Create zones
+	CreateEscapeZones()
 
 	hook.Run("sls_round_StartEscape")
 	net.Start("sls_round_StartEscape")
@@ -315,34 +339,8 @@ local function Think()
 end
 hook.Add("Think", "sls_round_Think", Think)
 
--- Called from InitPostEntity and PostCleanupMap
-local function CreateEscapeZones()
-	-- Create zones
-	for _, v in ipairs(ents.FindByName("trigger_escape")) do
-		--local zone
-		local vec1, vec2
-
-		vec1 = v:LocalToWorld(v:OBBMins())
-		vec2 = v:LocalToWorld(v:OBBMaxs())
-		OrderVectors(vec1, vec2)
-		--[[zone = CreateZone(vec1, vec2)
-
-		function zone:OnPlayerEnter(ply)
-			if not GM.ROUND.Escape then return end
-			if ply:Team() ~= TEAM_SURVIVORS then return end
-			ply:SetNWBool("Escaped", true)
-			ply:KillSilent()
-		end]]
-		
-		local trigger = ents.Create("trigger_zone")
-		trigger.PointA = vec1
-		trigger.PointB = vec2
-    	trigger:Spawn()
-	end
-end
-
 local function InitPostEntity()
-	CreateEscapeZones() -- Future proofing in case if we don't call a map cleanup on round start
+	--CreateEscapeZones() -- Future proofing in case if we don't call a map cleanup on round start
 
 	-- Get Cam pos
 	local camera = ents.FindByName("camera_view")[1]
@@ -351,7 +349,10 @@ local function InitPostEntity()
 end
 hook.Add("InitPostEntity", "sls_round_InitPostEntity", InitPostEntity)
 
+-- TODO: Remove? Also, on slash_lodge only the proper escape zone is made, recheck if slash_highschool works same way.
+--[[
 local function PostCleanupMap()
 	CreateEscapeZones()
 end
 hook.Add("PostCleanupMap", "sls_round_PostCleanupMap", PostCleanupMap)
+--]]
